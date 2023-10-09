@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Camp extends ClassMonitor{
+public class ClassCamp extends ClassMonitor,ClassActivity{
     private int idCamp;
     private Date beginningDate;
     private Date endingDate;
@@ -14,7 +14,7 @@ public class Camp extends ClassMonitor{
     private Monitor specialMonitor;
 
     
-    public Camp() {
+    public ClassCamp() {
         activity = new ArrayList<>();
     } 
     public Camp(int idCamp, Date beginningDate, Date endingDate, String educativeLevel, int maxAssistants) {
