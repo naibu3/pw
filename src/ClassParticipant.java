@@ -1,6 +1,6 @@
 
 
-public class ClassParticipant extends Person {
+public class ClassParticipant extends ClassPerson {
     private String birthday_;
     private boolean special_attention_;
 

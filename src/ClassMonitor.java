@@ -1,6 +1,6 @@
 
 
-public class Monitor extends Person {
+public class ClassMonitor extends ClassPerson {
 	private Boolean specialNeedsEducator_;
 	
 	public Boolean getSpecialNeedsEducator() { return specialNeedsEducator_; }
@@ -11,8 +11,8 @@ public class Monitor extends Person {
 		return "ID: " + getId() + "\nNombre: " + getNombre() + "\nApellidos: " + getApellidos() + "\nSpecial needs: " + specialNeedsEducator_ + "\n";
 	}
 	
-	public Monitor() {}
-	public Monitor(int id, String nombre, String apellidos, Boolean specialNeeds) {
+	public ClassMonitor() {}
+	public ClassMonitor(int id, String nombre, String apellidos, Boolean specialNeeds) {
 		super(id, nombre, apellidos);
 		setSpecialNeedsEducator(specialNeeds);
 	}

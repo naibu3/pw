@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Camp extends Monitor{
+public class Camp extends ClassMonitor{
     private int idCamp;
     private Date beginningDate;
     private Date endingDate;

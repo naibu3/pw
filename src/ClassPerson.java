@@ -1,6 +1,6 @@
 
 
-public abstract class Person {
+public abstract class ClassPerson {
 	private int id_;
 	private String nombre_, apellidos_;
 	
@@ -10,8 +10,8 @@ public abstract class Person {
 	public void setId(int id) { id_ = id; }
 	public void setNombre(String nombre) { nombre_ = nombre; }
 	public void setApellidos(String apellidos) { apellidos_ = apellidos; }
-	public Person() {};
-	public Person(int id, String nombre, String apellidos) {
+	public ClassPerson() {};
+	public ClassPerson(int id, String nombre, String apellidos) {
 		setId(id);
 		setNombre(nombre);
 		setApellidos(apellidos);
