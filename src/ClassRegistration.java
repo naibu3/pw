@@ -8,7 +8,12 @@ public class ClassRegistration {
     private LocalDate RegistrationDate_;
     private float price_;
     private EnumRegistrationType type_;
+    private EnumRegistrtationTime time_;
 
+
+    public ClassRegistration(EnumRegistrtationTime time){
+        time_=time;
+    }
 
     public int getIdParticipant() {
         return idPartcipant_;
@@ -26,6 +31,11 @@ public class ClassRegistration {
         return type_;
     }
 
+    public EnumRegistrtationTime getRegistrationTime(){
+        return time_;        
+    }
+
+
     public void setIdParticipant_(int id) {
         idPartcipant_=id;
     }
@@ -41,6 +51,9 @@ public class ClassRegistration {
     public void setType(EnumRegistrationType type) {
         type_=type;
     }
+    public void setRegistrationTime(EnumRegistrtationTime time) {
+        time_ = time;
+    }
 
     public String toString(){
         String string = "IdParticipant:"+getIdParticipant()+
@@ -49,5 +62,9 @@ public class ClassRegistration {
                         "\nPrice:"+getPrice()+
                         "\nType:"+getType()+"\n";
         return string;
+    }
+
+    public void cancel(){
+
     }
 }   
