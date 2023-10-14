@@ -1,12 +1,12 @@
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ClassCamp extends ClassMonitor{
     private int idCamp;
-    private Date beginningDate;
-    private Date endingDate;
+    private LocalDate beginningDate;
+    private LocalDate endingDate;//FORMAto =>año/mes/dia 
     private EnumLevel level_;
     private int maxAssistants;
     private List<ClassActivity> activity;
@@ -18,7 +18,7 @@ public class ClassCamp extends ClassMonitor{
     public ClassCamp() {
         activity = new ArrayList<ClassActivity>() ;
     } 
-    public ClassCamp(int idCamp, Date beginningDate, Date endingDate, EnumLevel level, int maxAssistants) {
+    public ClassCamp(int idCamp, LocalDate beginningDate, LocalDate endingDate, EnumLevel level, int maxAssistants) {
         this.idCamp = idCamp;
         this.beginningDate = beginningDate;
         this.endingDate = endingDate;
@@ -32,13 +32,13 @@ public class ClassCamp extends ClassMonitor{
 
     public void setIdCamp(int idCamp) {this.idCamp = idCamp;}
 
-    public Date getbeginningDate() {return beginningDate;}
+    public LocalDate getbeginningDate() {return beginningDate;}
 
-    public void setbeginningDate(Date beginningDate) {this.beginningDate = beginningDate;}
+    public void setbeginningDate(LocalDate beginningDate) {this.beginningDate = beginningDate;}
 
-    public Date getendingDate() {return endingDate;}
+    public LocalDate getendingDate() {return endingDate;}
 
-    public void setendingDate(Date endingDate) {this.endingDate = endingDate;    }
+    public void setendingDate(LocalDate endingDate) {this.endingDate = endingDate;    }
 
     public EnumLevel geteducativeLevel() {return level_;}
 
