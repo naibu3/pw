@@ -34,6 +34,32 @@ public class ClassCampsManager extends ClassCamp{
         }
     }
 
+    public List<ClassParticipant> listParticipants() { //este es el ejemplo, modificar los otros en base a este
+        List<ClassParticipant> listado = new ArrayList<>();
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(registeredFile))) {
+            String linea;
+            ClassParticipant aux = new ClassParticipant(); // Mover la declaración de ClassParticipant dentro del bucle
+    
+            while (((linea = br.readLine()) != null)) {
+                if(linea.startsWith("Id:")){
+
+                   aux.setId(Integer.parseInt(linea.substring(3).trim()));
+                   listado.add(aux);                
+                }
+                    
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+        
+        
+        return listado;
+    }
+
     public List<ClassCamp> listCamps() {
         List<ClassCamp> camps = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(campsFile))) {
@@ -109,9 +135,10 @@ public class ClassCampsManager extends ClassCamp{
     }
 
     public void addMonitor(ClassMonitor monitor, ClassActivity activity) {
-        ClassMonitor aux;
-        if (activity.getMonitors_n_() < getminMonitors()) {
-            aux=getMonitors_();
+        ClassMonitor aux[];
+        if (activity.getMonitors_().length<activity.getMonitors_n_() ) {
+            aux=activity.getMonitors_();
+            activity.setMonitors_(aux);
         } else {
             System.out.println("Se ha alcanzado el mínimo requerido de monitores para esta actividad.");
         }
