@@ -4,7 +4,6 @@ public class ClassParticipant extends ClassPerson {
     private LocalDate birthday_;
     private boolean special_attention_;
 
-    public ClassParticipant(){}
     public ClassParticipant(int identifier, String name,String lastname,LocalDate birthday, boolean special_attention){
         setId(identifier);
         this.birthday_=birthday;
@@ -12,6 +11,7 @@ public class ClassParticipant extends ClassPerson {
         setNombre(name);
         setApellidos(lastname);
     }
+    public ClassParticipant(){}
 
     public LocalDate get_birthday(){
         return birthday_;

@@ -132,32 +132,34 @@ public class ClassParticipantManager {
         try (BufferedReader br = new BufferedReader(new FileReader(registeredFile))) {
             String linea;
             ClassParticipant aux = new ClassParticipant(); // Mover la declaración de ClassParticipant dentro del bucle
-    
             while (((linea = br.readLine()) != null)) {
                 if(linea.startsWith("Id:")){
-
                    aux.setId(Integer.parseInt(linea.substring(3).trim()));
-                   listado.add(aux);                
+                   linea=br.readLine();
+                   aux.setNombre(linea.substring(4));
+                    linea=br.readLine();
+                    aux.setApellidos(linea.substring(8));
+                    linea=br.readLine();                    
+                    aux.set_birthday(LocalDate.of(Integer.parseInt(linea.substring(6,10)), Integer.parseInt(linea.substring(11,13)), Integer.parseInt(linea.substring(14,16))));
+                    linea=br.readLine();
+                    aux.set_special_attention(Boolean.parseBoolean(linea.substring(18)));
+                    System.out.println(aux.toString());                    
+                   listado.add(aux);        
                 }
-                    
                 
             }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-        
-        
-        
         return listado;
     }
     
     public void writeParticipants(){
-        List<ClassParticipant> listado = listParticipants(); // Supongamos que tienes una lista de ClassParticipants
+        List<ClassParticipant> listado = listParticipants(); 
 
-        for (ClassParticipant participant : listado) {
-            System.out.println(participant.toString());
+        for (int i=0; i<listado.size(); i++) {
+            System.out.println(listado.get(i).toString());
         }
     }
-    
 }
