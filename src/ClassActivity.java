@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ClassActivity {
 
     private String name_;   //como hacer unico?
@@ -56,7 +58,7 @@ public class ClassActivity {
     }
 
     public String toString(){
-        String string = "Name:"+getName_()+"\nLevel:"+getLevel_()+"\nTimetable:"+getTimetable_()+"\nMax:"+getMax_()+"\nNumber of Monitors:"+getMonitors_n_()+"\nMonitores:";
+        String string = "Name:"+getName_()+"\nLevel:"+getLevel_()+"\nTimetable:"+getTimetable_()+"\nMax:"+getMax_()+"\nNumero de monitores:"+getMonitors_n_()+"\nMonitors:"+Arrays.toString(monitors_);
         
         string += "\n";
         return string;

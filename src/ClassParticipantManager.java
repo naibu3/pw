@@ -15,6 +15,7 @@ public class ClassParticipantManager {
         }
     }
 
+    
     public void modifyParticipant(int id, LocalDate newBirthday, boolean newSpecialAttention) {
         String idToFind=Integer.toString(id);
            
@@ -143,7 +144,7 @@ public class ClassParticipantManager {
                     aux.set_birthday(LocalDate.of(Integer.parseInt(linea.substring(6,10)), Integer.parseInt(linea.substring(11,13)), Integer.parseInt(linea.substring(14,16))));
                     linea=br.readLine();
                     aux.set_special_attention(Boolean.parseBoolean(linea.substring(18)));
-                    System.out.println(aux.toString());                    
+                    //System.out.println(aux.toString());                    
                    listado.add(aux);        
                 }
                 
@@ -162,4 +163,5 @@ public class ClassParticipantManager {
             System.out.println(listado.get(i).toString());
         }
     }
+    
 }

@@ -8,7 +8,7 @@ public class ClassMonitor extends ClassPerson {
 	
 	@Override
 	public String toString() {
-		return "ID: " + getId() + "\nName: " + getNombre() + "\nLastName: " + getApellidos() + "\nSpecial needs: " + specialNeedsEducator_ + "\n";
+		return "ID: " + getId() + "\nNombre: " + getNombre() + "\nApellidos: " + getApellidos() + "\nSpecial needs: " + specialNeedsEducator_ + "\n";
 	}
 	
 	public ClassMonitor() {}

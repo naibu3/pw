@@ -2,11 +2,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassCampsManager extends ClassCamp{
+public class ClassCampsManager {
     private String campsFile = "camps.txt";
     private String activitiesFile = "activities.txt";
     private String monitorsFile = "monitors.txt";
-    private String registeredFile = "registered.txt";
 
     public ClassCampsManager() {
     }
@@ -35,33 +34,8 @@ public class ClassCampsManager extends ClassCamp{
         }
     }
 
-    public List<ClassParticipant> listParticipants() { //este es el ejemplo, modificar los otros en base a este
-        List<ClassParticipant> listado = new ArrayList<>();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(registeredFile))) {
-            String linea;
-            ClassParticipant aux = new ClassParticipant(); // Mover la declaración de ClassParticipant dentro del bucle
-    
-            while (((linea = br.readLine()) != null)) {
-                if(linea.startsWith("Id:")){
-
-                   aux.setId(Integer.parseInt(linea.substring(3).trim()));
-                   listado.add(aux);                
-                }
-                    
-                
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        
-        
-        
-        return listado;
-    }
-
-    public List<ClassCamp> listCamps() {
+    //Los load no estan bien
+    public List<ClassCamp> loadCamps() {
         List<ClassCamp> camps = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(campsFile))) {
             while (true) {
@@ -78,7 +52,7 @@ public class ClassCampsManager extends ClassCamp{
         return camps;
     }
 
-    public List<ClassActivity> listActivities() {
+    public List<ClassActivity> loadActivities() {
         List<ClassActivity> activities = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(activitiesFile))) {
             while (true) {
@@ -95,7 +69,7 @@ public class ClassCampsManager extends ClassCamp{
         return activities;
     }
 
-    public List<ClassMonitor> listMonitors() {
+    public List<ClassMonitor> loadMonitors() {
         List<ClassMonitor> monitors = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(monitorsFile))) {
             while (true) {
@@ -112,7 +86,13 @@ public class ClassCampsManager extends ClassCamp{
         return monitors;
     }
 
-            
+    public void writeMonitors(){
+        List<ClassMonitor> listado = loadMonitors(); // Supongamos que tienes una lista de ClassParticipants
+
+        for (ClassMonitor monitor : listado) {
+            System.out.println(monitor.toString());
+        }
+    }
 
     public static void searchCampStartDate(int campId, String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -133,18 +113,6 @@ public class ClassCampsManager extends ClassCamp{
             e.printStackTrace();
         }
     
-    }
-
-    public void addMonitor(ClassMonitor monitor, ClassActivity activity) {
-        ClassMonitor aux[];
-        if (activity.getMonitors_().length<activity.getMonitors_n_() ) {
-            aux=activity.getMonitors_();
-            activity.setMonitors_(aux);
-        } else {
-            System.out.println("Se ha alcanzado el mínimo requerido de monitores para esta actividad.");
-        }
+    
     }
 }
-    
-    
-

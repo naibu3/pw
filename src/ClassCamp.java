@@ -1,12 +1,13 @@
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ClassCamp extends ClassMonitor{
     private int idCamp;
     private LocalDate beginningDate;
-    private LocalDate endingDate;//FORMATO =>año/mes/dia 
+    private LocalDate endingDate;
     private EnumLevel level_;
     private int maxAssistants;
     private List<ClassActivity> activity;
@@ -27,18 +28,23 @@ public class ClassCamp extends ClassMonitor{
         activity = new ArrayList<ClassActivity>();
     }
 
+    //PEDIRLE ESTA FUNCIÓN A JUAN
+    public ClassCamp getCamp(int idCamp){   //TO TO     Función que busque un campamento por su id y devuelva ese objeto
+        ClassCamp c=new ClassCamp();
+        return c;
+    }
     
     public int getIdCamp() {return idCamp;}
 
     public void setIdCamp(int idCamp) {this.idCamp = idCamp;}
 
-    public LocalDate getbeginningDate() {return beginningDate;}
+    public Date getbeginningDate() {return beginningDate;}
 
-    public void setbeginningDate(LocalDate beginningDate) {this.beginningDate = beginningDate;}
+    public void setbeginningDate(Date beginningDate) {this.beginningDate = beginningDate;}
 
-    public LocalDate getendingDate() {return endingDate;}
+    public Date getendingDate() {return endingDate;}
 
-    public void setendingDate(LocalDate endingDate) {this.endingDate = endingDate;    }
+    public void setendingDate(Date endingDate) {this.endingDate = endingDate;    }
 
     public EnumLevel geteducativeLevel() {return level_;}
 
@@ -95,6 +101,6 @@ public class ClassCamp extends ClassMonitor{
                 "\nMax number of assistants: " + maxAssistants +
                 "\nActivites: " + activity +
                 "\nResponsible monitor: " + responsibleMonitor +
-                "\nSpecial monitor: " + responsiblespecialMonitor+"\n";
+                "\nSpecial monitor: " + responsiblespecialMonitor +"\n";
     }
 }
