@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassCampsManager {
+public class ClassCampsManager extends ClassCamp, ClassActivity{
     private String campsFile = "camps.txt";
     private String activitiesFile = "activities.txt";
     private String monitorsFile = "monitors.txt";
@@ -106,7 +106,15 @@ public class ClassCampsManager {
             e.printStackTrace();
         }
     
-    
+    }
+
+    public void addMonitor(ClassMonitor monitor) {
+        if (monitors_.size() < getminMonitors()) {
+            monitors_[monitors_n_] = monitor;
+            monitors_n_++;
+        } else {
+            System.out.println("Se ha alcanzado el mínimo requerido de monitores para esta actividad.");
+        }
     }
 }
     
