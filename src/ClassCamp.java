@@ -1,26 +1,23 @@
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-/** Represents a camp.
- * @version 1.0
-*/
 public class ClassCamp extends ClassMonitor{
     private int idCamp;
     private LocalDate beginningDate;
-    private LocalDate endingDate;
+    private LocalDate endingDate;//FORMATO =>año/mes/dia 
     private EnumLevel level_;
     private int maxAssistants;
-    private List<ClassActivity> activity;
-    private ClassMonitor[] monitors_;
+    private List<String> activity;
+    private List<Integer> monitors_;
     private int minMonitors;
-    private ClassMonitor responsibleMonitor;
-    private ClassMonitor responsiblespecialMonitor;
+    private int responsibleMonitor;
+    private int responsiblespecialMonitor;
 
     public ClassCamp() {
-        activity = new ArrayList<ClassActivity>() ;
+        activity = new ArrayList<String>() ;
+        monitors_ = new ArrayList<Integer>();
     } 
     public ClassCamp(int idCamp, LocalDate beginningDate, LocalDate endingDate, EnumLevel level, int maxAssistants) {
         this.idCamp = idCamp;
@@ -28,22 +25,13 @@ public class ClassCamp extends ClassMonitor{
         this.endingDate = endingDate;
         this.level_ = level;
         this.maxAssistants = maxAssistants;
-        activity = new ArrayList<ClassActivity>();
+        activity = new ArrayList<String>();
+        monitors_ = new ArrayList<Integer>();
     }
 
-    //PEDIRLE ESTA FUNCIÓN A JUAN
-    public ClassCamp getCamp(int idCamp){   //TO TO     Función que busque un campamento por su id y devuelva ese objeto
-        ClassCamp c=new ClassCamp();
-        return c;
-    }
-    /** Gets the camp id.
-     * @return camp id
-    */
+    
     public int getIdCamp() {return idCamp;}
 
-    /** Sets the camp id.
-     * @param idCamp camp id
-    */
     public void setIdCamp(int idCamp) {this.idCamp = idCamp;}
 
     public LocalDate getbeginningDate() {return beginningDate;}
@@ -54,101 +42,50 @@ public class ClassCamp extends ClassMonitor{
 
     public void setendingDate(LocalDate endingDate) {this.endingDate = endingDate;    }
 
-    /** Gets the educative level.
-     * @return educative level
-    */
     public EnumLevel geteducativeLevel() {return level_;}
 
-    /** Sets the educative level.
-     * @param educationLevel educative level
-    */
     public void seteducativeLevel(EnumLevel educativeLevel) {this.level_ = educativeLevel;}
 
-    /** Gets the max. number of assistants.
-     * @return max. number of assistants
-    */
     public int getmaxAssistants() {return maxAssistants;}
 
-    /** Sets the max. number of assistants.
-     * @param maxAssistants max. number of assistants
-    */
     public void setmaxAssistants(int maxAssistants) {this.maxAssistants = maxAssistants;}
 
-    /** Gets the activity list.
-     * @return activity list
-    */
-    public List<ClassActivity> getClassactivity() {return activity;}
+    public List<String> getClassactivity() {return activity;}
 
-    /** Sets the activity list.
-     * @param activity activity list
-    */
-    public void setClassactivity(List<ClassActivity> activity) {this.activity = activity;}
+    public void setClassactivity(List<String> activity) {this.activity = activity;}
 
-    /** Gets the camp monitors.
-     * @return camp monitors
-    */
-    public ClassMonitor[] getMonitors() {return monitors_;}
+    public List<Integer> getMonitors() {return monitors_;}
 
-    /** Gets the min. number of monitors.
-     * @return min. number of monitors
-    */
     public int getminMonitors() {return minMonitors;}
 
-    /** Sets the min. number of monitors.
-     * @param minMonitors min. number of monitors
-    */
     public void setminMonitors(int minMonitors) {this.minMonitors = minMonitors;}
 
-    /** Gets the responsible monitor.
-     * @return responsible monitor
-    */
-    public ClassMonitor getresponsibleMonitor() {return responsibleMonitor;}
+    public int getresponsibleMonitor() {return responsibleMonitor;}
 
-    /** Sets the responsible monitor.
-     * @param responsibleMonitor responsible monitor
-    */
-    public void setresponsibleMonitors(ClassMonitor responsibleMonitor) {this.responsibleMonitor = responsibleMonitor;}
+    public void setresponsibleMonitors(int responsibleMonitor) {this.responsibleMonitor = responsibleMonitor;}
 
-    /** Gets the responsible special monitor.
-     * @return responsible special monitor
-    */
-    public ClassMonitor getresponsiblespecialMonitor() {return responsiblespecialMonitor;}
+    public int getresponsiblespecialMonitor() {return responsiblespecialMonitor;}
 
-    /** Sets the responsiblespecial monitor.
-     * @param responsiblespecialMonitor responsiblespecial monitor
-    */
-    public void setresponsiblespecialMonitor(ClassMonitor responsiblespecialMonitor) {this.responsiblespecialMonitor=responsiblespecialMonitor;}
+    public void setresponsiblespecialMonitor(int responsiblespecialMonitor) {this.responsiblespecialMonitor=responsiblespecialMonitor;}
 
-    /** Sets the monitor list.
-     * @param monitor monitor list
-    */
-    public void setMonitor(ClassMonitor[] monitor) {this.monitors_ = monitor;}
+    public void setMonitors(List<Integer> monitor) {this.monitors_ = monitor;}
 
-    /** Adds an activity.
-     * @param activity activity
-    */
     public void associateActivity(ClassActivity activity) {
         if (activity.getLevel_().equals(this.level_)) {
-            this.activity.add(activity);
+            this.activity.add(activity.getName_());
         }
     }
 
-    /** Adds an monitor.
-     * @param monitor monitor
-    */
-    public void associateMonitor(ClassMonitor monitor) {
+    public void associateMonitor(int monitor) {
         
             responsibleMonitor=monitor;
         
     }
 
-    /** Adds an special monitor.
-     * @param monitor special monitor
-    */
-    public void associateSpecialMonitor(ClassMonitor monitor) {
-        if (monitor.getSpecialNeedsEducator()) {
+    public void associateSpecialMonitor(int monitor) {
+        
             responsiblespecialMonitor = monitor;
-        }
+        
     }
 
     @Override
@@ -160,6 +97,6 @@ public class ClassCamp extends ClassMonitor{
                 "\nMax number of assistants: " + maxAssistants +
                 "\nActivites: " + activity +
                 "\nResponsible monitor: " + responsibleMonitor +
-                "\nSpecial monitor: " + responsiblespecialMonitor +"\n";
+                "\nSpecial monitor: " + responsiblespecialMonitor+"\n";
     }
 }
