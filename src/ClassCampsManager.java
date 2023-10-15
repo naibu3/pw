@@ -214,7 +214,6 @@ public class ClassCampsManager {
         }
     }
 
-    
     private void loadActivitiesFile() throws FileNotFoundException, IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(new File(activitiesFile)))) {
             String line;
@@ -392,16 +391,45 @@ public class ClassCampsManager {
     
     }
 
-    public void addMonitor(ClassMonitor monitor, ClassActivity activity) {
-        ClassMonitor aux[];
-        if (activity.getMonitors_().length<activity.getMonitors_n_() ) {
-            aux=activity.getMonitors_();
-            activity.setMonitors_(aux);
-        } else {
-            System.out.println("Se ha alcanzado el mínimo requerido de monitores para esta actividad.");
+    public void associateActivity(String nameAct, int idCamp ) {
+        List<String>auxActs= new ArrayList<String>();
+        List<ClassCamp> auxcamps = new ArrayList<ClassCamp>();
+        
+        for(ClassCamp auxCamp: camps){
+            if(auxCamp.getId()==idCamp){
+                auxActs=auxCamp.getClassactivity();
+                auxActs.add(nameAct);
+                auxCamp.setClassactivity(auxActs);
+            }
+            auxcamps.add(auxCamp);
         }
+
+        camps=auxcamps;
+
+        writeFileC();               
+
     }
+
+    public void associateMonitor(int id, int idCamp ) {   
+        List<Integer>auxIdMon = new ArrayList<Integer>();
+        List<ClassCamp> auxcamps = new ArrayList<ClassCamp>();
+        
+        for(ClassCamp auxCamp: camps){
+            if(auxCamp.getId()==idCamp){
+                auxIdMon=auxCamp.getMonitors();
+                auxIdMon.add(id);
+                auxCamp.setMonitors(auxIdMon);
+            }
+            auxcamps.add(auxCamp);
+        }
+    
+        camps=auxcamps;
+    
+        writeFileM(); 
+    
+    }
+
+    
 }
     
     
-
