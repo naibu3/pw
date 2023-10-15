@@ -11,6 +11,18 @@ public abstract class AbstractRegistration {
     private EnumRegistrationType type_;
     private EnumRegistrtationTime time_;
 
+    public AbstractRegistration(int id, int id_camp, LocalDate registrationDate, float price, EnumRegistrationType type, EnumRegistrtationTime time, boolean specialAttention) {
+        setIdParticipant_(id);
+        setIdCamp_(id_camp);
+        setRegistrationDate(registrationDate);
+        setPrice(price);
+        setType(type);
+        setRegistrationTime(time);
+        setSpecialNeeds(specialAttention);
+    }
+
+    public AbstractRegistration() {}
+
     public boolean getSpecialNeeds() {
         return specialNeeds;
     }
@@ -63,7 +75,9 @@ public abstract class AbstractRegistration {
                         "\nIdCamp:"+getIdCamp()+
                         "\nRegistrationDate:"+getRegistrationDate()+
                         "\nPrice:"+getPrice()+
-                        "\nType:"+getType()+"\n";
+                        "\nType:"+getType()+
+                        "\nTime:"+getRegistrationTime() + 
+                        "\nSpecialNeeds"+getSpecialNeeds()+"\n";
         return string;
     }
 

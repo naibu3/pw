@@ -5,8 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ClassParticipantManager {
     private List<ClassParticipant> registeredParticipants = new ArrayList<ClassParticipant>();
@@ -135,4 +135,14 @@ public class ClassParticipantManager {
             System.out.println(participant.toString());
         }
     }
+
+    public boolean participantExists(int id) {
+        for (ClassParticipant p : registeredParticipants) {
+            if (p.getId() == id) {
+                return true;
+            }
+        }
+
+        return false;
+     }
 }

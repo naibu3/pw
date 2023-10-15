@@ -3,8 +3,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.monitor.Monitor;
-
 public class ClassCampsManager {
     private List<ClassCamp> camps = new ArrayList<ClassCamp>();
     private List<ClassActivity> activities = new ArrayList<ClassActivity>();
