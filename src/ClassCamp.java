@@ -1,6 +1,7 @@
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /** Represents a camp.
@@ -9,7 +10,7 @@ import java.util.List;
 public class ClassCamp extends ClassMonitor{
     private int idCamp;
     private LocalDate beginningDate;
-    private LocalDate endingDate;//FORMATO =>año/mes/dia 
+    private LocalDate endingDate;
     private EnumLevel level_;
     private int maxAssistants;
     private List<ClassActivity> activity;
@@ -30,6 +31,11 @@ public class ClassCamp extends ClassMonitor{
         activity = new ArrayList<ClassActivity>();
     }
 
+    //PEDIRLE ESTA FUNCIÓN A JUAN
+    public ClassCamp getCamp(int idCamp){   //TO TO     Función que busque un campamento por su id y devuelva ese objeto
+        ClassCamp c=new ClassCamp();
+        return c;
+    }
     /** Gets the camp id.
      * @return camp id
     */
@@ -40,24 +46,12 @@ public class ClassCamp extends ClassMonitor{
     */
     public void setIdCamp(int idCamp) {this.idCamp = idCamp;}
 
-    /** Gets the beginning date.
-     * @return beginning date
-    */
     public LocalDate getbeginningDate() {return beginningDate;}
 
-    /** Sets the beginning date.
-     * @param beginningDate beginning date
-    */
     public void setbeginningDate(LocalDate beginningDate) {this.beginningDate = beginningDate;}
 
-    /** Gets the ending date.
-     * @return ending date
-    */
     public LocalDate getendingDate() {return endingDate;}
 
-    /** Sets the ending date.
-     * @param endingDate ending date
-    */
     public void setendingDate(LocalDate endingDate) {this.endingDate = endingDate;    }
 
     /** Gets the educative level.
@@ -166,6 +160,6 @@ public class ClassCamp extends ClassMonitor{
                 "\nMax number of assistants: " + maxAssistants +
                 "\nActivites: " + activity +
                 "\nResponsible monitor: " + responsibleMonitor +
-                "\nSpecial monitor: " + responsiblespecialMonitor+"\n";
+                "\nSpecial monitor: " + responsiblespecialMonitor +"\n";
     }
 }

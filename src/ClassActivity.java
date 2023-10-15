@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /** Represents an activity.
  * @version 1.0
 */
@@ -113,7 +115,7 @@ public class ClassActivity {
      * @return activity info
     */
     public String toString(){
-        String string = "Name:"+getName_()+"\nLevel:"+getLevel_()+"\nTimetable:"+getTimetable_()+"\nMax:"+getMax_()+"\nNumber of Monitors:"+getMonitors_n_()+"\nMonitores:";
+        String string = "Name:"+getName_()+"\nLevel:"+getLevel_()+"\nTimetable:"+getTimetable_()+"\nMax:"+getMax_()+"\nNumero de monitores:"+getMonitors_n_()+"\nMonitors:"+Arrays.toString(monitors_);
         
         string += "\n";
         return string;
