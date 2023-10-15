@@ -95,6 +95,6 @@ public class ClassCamp extends ClassMonitor{
                 "\nMax number of assistants: " + maxAssistants +
                 "\nActivites: " + activity +
                 "\nResponsible monitor: " + responsibleMonitor +
-                "\nSpecial monitor: " + responsiblespecialMonitor;
+                "\nSpecial monitor: " + responsiblespecialMonitor+"\n";
     }
 }

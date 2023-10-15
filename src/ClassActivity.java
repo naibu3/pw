@@ -58,10 +58,8 @@ public class ClassActivity {
     }
 
     public String toString(){
-        String string = "Name:"+getName_()+"\nLevel:"+getLevel_()+"\nTimetable:"+getTimetable_()+"\nMax:"+getMax_()+"\nNumero de monitores:"+getMonitors_n_()+"\n";
-        for (ClassMonitor monitor : monitors_) {
-            string += monitor.toString();
-        }
+        String string = "Name:"+getName_()+"\nLevel:"+getLevel_()+"\nTimetable:"+getTimetable_()+"\nMax:"+getMax_()+"\nNumero de monitores:"+getMonitors_n_()+"\nMonitores:"+Arrays.toString(monitors_);
+        
         string += "\n";
         return string;
     }
