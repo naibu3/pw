@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassCampsManager extends ClassCamp, ClassActivity{
+public class ClassCampsManager extends ClassCamp{
     private String campsFile = "camps.txt";
     private String activitiesFile = "activities.txt";
     private String monitorsFile = "monitors.txt";
@@ -34,7 +34,7 @@ public class ClassCampsManager extends ClassCamp, ClassActivity{
         }
     }
 
-    public List<ClassCamp> loadCamps() {
+    public List<ClassCamp> listCamps() {
         List<ClassCamp> camps = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(campsFile))) {
             while (true) {
@@ -51,7 +51,7 @@ public class ClassCampsManager extends ClassCamp, ClassActivity{
         return camps;
     }
 
-    public List<ClassActivity> loadActivities() {
+    public List<ClassActivity> listActivities() {
         List<ClassActivity> activities = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(activitiesFile))) {
             while (true) {
@@ -68,7 +68,7 @@ public class ClassCampsManager extends ClassCamp, ClassActivity{
         return activities;
     }
 
-    public List<ClassMonitor> loadMonitors() {
+    public List<ClassMonitor> listMonitors() {
         List<ClassMonitor> monitors = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(monitorsFile))) {
             while (true) {
@@ -108,10 +108,10 @@ public class ClassCampsManager extends ClassCamp, ClassActivity{
     
     }
 
-    public void addMonitor(ClassMonitor monitor) {
-        if (monitors_.size() < getminMonitors()) {
-            monitors_[monitors_n_] = monitor;
-            monitors_n_++;
+    public void addMonitor(ClassMonitor monitor, ClassActivity activity) {
+        ClassMonitor aux;
+        if (activity.getMonitors_n_() < getminMonitors()) {
+            aux=getMonitors_();
         } else {
             System.out.println("Se ha alcanzado el mínimo requerido de monitores para esta actividad.");
         }
