@@ -6,7 +6,7 @@ import java.util.List;
 public class ClassCamp extends ClassMonitor{
     private int idCamp;
     private LocalDate beginningDate;
-    private LocalDate endingDate;//FORMAto =>año/mes/dia 
+    private LocalDate endingDate;//FORMATO =>año/mes/dia 
     private EnumLevel level_;
     private int maxAssistants;
     private List<ClassActivity> activity;
@@ -95,6 +95,6 @@ public class ClassCamp extends ClassMonitor{
                 "\nMax number of assistants: " + maxAssistants +
                 "\nActivites: " + activity +
                 "\nResponsible monitor: " + responsibleMonitor +
-                "\nSpecial monitor: " + responsiblespecialMonitor;
+                "\nSpecial monitor: " + responsiblespecialMonitor+"\n";
     }
 }

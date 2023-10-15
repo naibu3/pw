@@ -26,7 +26,7 @@ public class ClassParticipant extends ClassPerson {
         special_attention_=special_attention;
     }
     public String toString(){
-        return "\nId:"+getId()+"\nName:"+getNombre()+"\nLastname:"+getApellidos()+" \nBirth:"+get_birthday()+"\nSpecial attention:"+get_special_attention();
+        return "Id:"+getId()+"\nName:"+getNombre()+"\nLastname:"+getApellidos()+" \nBirth:"+get_birthday()+"\nSpecial attention:"+get_special_attention()+"\n";
     }
 
         

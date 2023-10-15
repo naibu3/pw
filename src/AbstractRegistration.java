@@ -1,6 +1,7 @@
+
 import java.time.LocalDate;
 
-public class ClassRegistration {
+public abstract class AbstractRegistration {
     
     private int idPartcipant_;
     private int idCamp_;
@@ -11,9 +12,8 @@ public class ClassRegistration {
     private EnumRegistrtationTime time_;
 
 
-    public ClassRegistration(EnumRegistrtationTime time){
-        time_=time;
-    }
+  
+
 
     public int getIdParticipant() {
         return idPartcipant_;
