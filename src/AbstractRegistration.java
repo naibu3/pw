@@ -5,15 +5,19 @@ public abstract class AbstractRegistration {
     
     private int idPartcipant_;
     private int idCamp_;
-
+    private boolean specialNeeds;
     private LocalDate RegistrationDate_;
     private float price_;
     private EnumRegistrationType type_;
     private EnumRegistrtationTime time_;
 
+    public boolean getSpecialNeeds() {
+        return specialNeeds;
+    }
 
-  
-
+    public void setSpecialNeeds(boolean special) {
+        specialNeeds = special;
+    }
 
     public int getIdParticipant() {
         return idPartcipant_;
@@ -34,7 +38,6 @@ public abstract class AbstractRegistration {
     public EnumRegistrtationTime getRegistrationTime(){
         return time_;        
     }
-
 
     public void setIdParticipant_(int id) {
         idPartcipant_=id;

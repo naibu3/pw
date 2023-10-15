@@ -5,11 +5,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class NewClassParticipantManager {
-    private List<ClassParticipant> registeredParticipants;
+    private List<ClassParticipant> registeredParticipants = new ArrayList<ClassParticipant>();
     private String participantsFile = "registered.txt";
 
     public NewClassParticipantManager() {
@@ -135,4 +135,14 @@ public class NewClassParticipantManager {
             System.out.println(participant.toString());
         }
     }
+
+    public boolean participantExists(int id) {
+        for (ClassParticipant p : registeredParticipants) {
+            if (p.getId() == id) {
+                return true;
+            }
+        }
+
+        return false;
+     }
 }

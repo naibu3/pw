@@ -6,6 +6,7 @@ public class ClassCampsManager extends ClassCamp{
     private String campsFile = "camps.txt";
     private String activitiesFile = "activities.txt";
     private String monitorsFile = "monitors.txt";
+    private String registeredFile = "registered.txt";
 
     public ClassCampsManager() {
     }
