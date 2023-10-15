@@ -233,11 +233,11 @@ public class App {
                     printMonitors(campsManager.listMonitors());
                     break;
                 case 15:
+                    scanner.close();
                     break;
             }
     
-            scanner.close();
         }
-
+        
     }
 }
