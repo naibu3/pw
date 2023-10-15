@@ -149,19 +149,22 @@ public class App {
         System.out.println("5. Create Monitor (CampsManager)");
         System.out.println("6. Create Early Registration (RegistrationManager)");
         System.out.println("7. Create Late Registration (RegistrationManager)");
-        System.out.println("8. List camps");
-        System.out.println("9. List activities");
-        System.out.println("10. List monitors");
+        System.out.println("8. List camps.");
+        System.out.println("9. List activities.");
+        System.out.println("10. List monitors.");
+        System.out.println("11. Associate monitor to camp.");
+        System.out.println("12. Associate activity to camp.");
         System.out.println("15. Exit");
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        NewClassParticipantManager participantManager = new NewClassParticipantManager();
+        ClassParticipantManager participantManager = new ClassParticipantManager();
         ClassCampsManager campsManager = new ClassCampsManager();
         ClassRegistrationManager registrationManager = new ClassRegistrationManager();
         int id, id_camp;
         boolean specialNeeds;
+        String actName;
         EnumRegistrationType type;
         while (true) {
             menu();
@@ -232,6 +235,18 @@ public class App {
                 case 10:
                     printMonitors(campsManager.listMonitors());
                     break;
+                case 11:
+                    System.out.println("Monitor ID:");
+                    id = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Camp ID:");
+                    id_camp = Integer.parseInt(scanner.nextLine());
+                    campsManager.associateMonitor(id, id_camp);
+                case 12:
+                    System.out.println("Activity Name:");
+                    actName = scanner.nextLine();
+                    System.out.println("Camp ID:");
+                    id_camp = Integer.parseInt(scanner.nextLine());
+                    campsManager.associateActivity(actName, id_camp);
                 case 15:
                     scanner.close();
                     break;
