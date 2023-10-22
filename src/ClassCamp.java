@@ -18,10 +18,20 @@ public class ClassCamp extends ClassMonitor{
     private int responsibleMonitor;
     private int responsiblespecialMonitor;
 
+    /** Builder
+    */
     public ClassCamp() {
         activity = new ArrayList<String>() ;
         monitors_ = new ArrayList<Integer>();
-    } 
+    }
+
+    /** Builder
+     * @param idCamp
+     * @param beginningDate
+     * @param endingDate
+     * @param level
+     * @param maxAssistants
+    */
     public ClassCamp(int idCamp, LocalDate beginningDate, LocalDate endingDate, EnumLevel level, int maxAssistants) {
         this.idCamp = idCamp;
         this.beginningDate = beginningDate;
@@ -42,12 +52,24 @@ public class ClassCamp extends ClassMonitor{
     */
     public void setIdCamp(int idCamp) {this.idCamp = idCamp;}
 
+    /** Gets the beginning date.
+     * @return beginningDate
+    */
     public LocalDate getbeginningDate() {return beginningDate;}
 
+    /** Sets the beginning date.
+     * @param beginningDate
+    */
     public void setbeginningDate(LocalDate beginningDate) {this.beginningDate = beginningDate;}
 
+    /** Gets the ending date.
+     * @return endingDate
+    */
     public LocalDate getendingDate() {return endingDate;}
 
+    /** Sets the ending date.
+     * @param endingDate
+    */
     public void setendingDate(LocalDate endingDate) {this.endingDate = endingDate;    }
 
     /** Gets the educative level.
@@ -138,7 +160,7 @@ public class ClassCamp extends ClassMonitor{
         
     }
 
-     /** Adds an special monitor.
+    /** Adds an special monitor.
      * @param monitor special monitor
     */
     public void associateSpecialMonitor(int monitor) {
@@ -147,6 +169,9 @@ public class ClassCamp extends ClassMonitor{
         
     }
 
+    /** Dumps all info into a string.
+     * @return string
+    */
     @Override
     public String toString() {
         return "Camp ID: " + idCamp +

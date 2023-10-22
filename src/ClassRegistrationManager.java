@@ -12,6 +12,8 @@ public class ClassRegistrationManager {
     private List<AbstractRegistration> registrations = new ArrayList<AbstractRegistration>();
     private String registrationFile = "registrations.txt";
 
+    /** Description
+    */
     public ClassRegistrationManager() {
         try {
             loadFile();
@@ -20,6 +22,8 @@ public class ClassRegistrationManager {
         }
     }
 
+    /** Description
+    */
     private void writeFile() {
         try (FileWriter archivo = new FileWriter(registrationFile, false)) {
             for (AbstractRegistration registration : registrations) {
@@ -31,6 +35,8 @@ public class ClassRegistrationManager {
         }
     }
 
+    /** Description
+    */
     private void loadFile() throws FileNotFoundException, IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(new File(registrationFile)))) {
             String line;
@@ -97,6 +103,10 @@ public class ClassRegistrationManager {
     }
 
 
+    /** Description
+     * @param id
+     * @param camp
+    */
     private boolean isUserRegistered(int id, int camp) {
         for (AbstractRegistration registration : registrations) {
             if (registration.getIdParticipant() == id && registration.getIdCamp() == camp) {
@@ -106,6 +116,14 @@ public class ClassRegistrationManager {
         return false;
     }
 
+    /** Description
+     * @param id
+     * @param id_camp
+     * @param special
+     * @param type
+     * @param campsManager
+     * @param participantManager
+    */
     public boolean createEarlyRegistration(int id, int id_camp, boolean special, EnumRegistrationType type, ClassCampsManager campsManager, ClassParticipantManager participantManager) {
         if (! isUserRegistered(id, id_camp) && participantManager.participantExists(id)) {
             ClassEarlyRegistration registration = new ClassEarlyRegistration();
@@ -123,6 +141,14 @@ public class ClassRegistrationManager {
         return false;
     }
 
+    /** Description
+     * @param id
+     * @param id_camp
+     * @param special
+     * @param type
+     * @param campsManager
+     * @param participantManager
+    */
     public boolean createLateRegistration(int id, int id_camp, boolean special, EnumRegistrationType type, ClassParticipantManager participantManager) {
         if (! isUserRegistered(id, id_camp) && participantManager.participantExists(id)) {
             ClassLateRegistration registration = new ClassLateRegistration();

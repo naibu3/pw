@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
+/** Description.
+ * @version 1.0
+*/
 public class ClassParticipantManager {
     private List<ClassParticipant> registeredParticipants = new ArrayList<ClassParticipant>();
     private String participantsFile = "registered.txt";

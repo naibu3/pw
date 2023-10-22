@@ -35,7 +35,15 @@ public abstract class ClassPerson {
     */
 	public void setApellidos(String apellidos) { apellidos_ = apellidos; }
 	
+	/** Builder.
+    */
 	public ClassPerson() {};
+
+	/** Builder.
+     * @param id
+	 * @param nombre
+	 * @param apellidos
+    */
 	public ClassPerson(int id, String nombre, String apellidos) {
 		setId(id);
 		setNombre(nombre);

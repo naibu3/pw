@@ -12,7 +12,12 @@ public class ClassActivity {
     private int monitors_n_;
     private List<Integer> monitors_;
 
+    /** Description.
+	*/
     public ClassActivity(){}
+
+    /** Description.
+	*/
     public ClassActivity(String name, EnumLevel level, String timetable, int max, int monitors_n){
         name_=name;
         level_=level;

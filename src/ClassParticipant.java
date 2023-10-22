@@ -7,6 +7,8 @@ public class ClassParticipant extends ClassPerson {
     private LocalDate birthday_;
     private boolean special_attention_;
 
+    /** Description.
+	*/
     public ClassParticipant(int identifier, String name,String lastname,LocalDate birthday, boolean special_attention){
         setId(identifier);
         this.birthday_=birthday;

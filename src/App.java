@@ -2,25 +2,37 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.List;
 
+/** Description
+ * @version 1.0
+*/
 public class App {
+
+    /** Description.
+	*/
     private static void printCamps(List<ClassCamp> listCamps) {
         for (ClassCamp camp : listCamps) {
             System.out.println(camp.toString());
         }
     }
 
+    /** Description.
+	*/
     private static void printActivities(List<ClassActivity> listActivities) {
         for (ClassActivity activity : listActivities) {
             System.out.println(activity.toString());
         }
     }
 
+    /** Description.
+	*/
     private static void printMonitors(List<ClassMonitor> listMonitors) {
         for (ClassMonitor monitor: listMonitors) {
             System.out.println(monitor.toString());
         }
     } 
 
+    /** Description.
+	*/
     private static ClassParticipant createNewParticipant() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ID:");
@@ -48,6 +60,8 @@ public class App {
         return participant;
     }
 
+    /** Description.
+	*/
     private static ClassCamp createNewCamp() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ID:");
@@ -91,6 +105,8 @@ public class App {
         return new ClassCamp(id, beginDate, endDate, level, participants);
     }
     
+    /** Description.
+	*/
     private static ClassActivity cretaeNewActivity() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Name:");
@@ -121,6 +137,8 @@ public class App {
         return new ClassActivity(name, level, timetable, max, monitors);
     }
 
+    /** Description.
+	*/
     private static ClassMonitor createNewMonitor() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ID:");
@@ -141,6 +159,8 @@ public class App {
         return new ClassMonitor(id, name, lastName, specialAttention);
     }
 
+    /** Description.
+	*/
     private static void menu() {
         System.out.println("1. Create Participant (ParticipantManager)");
         System.out.println("2. List Participants (ParticipantManager)");
@@ -157,6 +177,8 @@ public class App {
         System.out.println("15. Exit");
     }
 
+    /** Description.
+	*/
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ClassParticipantManager participantManager = new ClassParticipantManager();
@@ -251,8 +273,6 @@ public class App {
                     scanner.close();
                     break;
             }
-    
         }
-        
     }
 }

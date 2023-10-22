@@ -3,6 +3,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Description.
+ * @version 1.0
+*/
 public class ClassCampsManager {
     private List<ClassCamp> camps = new ArrayList<ClassCamp>();
     private List<ClassActivity> activities = new ArrayList<ClassActivity>();
