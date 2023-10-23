@@ -1,7 +1,7 @@
 /** Represents a Person.
  * @version 1.0
 */
-public abstract class ClassPerson {
+public abstract class Person {
 	private int id_;
 	private String nombre_, apellidos_;
 	
@@ -37,14 +37,14 @@ public abstract class ClassPerson {
 	
 	/** Builder.
     */
-	public ClassPerson() {};
+	public Person() {};
 
 	/** Builder.
      * @param id
 	 * @param nombre
 	 * @param apellidos
     */
-	public ClassPerson(int id, String nombre, String apellidos) {
+	public Person(int id, String nombre, String apellidos) {
 		setId(id);
 		setNombre(nombre);
 		setApellidos(apellidos);

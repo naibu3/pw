@@ -2,7 +2,7 @@
 /** Description.
  * @version 1.0
 */
-public class ClassMonitor extends ClassPerson {
+public class Monitor extends Person {
 
 	private Boolean specialNeedsEducator_;
 	
@@ -23,11 +23,11 @@ public class ClassMonitor extends ClassPerson {
 	
 	/** Description.
 	*/
-	public ClassMonitor() {}
+	public Monitor() {}
 
 	/** Description.
 	*/
-	public ClassMonitor(int id, String nombre, String apellidos, Boolean specialNeeds) {
+	public Monitor(int id, String nombre, String apellidos, Boolean specialNeeds) {
 		super(id, nombre, apellidos);
 		setSpecialNeedsEducator(specialNeeds);
 	}

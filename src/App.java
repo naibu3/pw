@@ -9,31 +9,31 @@ public class App {
 
     /** Description.
 	*/
-    private static void printCamps(List<ClassCamp> listCamps) {
-        for (ClassCamp camp : listCamps) {
+    private static void printCamps(List<Camp> listCamps) {
+        for (Camp camp : listCamps) {
             System.out.println(camp.toString());
         }
     }
 
     /** Description.
 	*/
-    private static void printActivities(List<ClassActivity> listActivities) {
-        for (ClassActivity activity : listActivities) {
+    private static void printActivities(List<Activity> listActivities) {
+        for (Activity activity : listActivities) {
             System.out.println(activity.toString());
         }
     }
 
     /** Description.
 	*/
-    private static void printMonitors(List<ClassMonitor> listMonitors) {
-        for (ClassMonitor monitor: listMonitors) {
+    private static void printMonitors(List<Monitor> listMonitors) {
+        for (Monitor monitor: listMonitors) {
             System.out.println(monitor.toString());
         }
     } 
 
     /** Description.
 	*/
-    private static ClassParticipant createNewParticipant() {
+    private static Participant createNewParticipant() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ID:");
         int id = Integer.parseInt(scanner.nextLine());
@@ -56,13 +56,13 @@ public class App {
             specialAttention = false;
         }
         scanner.close();
-        ClassParticipant participant = new ClassParticipant(id, name, lastName, birthDate, specialAttention);
+        Participant participant = new Participant(id, name, lastName, birthDate, specialAttention);
         return participant;
     }
 
     /** Description.
 	*/
-    private static ClassCamp createNewCamp() {
+    private static Camp createNewCamp() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ID:");
         int id = Integer.parseInt(scanner.nextLine());
@@ -102,12 +102,12 @@ public class App {
         System.out.println("Max participants");
         int participants = Integer.parseInt(scanner.nextLine());
         scanner.close();
-        return new ClassCamp(id, beginDate, endDate, level, participants);
+        return new Camp(id, beginDate, endDate, level, participants);
     }
     
     /** Description.
 	*/
-    private static ClassActivity cretaeNewActivity() {
+    private static Activity cretaeNewActivity() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Name:");
         String name = scanner.nextLine();
@@ -134,12 +134,12 @@ public class App {
         System.out.println("Number of monitors:");
         int monitors = Integer.parseInt(scanner.nextLine());
         scanner.close();
-        return new ClassActivity(name, level, timetable, max, monitors);
+        return new Activity(name, level, timetable, max, monitors);
     }
 
     /** Description.
 	*/
-    private static ClassMonitor createNewMonitor() {
+    private static Monitor createNewMonitor() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ID:");
         int id = Integer.parseInt(scanner.nextLine());
@@ -156,7 +156,7 @@ public class App {
             specialAttention = false;
         }    
         scanner.close();
-        return new ClassMonitor(id, name, lastName, specialAttention);
+        return new Monitor(id, name, lastName, specialAttention);
     }
 
     /** Description.
@@ -181,9 +181,9 @@ public class App {
 	*/
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ClassParticipantManager participantManager = new ClassParticipantManager();
-        ClassCampsManager campsManager = new ClassCampsManager();
-        ClassRegistrationManager registrationManager = new ClassRegistrationManager();
+        ParticipantManager participantManager = new ParticipantManager();
+        CampsManager campsManager = new CampsManager();
+        RegistrationManager registrationManager = new RegistrationManager();
         int id, id_camp;
         boolean specialNeeds;
         String actName;

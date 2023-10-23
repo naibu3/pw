@@ -6,7 +6,7 @@ import java.util.List;
 /** Represents a camp.
  * @version 1.0
 */
-public class ClassCamp extends ClassMonitor{
+public class Camp extends Monitor{
     private int idCamp;
     private LocalDate beginningDate;
     private LocalDate endingDate;//FORMATO =>año/mes/dia 
@@ -20,7 +20,7 @@ public class ClassCamp extends ClassMonitor{
 
     /** Builder
     */
-    public ClassCamp() {
+    public Camp() {
         activity = new ArrayList<String>() ;
         monitors_ = new ArrayList<Integer>();
     }
@@ -32,7 +32,7 @@ public class ClassCamp extends ClassMonitor{
      * @param level
      * @param maxAssistants
     */
-    public ClassCamp(int idCamp, LocalDate beginningDate, LocalDate endingDate, EnumLevel level, int maxAssistants) {
+    public Camp(int idCamp, LocalDate beginningDate, LocalDate endingDate, EnumLevel level, int maxAssistants) {
         this.idCamp = idCamp;
         this.beginningDate = beginningDate;
         this.endingDate = endingDate;
@@ -95,12 +95,12 @@ public class ClassCamp extends ClassMonitor{
     /** Gets the activity list.
      * @return activity list
     */
-    public List<String> getClassactivity() {return activity;}
+    public List<String> getactivity() {return activity;}
 
     /** Sets the activity list.
      * @param activity activity list
     */
-    public void setClassactivity(List<String> activity) {this.activity = activity;}
+    public void setactivity(List<String> activity) {this.activity = activity;}
 
     /** Gets the camp monitors.
      * @return camp monitors
@@ -145,7 +145,7 @@ public class ClassCamp extends ClassMonitor{
      /** Adds an activity.
      * @param activity activity
     */
-    public void associateActivity(ClassActivity activity) {
+    public void associateActivity(Activity activity) {
         if (activity.getLevel_().equals(this.level_)) {
             this.activity.add(activity.getName_());
         }

@@ -3,7 +3,7 @@ import java.util.List;
 /** Represents an activity.
  * @version 1.0
 */
-public class ClassActivity {
+public class Activity {
 
     private String name_;   //como hacer unico?
     private EnumLevel level_;
@@ -14,11 +14,11 @@ public class ClassActivity {
 
     /** Description.
 	*/
-    public ClassActivity(){}
+    public Activity(){}
 
     /** Description.
 	*/
-    public ClassActivity(String name, EnumLevel level, String timetable, int max, int monitors_n){
+    public Activity(String name, EnumLevel level, String timetable, int max, int monitors_n){
         name_=name;
         level_=level;
         timetable_=timetable;

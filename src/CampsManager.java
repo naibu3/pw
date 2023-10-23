@@ -6,15 +6,15 @@ import java.util.List;
 /** Description.
  * @version 1.0
 */
-public class ClassCampsManager {
-    private List<ClassCamp> camps = new ArrayList<ClassCamp>();
-    private List<ClassActivity> activities = new ArrayList<ClassActivity>();
-    private List<ClassMonitor> monitors = new ArrayList<ClassMonitor>();
+public class CampsManager {
+    private List<Camp> camps = new ArrayList<Camp>();
+    private List<Activity> activities = new ArrayList<Activity>();
+    private List<Monitor> monitors = new ArrayList<Monitor>();
     private String campsFile = "camps.txt";
     private String activitiesFile = "activities.txt";
     private String monitorsFile = "monitors.txt";
 
-    public ClassCampsManager() {
+    public CampsManager() {
         
         try {
             loadCampsFile();
@@ -31,7 +31,7 @@ public class ClassCampsManager {
 
     private void writeFileC() {
         try (FileWriter archivo = new FileWriter(campsFile, false)) {
-            for (ClassCamp camp : camps) {
+            for (Camp camp : camps) {
                 archivo.write(camp.toString());
             }
             archivo.close();
@@ -42,7 +42,7 @@ public class ClassCampsManager {
 
     private void writeFileA() {
         try (FileWriter archivo = new FileWriter(activitiesFile, false)) {
-            for (ClassActivity act : activities) {
+            for (Activity act : activities) {
                 archivo.write(act.toString());
             }
             archivo.close();
@@ -53,7 +53,7 @@ public class ClassCampsManager {
 
     private void writeFileM() {
         try (FileWriter archivo = new FileWriter(monitorsFile, false)) {
-            for (ClassMonitor mon: monitors) {
+            for (Monitor mon: monitors) {
                 archivo.write(mon.toString());
             }
             archivo.close();
@@ -63,7 +63,7 @@ public class ClassCampsManager {
     }
 
     private void loadCampsFile() throws FileNotFoundException, IOException {
-        ClassCamp auxCamp=new ClassCamp();
+        Camp auxCamp=new Camp();
         try (BufferedReader br = new BufferedReader(new FileReader(new File(campsFile)))) {
             String line;
             int id = 0, nMax=0;
@@ -134,7 +134,7 @@ public class ClassCampsManager {
                
                 if (id != 0 && nMax != 0 && begin != null && end != null && level!= null && read) {
                     
-                    auxCamp=(new ClassCamp(id, begin, end, level, nMax));
+                    auxCamp=(new Camp(id, begin, end, level, nMax));
                     
                     if(monitorR!=0){
                         auxCamp.setresponsibleMonitors(monitorR);
@@ -144,7 +144,7 @@ public class ClassCampsManager {
                         auxCamp.setresponsiblespecialMonitor(monitorS);    
                     }
                     if(acts!=null){
-                        auxCamp.setClassactivity(acts);
+                        auxCamp.setactivity(acts);
                     }
                     if(monitors!=null){
                         auxCamp.setMonitors(monitors);;
@@ -203,7 +203,7 @@ public class ClassCampsManager {
                 }
 
                 if (id != 0 && name != null && lastName != null && controlador) {
-                    monitors.add(new ClassMonitor(id, name, lastName, specialNeedsEducator));
+                    monitors.add(new Monitor(id, name, lastName, specialNeedsEducator));
                     // Reinicia las variables para la próxima entrada
                     id = 0;
                     name = null;
@@ -224,7 +224,7 @@ public class ClassCampsManager {
             String timetable=null;
             int max=0, n_mon=0;
             List<Integer> mon=new ArrayList<Integer>();
-            ClassActivity auxAct =new ClassActivity();
+            Activity auxAct =new Activity();
 
 
             while ((line = br.readLine()) != null) {
@@ -284,7 +284,7 @@ public class ClassCampsManager {
                 if (name != null && level != null && timetable!=null && max!=0 && n_mon!=0 && controlador) {
                     // Reinicia las variables para la próxima entrada
                     
-                    auxAct=(new ClassActivity(name,level,timetable,max, n_mon));
+                    auxAct=(new Activity(name,level,timetable,max, n_mon));
                     if(mon!=null){
                         auxAct.setMonitors_(mon);
                     }
@@ -303,27 +303,27 @@ public class ClassCampsManager {
         }
     }
 
-    public void createCamp(ClassCamp camp) {
+    public void createCamp(Camp camp) {
         camps.add(camp);
         writeFileC();
     }
 
-    public void createActivity(ClassActivity activity) {
+    public void createActivity(Activity activity) {
         activities.add(activity);
         writeFileA();
     }
 
-    public void createMonitor(ClassMonitor monitor) {
+    public void createMonitor(Monitor monitor) {
         monitors.add(monitor);
         writeFileM();
     }
 
-    public List<ClassCamp> listCamps() {
-        List<ClassCamp> camps = new ArrayList<>();
+    public List<Camp> listCamps() {
+        List<Camp> camps = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(campsFile))) {
             while (true) {
                 try {
-                    ClassCamp camp = (ClassCamp) inputStream.readObject();
+                    Camp camp = (Camp) inputStream.readObject();
                     camps.add(camp);
                 } catch (EOFException e) {
                     break;
@@ -335,12 +335,12 @@ public class ClassCampsManager {
         return camps;
     }
 
-    public List<ClassActivity> listActivities() {
-        List<ClassActivity> activities = new ArrayList<>();
+    public List<Activity> listActivities() {
+        List<Activity> activities = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(activitiesFile))) {
             while (true) {
                 try {
-                    ClassActivity activity = (ClassActivity) inputStream.readObject();
+                    Activity activity = (Activity) inputStream.readObject();
                     activities.add(activity);
                 } catch (EOFException e) {
                     break;
@@ -352,12 +352,12 @@ public class ClassCampsManager {
         return activities;
     }
 
-    public List<ClassMonitor> listMonitors() {
-        List<ClassMonitor> monitors = new ArrayList<>();
+    public List<Monitor> listMonitors() {
+        List<Monitor> monitors = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(monitorsFile))) {
             while (true) {
                 try {
-                    ClassMonitor monitor = (ClassMonitor) inputStream.readObject();
+                    Monitor monitor = (Monitor) inputStream.readObject();
                     monitors.add(monitor);
                 } catch (EOFException e) {
                     break;
@@ -394,13 +394,13 @@ public class ClassCampsManager {
 
     public void associateActivity(String nameAct, int idCamp ) {
         List<String>auxActs= new ArrayList<String>();
-        List<ClassCamp> auxcamps = new ArrayList<ClassCamp>();
+        List<Camp> auxcamps = new ArrayList<Camp>();
         
-        for(ClassCamp auxCamp: camps){
+        for(Camp auxCamp: camps){
             if(auxCamp.getId()==idCamp){
-                auxActs=auxCamp.getClassactivity();
+                auxActs=auxCamp.getactivity();
                 auxActs.add(nameAct);
-                auxCamp.setClassactivity(auxActs);
+                auxCamp.setactivity(auxActs);
             }
             auxcamps.add(auxCamp);
         }
@@ -413,9 +413,9 @@ public class ClassCampsManager {
 
     public void associateMonitor(int id, int idCamp ) {   
         List<Integer>auxIdMon = new ArrayList<Integer>();
-        List<ClassCamp> auxcamps = new ArrayList<ClassCamp>();
+        List<Camp> auxcamps = new ArrayList<Camp>();
         
-        for(ClassCamp auxCamp: camps){
+        for(Camp auxCamp: camps){
             if(auxCamp.getId()==idCamp){
                 auxIdMon=auxCamp.getMonitors();
                 auxIdMon.add(id);

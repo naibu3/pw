@@ -11,11 +11,11 @@ import java.util.ArrayList;
 /** Description.
  * @version 1.0
 */
-public class ClassParticipantManager {
-    private List<ClassParticipant> registeredParticipants = new ArrayList<ClassParticipant>();
+public class ParticipantManager {
+    private List<Participant> registeredParticipants = new ArrayList<Participant>();
     private String participantsFile = "registered.txt";
 
-    public ClassParticipantManager() {
+    public ParticipantManager() {
         try {
             loadFile();
         } catch (FileNotFoundException e) {
@@ -27,7 +27,7 @@ public class ClassParticipantManager {
 
     private void writeFile() {
         try (FileWriter archivo = new FileWriter(participantsFile, false)) {
-            for (ClassParticipant participant : registeredParticipants) {
+            for (Participant participant : registeredParticipants) {
                 archivo.write(participant.toString());
             }
             archivo.close();
@@ -75,7 +75,7 @@ public class ClassParticipantManager {
                 }
 
                 if (id != 0 && name != null && lastName != null && birth != null) {
-                    registeredParticipants.add(new ClassParticipant(id, name, lastName, birth, specialAttention));
+                    registeredParticipants.add(new Participant(id, name, lastName, birth, specialAttention));
                     // Reinicia las variables para la próxima entrada
                     id = 0;
                     name = null;
@@ -87,13 +87,13 @@ public class ClassParticipantManager {
         }
     }
 
-    public void enrollParticipant(ClassParticipant participant) {
+    public void enrollParticipant(Participant participant) {
         registeredParticipants.add(participant);
         writeFile();
     }
 
     public void modifyParticipant(int id, LocalDate newBirthday, Boolean specialNeeds) {
-        for (ClassParticipant participant : registeredParticipants) {
+        for (Participant participant : registeredParticipants) {
             if (participant.getId() == id) {
                 System.out.println("Modifying participant with ID " + id);
                 participant.set_birthday(newBirthday);
@@ -106,7 +106,7 @@ public class ClassParticipantManager {
     }
 
     public void modifyParticipant(int id, LocalDate newBirthday) {
-        for (ClassParticipant participant : registeredParticipants) {
+        for (Participant participant : registeredParticipants) {
             if (participant.getId() == id) {
                 System.out.println("Modifying birthday for participant with ID " + id);
                 participant.set_birthday(newBirthday);
@@ -118,7 +118,7 @@ public class ClassParticipantManager {
     }
 
     public void modifyParticipant(int id, Boolean specialNeeds) {
-        for (ClassParticipant participant : registeredParticipants) {
+        for (Participant participant : registeredParticipants) {
             if (participant.getId() == id) {
                 System.out.println("Modifying birthday for participant with ID " + id);
                 participant.set_special_attention(specialNeeds);
@@ -129,18 +129,18 @@ public class ClassParticipantManager {
         writeFile();
     }
 
-    public List<ClassParticipant> listParticipants() {
+    public List<Participant> listParticipants() {
         return registeredParticipants;
     }
 
     public void writeParticipants() {
-        for (ClassParticipant participant : registeredParticipants) {
+        for (Participant participant : registeredParticipants) {
             System.out.println(participant.toString());
         }
     }
 
     public boolean participantExists(int id) {
-        for (ClassParticipant p : registeredParticipants) {
+        for (Participant p : registeredParticipants) {
             if (p.getId() == id) {
                 return true;
             }

@@ -3,20 +3,20 @@ import java.time.LocalDate;
 /** Represents a Participant.
  * @version 1.0
 */
-public class ClassParticipant extends ClassPerson {
+public class Participant extends Person {
     private LocalDate birthday_;
     private boolean special_attention_;
 
     /** Description.
 	*/
-    public ClassParticipant(int identifier, String name,String lastname,LocalDate birthday, boolean special_attention){
+    public Participant(int identifier, String name,String lastname,LocalDate birthday, boolean special_attention){
         setId(identifier);
         this.birthday_=birthday;
         this.special_attention_=special_attention;
         setNombre(name);
         setApellidos(lastname);
     }
-    public ClassParticipant(){}
+    public Participant(){}
 
     /** Gets the birthday date.
      * @return birthday date
@@ -56,7 +56,7 @@ public class ClassParticipant extends ClassPerson {
         
       /*  //ASÍ SE USA
         public static void main(String[] args){
-            ClassParticipant yo = new ClassParticipant(1, LocalDate.now(), true);
+            Participant yo = new Participant(1, LocalDate.now(), true);
             System.out.println(yo.toString());
         }
        */ 
