@@ -1,3 +1,4 @@
+package data.dto;
 
 public abstract class AbstractRegistrationManagerFactory {
     public abstract boolean createEarlyRegistration(int id);
