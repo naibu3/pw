@@ -1,5 +1,16 @@
 import java.time.LocalDate;
 import java.util.Scanner;
+
+import business.CampsManager;
+import business.ParticipantManager;
+import business.RegistrationManager;
+import data.dto.Activity;
+import data.dto.Camp;
+import data.dto.EnumLevel;
+import data.dto.EnumRegistrationType;
+import data.dto.Monitor;
+import data.dto.Participant;
+
 import java.util.List;
 
 /** Description

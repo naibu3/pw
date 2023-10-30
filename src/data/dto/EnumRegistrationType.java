@@ -1,3 +1,4 @@
+package data.dto;
 /** Represents the registration types.
  * @version 1.0
 */

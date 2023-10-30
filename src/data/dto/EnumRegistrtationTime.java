@@ -1,3 +1,4 @@
+package data.dto;
 /** Represents the registration times.
  * @version 1.0
 */

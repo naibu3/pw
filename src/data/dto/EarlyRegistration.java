@@ -1,13 +1,14 @@
+package data.dto;
 import java.time.LocalDate;
 
-/** Represents an abstract Registration.
+/** Represents an EarlyRegistration.
  * @version 1.0
 */
-public class LateRegistration extends AbstractRegistration{
+public class EarlyRegistration extends AbstractRegistration{
 
     /** Description.
 	*/
-    public LateRegistration(int id, int id_camp, LocalDate registrationDate, float price, EnumRegistrationType type, EnumRegistrtationTime time, boolean specialAttention) {
+    public EarlyRegistration(int id, int id_camp, LocalDate registrationDate, float price, EnumRegistrationType type, EnumRegistrtationTime time, boolean specialAttention) {
         super(id, id_camp, registrationDate, price, type, time, specialAttention);
         setRegistrationDate(LocalDate.now());
         setRegistrationTime(EnumRegistrtationTime.Early);
@@ -15,10 +16,9 @@ public class LateRegistration extends AbstractRegistration{
 
     /** Description.
 	*/
-    public LateRegistration(){
+    public EarlyRegistration(){
+        super();
         setRegistrationDate(LocalDate.now());
         setRegistrationTime(EnumRegistrtationTime.Early);
     }
-
-    
 }

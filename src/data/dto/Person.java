@@ -1,3 +1,4 @@
+package data.dto;
 /** Represents a Person.
  * @version 1.0
 */

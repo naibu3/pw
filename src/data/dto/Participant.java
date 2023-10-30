@@ -1,3 +1,4 @@
+package data.dto;
 import java.time.LocalDate;
 
 /** Represents a Participant.
