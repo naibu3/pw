@@ -2,13 +2,14 @@ package data.dao;
 
 import java.util.Properties;
 import java.util.Hashtable;
+import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import data.dto.ParticipantDTO;
 import data.common.DBConnection;
 
-public class ParticipantDao {
+public class ParticipantDAO {
     
     
     private Properties pathSQL;
@@ -22,7 +23,7 @@ public class ParticipantDao {
 	 * @param pathSQL, sql.properties path
 	 */
 	
-	public ParticipantDao() {
+	public ParticipantDAO() {
 	}
 
      /**
@@ -33,6 +34,8 @@ public class ParticipantDao {
 	public boolean createParticipant(ParticipantDTO Participant) {
 		int status = -1;
 		try {
+			pathSQL = new Properties();
+			pathSQL.load(new FileInputStream("config.properties"));
 			DBConnection dbConnection = new DBConnection(pathSQL);
 			dbConnection.getConnection();
 
@@ -72,7 +75,6 @@ public class ParticipantDao {
 			}
 			
 		} catch (Exception e){
-			System.err.println(e);
 			e.printStackTrace();
 		}
 		

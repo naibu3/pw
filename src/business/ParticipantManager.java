@@ -2,7 +2,7 @@ package business;
 
 import java.util.ArrayList;
 
-import data.dao.ParticipantDao;
+import data.dao.ParticipantDAO;
 import data.dto.ParticipantDTO;
 
 /**
@@ -18,7 +18,7 @@ public class ParticipantManager {
     public String getAllParticipants(){
         String p="";
 
-        ParticipantDao partInfo= new ParticipantDao();
+        ParticipantDAO partInfo= new ParticipantDAO();
 
         ArrayList<ParticipantDTO> participants= partInfo.getAllParticipants();
         for(ParticipantDTO part: participants){

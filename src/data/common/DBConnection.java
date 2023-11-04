@@ -4,6 +4,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Properties;
+
 import java.util.ArrayList;
 
 public class DBConnection {
@@ -14,7 +15,6 @@ public class DBConnection {
 	 * Constructor		se llama 1 vez
 	 */
 	public DBConnection(Properties path) {
-		sqlProp = new Properties();
 		sqlProp=path;
 	}
 
@@ -26,18 +26,108 @@ public class DBConnection {
 	public Connection getConnection(){
 		connection = null;
 		try {
-		Class.forName("com.mysql.jdbc.Driver");
-		connection=DriverManager.getConnection("jdbc:mysql://oraclepr.uco.es:3306/database","i12gofoa","periquito");
+			Class.forName("com.mysql.jdbc.Driver");
+			connection=DriverManager.getConnection("jdbc:mysql://oraclepr.uco.es:3306","i12gofoa","periquito");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch(Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
-		return connection;
+			return connection;
 		}
+
+
+	/**
+	 * Creates a new monitor in the data base
+	 * @param dni	 
+	 * @param name
+	 * @param lastname
+	 * @param specialneeds
+	 * @return 1 on success
+	 */
+	public int createMonitor(int dni, String name, String lastname, boolean specialEducator) {
+		int status = 0;
+		try {
+			PreparedStatement ps = connection.prepareStatement(sqlProp.getProperty("createMonitor"));
+			ps.setInt(1, dni);
+			ps.setString(2, name);
+			ps.setString(3, lastname);
+			ps.setBoolean(4, specialEducator);
+
+			status = ps.executeUpdate();
+		} catch(Exception e) { e.printStackTrace(); }
+
+		return status;
+	}
+
+	/**
+	 * Removes a monitor from the data base
+	 * @param dni
+	 * @return 1 on success
+	 */
+	public int deleteMonitor(int dni){
+		int status=0;
+		try {
+			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("deleteMonitor"));
+			ps.setInt(1, dni);
+
+			status=ps.executeUpdate();
+		} catch(Exception e) { e.printStackTrace(); }
+
+		return status;
+	}
+
+	/**
+	 * Updates monitor info
+	 * @param dni	 
+	 * @param name
+	 * @param lastname
+	 * @param birthdate
+	 * @param specialneeds
+	 * @return 1 on success
+	 */
+	public int updateMonitor(int dni, String name, String lastname, boolean specialEducator){
+		int status=0;
+		try{
+			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("updateMonitor"));
+			ps.setInt(1, dni);
+			ps.setString(2, name);
+			ps.setString(3, lastname);
+			ps.setBoolean(4, specialEducator);
+
+			status=ps.executeUpdate();
+		}catch(Exception e){ e.printStackTrace();}
+		return status;
+	}
+
+	/**
+	 * Gets the monitor info from the data base given its dni
+	 * @param dni
+	 * @return Hashtable<String,String> with the info of the monitor
+	 */
+	public Hashtable<String,String> monitorByDni (int dni) {
+		Statement stmt = null;
+		Hashtable<String,String> result = null;
+		
+		try {
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("monitorByDNI") + "'" + dni + "'");
+			
+			while (rs.next()) {				
+				result = new Hashtable<String,String>();
+				result.put("dni", Integer.toString(dni));
+				result.put("name", rs.getString("name"));
+				result.put("lastname", rs.getString("lastname"));
+				result.put("specialeducator", Boolean.toString(rs.getBoolean("specialeducator")));
+			}
+			
+			if (stmt != null) stmt.close();
+		} catch (Exception e) { e.printStackTrace(); }
+		return result;
+	}
 
 	/**
 	 * Creates a new participant in the data base
@@ -139,14 +229,42 @@ public class DBConnection {
 			}
 			
 			if (stmt != null) stmt.close();
-		} catch (Exception e) { System.out.println(e); }
+		} catch (Exception e) { e.printStackTrace(); }
 		return result;
+	}
+
+	/**
+	 * Get all the monitors in the database
+	 * @param id
+	 * @return ArrayList<HashTable<String, String>> with the info of all the monitors
+	 */
+	public ArrayList<Hashtable<String, String>> getAllMonitors() {
+		Statement stmt = null;
+		ArrayList<Hashtable<String, String>> monitors = new ArrayList<>();
+		
+		try {
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("getAllMonitors"));
+
+			while(rs.next()) {
+				Hashtable<String, String> monitor = new Hashtable<String, String>();
+				monitor.put("id", Integer.toString(rs.getInt("dni")));
+				monitor.put("name", rs.getString("name"));
+				monitor.put("lastname", rs.getString("lastname"));
+				monitor.put("specialeducator", Boolean.toString(rs.getBoolean("specialeducator")));
+
+				monitors.add(monitor);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return monitors;
 	}
 
 	/**
 	 * Checks if there is already an Participant in the data base with the given id 
 	 * @param id
-	 * @param con
 	 * @return >=1 on success
 	 */
 	public int countParticipantid (int id) {
