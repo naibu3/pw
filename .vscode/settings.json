@@ -1,6 +1,11 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "/home/nacabaro/mysql-connector.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "libs/mysql-connector.jar"
+        ],
+        "exclude": [
+            "/home/nacabaro/mysql-connector.jar"
+        ]
+    }
 }
