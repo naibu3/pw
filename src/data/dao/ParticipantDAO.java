@@ -36,7 +36,7 @@ public class ParticipantDAO {
 		try {
 			pathSQL = new Properties();
 			pathSQL.load(new FileInputStream("config.properties"));
-			DBConnection dbConnection = new DBConnection(pathSQL);
+			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 
 			status = dbConnection.createParticipant(Participant.getId(), Participant.getName(), Participant.getLastname(), Participant.getbirthdate(), Participant.getSpecialAttention());
@@ -59,7 +59,7 @@ public class ParticipantDAO {
 		ArrayList<ParticipantDTO> Participants = new ArrayList<>();
 		
 		try {
-			DBConnection dbConnection = new DBConnection(pathSQL);
+			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 			result = dbConnection.getAllParticipants();
 			

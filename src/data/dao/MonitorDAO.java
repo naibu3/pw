@@ -2,16 +2,10 @@ package data.dao;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Properties;
-import java.io.FileInputStream;
 import data.dto.MonitorDTO;
 import data.common.DBConnection;
 
 public class MonitorDAO {
-
-    private Properties connectionProperties;
-
-
     MonitorDAO() {}
 
     /**
@@ -21,10 +15,7 @@ public class MonitorDAO {
 	 */
     public Boolean createMonitor(MonitorDTO monitor) {
         try {
-            connectionProperties = new Properties();
-            connectionProperties.load(new FileInputStream("sql.properties"));
-
-			DBConnection dbConnection = new DBConnection(connectionProperties);
+			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 
             dbConnection.createMonitor(monitor.getId(), monitor.getName(), monitor.getLastName(), monitor.getSpecialNeedsEducator());
@@ -45,10 +36,7 @@ public class MonitorDAO {
     public ArrayList<MonitorDTO> getAllMonitors() {
         ArrayList<MonitorDTO> result = new ArrayList<MonitorDTO>();
         try {
-            connectionProperties = new Properties();
-            connectionProperties.load(new FileInputStream("sql.properties"));
-
-            DBConnection dbConnection = new DBConnection(connectionProperties);
+            DBConnection dbConnection = new DBConnection();
             dbConnection.getConnection();
 
             ArrayList<Hashtable<String, String>> monitors = dbConnection.getAllMonitors();
@@ -60,6 +48,7 @@ public class MonitorDAO {
                 MonitorDTO currentMonitor = new MonitorDTO(Integer.parseInt(monitor.get("id")), monitor.get("name"), monitor.get("lastname"), Boolean.parseBoolean(monitor.get("specialeducator")));
                 result.add(currentMonitor);
             }
+            
         } catch (Exception e) {
             e.printStackTrace();
         } 

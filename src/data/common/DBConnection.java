@@ -1,5 +1,6 @@
 package data.common;
 
+import java.io.FileInputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Hashtable;
@@ -10,24 +11,41 @@ import java.util.ArrayList;
 public class DBConnection {
     protected Connection connection = null;
     private Properties sqlProp;
+	private Properties sqlQueries;
 
     /**
-	 * Constructor		se llama 1 vez
+	 * Constructor, this loads all the necessary properties
 	 */
-	public DBConnection(Properties path) {
-		sqlProp=path;
+	public DBConnection() {
+		sqlProp = new Properties();
+		try {
+			sqlProp = new Properties();
+			sqlProp.load(new FileInputStream("config.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		sqlQueries = new Properties();
+		try {
+			sqlQueries.load(new FileInputStream("sql.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
 	/**
-	 * Retrieves a new connection to the data base		se llama antes de hacer los cambios
+	 * Retrieves a new connection to the data base se llama antes de hacer los cambios
 	 * @return Connection to the data base
 	 */
 	public Connection getConnection(){
 		connection = null;
 		try {
+			Properties sqlParams = new Properties();
+			sqlParams.load(new FileInputStream("config.properties"));
+
 			Class.forName("com.mysql.jdbc.Driver");
-			connection=DriverManager.getConnection("jdbc:mysql://oraclepr.uco.es:3306","i12gofoa","periquito");
+			connection=DriverManager.getConnection(sqlParams.getProperty("db_url"),sqlParams.getProperty("db_user"),sqlParams.getProperty("db_pass"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -99,7 +117,7 @@ public class DBConnection {
 			ps.setBoolean(4, specialEducator);
 
 			status=ps.executeUpdate();
-		}catch(Exception e){ e.printStackTrace();}
+		} catch(Exception e) { e.printStackTrace();}
 		return status;
 	}
 
@@ -149,16 +167,16 @@ public class DBConnection {
 			ps.setDate(4, Date.valueOf(birthdDate));
 			ps.setBoolean(5, specialAttention);
 			
-			
 			status = ps.executeUpdate();
+
 		} catch(Exception e) { System.out.println(e); }
+
 		return status;
 	}
 
 	/**
 	 * Removes an participant from the data base
 	 * @param id
-	 * @param con
 	 * @return 1 on success
 	 */
 	public int deleteParticipant(int id){
@@ -198,7 +216,6 @@ public class DBConnection {
 
 	/**
 	 * Gets the info of all the users registered in the data base
-	 * @param con
 	 * @return ArrayList<Hashtable<String,String>> with the info of the user
 	 */
 	public ArrayList<Hashtable<String,String>> getAllParticipants () {
@@ -208,14 +225,14 @@ public class DBConnection {
 		
 		try {
 			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("getAllParticipants"));
+			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("getAllParticipants"));
 			
 			while (rs.next()) {
-				int idparticipant = rs.getInt("id");
+				int idparticipant = rs.getInt("dni");
 				String name = rs.getString("name");
 				String lastname = rs.getString("lastname");				
 				Date birthdate = rs.getDate("birthdate");
-				Boolean special_attention = rs.getBoolean("special_attention");
+				Boolean special_attention = rs.getBoolean("specialneeds");
 
 				participantMap = new Hashtable<String, String>();
 				participantMap.put("id", Integer.toString(idparticipant));
@@ -235,7 +252,6 @@ public class DBConnection {
 
 	/**
 	 * Get all the monitors in the database
-	 * @param id
 	 * @return ArrayList<HashTable<String, String>> with the info of all the monitors
 	 */
 	public ArrayList<Hashtable<String, String>> getAllMonitors() {
@@ -270,10 +286,11 @@ public class DBConnection {
 	public int countParticipantid (int id) {
 		Statement stmt = null;
 		int result=0;
+
 		try{
 			
 			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("countParticipantid") + "'" + id + "'" );
+			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("countParticipantId") + "'" + id + "'" );
 			if ( rs.next() ) 
 			    result = rs.getInt(1);
 			

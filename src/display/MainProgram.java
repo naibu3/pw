@@ -6,5 +6,7 @@ public class MainProgram {
 		ParticipantManager participantManager = new ParticipantManager();
 		String participantsInfo = participantManager.getAllParticipants();
 		System.out.println(participantsInfo);
+
+		
 	}
 }
