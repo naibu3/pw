@@ -6,7 +6,7 @@ import data.dto.MonitorDTO;
 import data.common.DBConnection;
 
 public class MonitorDAO {
-    MonitorDAO() {}
+    public MonitorDAO() {}
 
     /**
 	 * Creates a new monitor
@@ -48,7 +48,7 @@ public class MonitorDAO {
                 MonitorDTO currentMonitor = new MonitorDTO(Integer.parseInt(monitor.get("id")), monitor.get("name"), monitor.get("lastname"), Boolean.parseBoolean(monitor.get("specialeducator")));
                 result.add(currentMonitor);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } 

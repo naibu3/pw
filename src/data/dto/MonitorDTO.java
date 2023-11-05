@@ -27,4 +27,8 @@ public class MonitorDTO {
     public void setName(String name) { name_ = name; };
     public void setLastNane(String lastName) { lastName_ = lastName; };
     public void setSpecialNeedsEducator(Boolean specialEducator) { specialEducator_ = specialEducator; };
+    
+    public String toString() {
+        return "dni: " + dni_ + ", name: " + name_ + ", last_name: " + lastName_ + ",special_educator: " + specialEducator_; 
+    }
 }

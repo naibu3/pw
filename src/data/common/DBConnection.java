@@ -260,7 +260,7 @@ public class DBConnection {
 		
 		try {
 			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("getAllMonitors"));
+			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("getAllMonitors"));
 
 			while(rs.next()) {
 				Hashtable<String, String> monitor = new Hashtable<String, String>();
