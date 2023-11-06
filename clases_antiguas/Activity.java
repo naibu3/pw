@@ -1,5 +1,3 @@
-package data.dto;
-
 import java.util.List;
 
 /** Represents an activity.

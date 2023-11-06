@@ -1,4 +1,3 @@
-package business;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,12 +7,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import data.dto.AbstractRegistration;
-import data.dto.EarlyRegistration;
-import data.dto.EnumRegistrationType;
-import data.dto.EnumRegistrtationTime;
-import data.dto.LateRegistration;
 
 public class RegistrationManager {
     private List<AbstractRegistration> registrations = new ArrayList<AbstractRegistration>();

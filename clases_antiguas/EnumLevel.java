@@ -1,5 +1,3 @@
-package data.dto;
-
 /** Represents ages.
  * @version 1.0
 */
