@@ -41,11 +41,9 @@ public class DBConnection {
 	public Connection getConnection(){
 		connection = null;
 		try {
-			Properties sqlParams = new Properties();
-			sqlParams.load(new FileInputStream("config.properties"));
 
 			Class.forName("com.mysql.jdbc.Driver");
-			connection=DriverManager.getConnection(sqlParams.getProperty("db_url"),sqlParams.getProperty("db_user"),sqlParams.getProperty("db_pass"));
+			connection=DriverManager.getConnection(sqlProp.getProperty("db_url"),sqlProp.getProperty("db_user"),sqlProp.getProperty("db_pass"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
