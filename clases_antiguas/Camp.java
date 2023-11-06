@@ -10,7 +10,7 @@ public class Camp extends Monitor{
     private int idCamp;
     private LocalDate beginningDate;
     private LocalDate endingDate;//FORMATO =>año/mes/dia 
-    private EnumLevel level_;
+    private Level level_;
     private int maxAssistants;
     private List<String> activity;
     private List<Integer> monitors_;
@@ -32,7 +32,7 @@ public class Camp extends Monitor{
      * @param level
      * @param maxAssistants
     */
-    public Camp(int idCamp, LocalDate beginningDate, LocalDate endingDate, EnumLevel level, int maxAssistants) {
+    public Camp(int idCamp, LocalDate beginningDate, LocalDate endingDate, Level level, int maxAssistants) {
         this.idCamp = idCamp;
         this.beginningDate = beginningDate;
         this.endingDate = endingDate;
@@ -75,12 +75,12 @@ public class Camp extends Monitor{
     /** Gets the educative level.
      * @return educative level
     */
-    public EnumLevel geteducativeLevel() {return level_;}
+    public Level geteducativeLevel() {return level_;}
 
     /** Sets the educative level.
      * @param educationLevel educative level
     */
-    public void seteducativeLevel(EnumLevel educativeLevel) {this.level_ = educativeLevel;}
+    public void seteducativeLevel(Level educativeLevel) {this.level_ = educativeLevel;}
 
     /** Gets the max. number of assistants.
      * @return max. number of assistants

@@ -84,19 +84,19 @@ public class App {
         LocalDate beginDate = LocalDate.of(year, month, day);
         LocalDate endDate = LocalDate.of(endyear, endmonth, endday);
         System.out.println("Level");
-        EnumLevel level;
+        Level level;
         switch (Integer.parseInt(scanner.nextLine())) {
             case 1: 
-                level = EnumLevel.Children;
+                level = Level.Children;
                 break;
             case 2: 
-                level = EnumLevel.Youth;
+                level = Level.Youth;
                 break;    
             case 3: 
-                level = EnumLevel.Teenager;
+                level = Level.Teenager;
                 break;
             default:
-                level = EnumLevel.Children;
+                level = Level.Children;
                 break;
         }
         System.out.println("Max participants");
@@ -112,19 +112,19 @@ public class App {
         System.out.println("Name:");
         String name = scanner.nextLine();
         System.out.println("Level");
-        EnumLevel level;
+        Level level;
         switch (Integer.parseInt(scanner.nextLine())) {
             case 1: 
-                level = EnumLevel.Children;
+                level = Level.Children;
                 break;
             case 2: 
-                level = EnumLevel.Youth;
+                level = Level.Youth;
                 break;    
             case 3: 
-                level = EnumLevel.Teenager;
+                level = Level.Teenager;
                 break;
             default:
-                level = EnumLevel.Children;
+                level = Level.Children;
                 break;
         }
         System.out.println("Timetable:");

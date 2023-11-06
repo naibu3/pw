@@ -68,7 +68,7 @@ public class CampsManager {
             String line;
             int id = 0, nMax=0;
             LocalDate begin = null, end=null;
-            EnumLevel level=null;
+            Level level=null;
             int monitorR=0, monitorS=0;
             boolean read=false;
             List<String> acts = new ArrayList<String>();
@@ -93,7 +93,7 @@ public class CampsManager {
                             
                             break;
                         case "Educative level":
-                            level = EnumLevel.valueOf(valor);
+                            level = Level.valueOf(valor);
                             
                             break;
                         case "Max number of assistants":
@@ -220,7 +220,7 @@ public class CampsManager {
             String line;
             String name = null;
             boolean controlador=false;
-            EnumLevel level=null;
+            Level level=null;
             String timetable=null;
             int max=0, n_mon=0;
             List<Integer> mon=new ArrayList<Integer>();
@@ -239,7 +239,7 @@ public class CampsManager {
                             
                             break;
                         case "Level":
-                            level = EnumLevel.valueOf(valor);
+                            level = Level.valueOf(valor);
                             
                             break;
                         case "Timetable":

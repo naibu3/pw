@@ -85,9 +85,9 @@ public class RegistrationManager {
 
                 if (id != 0 && id_camp != 0 && registrationDate != null && price != 0 && type != null && time != null) {
                     if (time == EnumRegistrtationTime.Early) {
-                        registrations.add(new EarlyRegistration(id, id_camp, registrationDate, price, type, time, specialAttention));
+                        registrations.add(new PartialRegistration(id, id_camp, registrationDate, price, type, time, specialAttention));
                     } else {
-                        registrations.add(new LateRegistration(id, id_camp, registrationDate, price, type, time, specialAttention));
+                        registrations.add(new FullRegistration(id, id_camp, registrationDate, price, type, time, specialAttention));
                     }
                     // Reinicia las variables para la próxima entrada
                     id = 0;
@@ -126,7 +126,7 @@ public class RegistrationManager {
     */
     public boolean createEarlyRegistration(int id, int id_camp, boolean special, EnumRegistrationType type, CampsManager campsManager, ParticipantManager participantManager) {
         if (! isUserRegistered(id, id_camp) && participantManager.participantExists(id)) {
-            EarlyRegistration registration = new EarlyRegistration();
+            PartialRegistration registration = new PartialRegistration();
             registration.setIdParticipant_(id);
             registration.setIdCamp_(id_camp);
             registration.setType(type);
@@ -151,7 +151,7 @@ public class RegistrationManager {
     */
     public boolean createLateRegistration(int id, int id_camp, boolean special, EnumRegistrationType type, ParticipantManager participantManager) {
         if (! isUserRegistered(id, id_camp) && participantManager.participantExists(id)) {
-            LateRegistration registration = new LateRegistration();
+            FullRegistration registration = new FullRegistration();
             registration.setIdParticipant_(id);
             registration.setIdCamp_(id_camp);
             registration.setType(type);

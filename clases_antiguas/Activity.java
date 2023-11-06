@@ -6,7 +6,7 @@ import java.util.List;
 public class Activity {
 
     private String name_;   //como hacer unico?
-    private EnumLevel level_;
+    private Level level_;
     private String timetable_;
     private int max_;
     private int monitors_n_;
@@ -18,7 +18,7 @@ public class Activity {
 
     /** Description.
 	*/
-    public Activity(String name, EnumLevel level, String timetable, int max, int monitors_n){
+    public Activity(String name, Level level, String timetable, int max, int monitors_n){
         name_=name;
         level_=level;
         timetable_=timetable;
@@ -37,7 +37,7 @@ public class Activity {
     /** Gets the activity level.
      * @return activity level
     */
-    public EnumLevel getLevel_() {
+    public Level getLevel_() {
         return level_;
     }
 
@@ -82,7 +82,7 @@ public class Activity {
     /** Sets the activity level.
      * @param level activity level
     */
-    public void setLevel_(EnumLevel level_) {
+    public void setLevel_(Level level_) {
         this.level_ = level_;
     }
 
