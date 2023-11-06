@@ -126,13 +126,15 @@ public class DBConnection {
 	 * @param dni
 	 * @return Hashtable<String,String> with the info of the monitor
 	 */
-	public Hashtable<String,String> monitorByDni (int dni) {
+	public Hashtable<String,String> monitorByDni(int dni) {
 		Statement stmt = null;
 		Hashtable<String,String> result = null;
 		
 		try {
 			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("monitorByDNI") + "'" + dni + "'");
+			PreparedStatement ps = connection.prepareStatement(sqlProp.getProperty("monitorByDNI"));
+			ResultSet rs = ps.executeQuery();
+			ps.setInt(1, dni);
 			
 			while (rs.next()) {				
 				result = new Hashtable<String,String>();
@@ -182,7 +184,6 @@ public class DBConnection {
 	public int deleteParticipant(int id){
 		int status=0;
 		try {
-			
 			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("deleteParticipant"));
 			ps.setInt(1, id);
 			status=ps.executeUpdate();
@@ -199,7 +200,7 @@ public class DBConnection {
 	 * @param specialAttention
 	 * @return 1 on success
 	 */
-	public int updateparticipant(int id, String name, String lastname, LocalDate birthdDate, boolean specialAttention){
+	public int updateParticipant(int id, String name, String lastname, LocalDate birthdDate, boolean specialAttention){
 		int status=0;
 		try{
 			
