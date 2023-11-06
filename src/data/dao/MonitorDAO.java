@@ -10,7 +10,8 @@ public class MonitorDAO {
 
     /**
 	 * Creates a new monitor
-	 * @param Participant
+     * @author Ignacio Caballero
+	 * @param monitor
 	 * @return true on success
 	 */
     public Boolean createMonitor(MonitorDTO monitor) {
@@ -30,7 +31,35 @@ public class MonitorDAO {
     }
 
     /**
+     * Delete a monitor from the database
+     * @param dni
+     * @author Ignacio Caballero
+     * @return true on success, otherwise false
+     */
+    public Boolean deleteMonitor(int dni) {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.getConnection();
+
+        if (dbConnection.deleteMonitor(dni)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean updateMonitor(int dni, String name, String lastName, Boolean specialEducator) {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.getConnection();
+        if (dbConnection.updateMonitor(dni, name, lastName, specialEducator)) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    /**
      * Get all the monitors in the database
+     * @author Ignacio Caballero
      * @return ArrayList<MonitorDTO> with all the monitors in the database.
      */
     public ArrayList<MonitorDTO> getAllMonitors() {
@@ -55,5 +84,4 @@ public class MonitorDAO {
 
         return result;
     }
-
 }

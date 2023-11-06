@@ -86,16 +86,17 @@ public class DBConnection {
 	 * @param dni
 	 * @return 1 on success
 	 */
-	public int deleteMonitor(int dni){
-		int status=0;
+	public Boolean deleteMonitor(int dni){
 		try {
 			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("deleteMonitor"));
 			ps.setInt(1, dni);
+			ps.executeUpdate();
 
-			status=ps.executeUpdate();
-		} catch(Exception e) { e.printStackTrace(); }
-
-		return status;
+			return true;
+		} catch(Exception e) { 
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 
 	/**
@@ -107,8 +108,7 @@ public class DBConnection {
 	 * @param specialneeds
 	 * @return 1 on success
 	 */
-	public int updateMonitor(int dni, String name, String lastname, boolean specialEducator){
-		int status=0;
+	public Boolean updateMonitor(int dni, String name, String lastname, boolean specialEducator){
 		try{
 			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("updateMonitor"));
 			ps.setInt(1, dni);
@@ -116,9 +116,13 @@ public class DBConnection {
 			ps.setString(3, lastname);
 			ps.setBoolean(4, specialEducator);
 
-			status=ps.executeUpdate();
-		} catch(Exception e) { e.printStackTrace();}
-		return status;
+			ps.executeUpdate();
+
+			return true;
+		} catch(Exception e) { 
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	/**
