@@ -1,21 +1,13 @@
-import java.util.ArrayList;
-
-import business.ParticipantManager;
-import data.dao.MonitorDAO;
-import data.dto.MonitorDTO;
+import business.MonitorManager;
 
 public class MainProgram {
     public static void main(String[] args) {
-		System.out.println("Main program: Print participant");
-		ParticipantManager participantManager = new ParticipantManager();
-		String participantsInfo = participantManager.getAllParticipants();
-		System.out.println(participantsInfo);
-
-		MonitorDAO monitors = new MonitorDAO();
-		ArrayList<MonitorDTO> monitorList = monitors.getAllMonitors();
-
-		for (MonitorDTO monitor: monitorList) {
-			System.out.println(monitor.toString());
-		}
+		MonitorManager monitorManager = new MonitorManager();
+		monitorManager.createMonitor(12,"Pitillo", "fumatas", true);
+		System.out.println(monitorManager.getAllMonitors());
+		monitorManager.updateMonitor(12, "notanpitillo", "antifumatas", false);
+		System.out.println(monitorManager.getAllMonitors());
+		monitorManager.deleteMonitor(12);
+		System.out.println(monitorManager.getAllMonitors());		
 	}
 }

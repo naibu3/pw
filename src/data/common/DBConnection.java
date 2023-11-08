@@ -5,7 +5,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Properties;
-
 import java.util.ArrayList;
 
 public class DBConnection {
@@ -67,7 +66,7 @@ public class DBConnection {
 	public int createMonitor(int dni, String name, String lastname, boolean specialEducator) {
 		int status = 0;
 		try {
-			PreparedStatement ps = connection.prepareStatement(sqlProp.getProperty("createMonitor"));
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_MONITORS"));
 			ps.setInt(1, dni);
 			ps.setString(2, name);
 			ps.setString(3, lastname);
@@ -86,7 +85,7 @@ public class DBConnection {
 	 */
 	public Boolean deleteMonitor(int dni){
 		try {
-			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("deleteMonitor"));
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_MONITOR"));
 			ps.setInt(1, dni);
 			ps.executeUpdate();
 
@@ -108,11 +107,11 @@ public class DBConnection {
 	 */
 	public Boolean updateMonitor(int dni, String name, String lastname, boolean specialEducator){
 		try{
-			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("updateMonitor"));
-			ps.setInt(1, dni);
-			ps.setString(2, name);
-			ps.setString(3, lastname);
-			ps.setBoolean(4, specialEducator);
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_MONITOR"));
+			ps.setInt(4, dni);
+			ps.setString(1, name);
+			ps.setString(2, lastname);
+			ps.setBoolean(3, specialEducator);
 
 			ps.executeUpdate();
 
@@ -135,8 +134,8 @@ public class DBConnection {
 		try {
 			stmt = connection.createStatement();
 			PreparedStatement ps = connection.prepareStatement(sqlProp.getProperty("monitorByDNI"));
-			ResultSet rs = ps.executeQuery();
 			ps.setInt(1, dni);
+			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {				
 				result = new Hashtable<String,String>();
@@ -299,6 +298,27 @@ public class DBConnection {
 			
 		}catch(Exception e){System.out.println(e);}
 		return result;
+	}
+
+	public ArrayList<Hashtable<String, String>> getAvailableCamps() {
+		ArrayList<Hashtable<String, String>> availableCamps = new ArrayList<>();
+		try {
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("AVAILABLE_CAMPS"));
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Hashtable<String, String> camp = new Hashtable<String, String>();
+				camp.put("id", Integer.toString(rs.getInt("id")));
+				camp.put("start", rs.getString("start"));
+				camp.put("end", rs.getString("end"));
+				camp.put("educational_level", rs.getString("educationallevel"));
+				camp.put("max_participants", Integer.toString(rs.getInt("maxparticipants")));
+				availableCamps.add(camp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return availableCamps;
 	}
 
 	/**
