@@ -1,8 +1,6 @@
 package data.dao;
 
-import java.util.Properties;
 import java.util.Hashtable;
-import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -12,7 +10,6 @@ import data.common.DBConnection;
 public class ParticipantDAO {
     
     
-    private Properties pathSQL;
 
     /**
 	 * Constructor
@@ -34,8 +31,6 @@ public class ParticipantDAO {
 	public boolean createParticipant(ParticipantDTO Participant) {
 		int status = -1;
 		try {
-			pathSQL = new Properties();
-			pathSQL.load(new FileInputStream("config.properties"));
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 
@@ -47,6 +42,29 @@ public class ParticipantDAO {
 			System.err.println(e);
 			e.printStackTrace();
 		}
+		return (status == 1);
+	}
+
+/**
+	 * Removes an user from the data base
+	 * @param participant
+	 * @return true on success
+	 */
+	public boolean deleteParticipant (int id) {
+		int status = -1;
+		try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+			
+			status = dbConnection.deleteParticipant(id);
+			
+			dbConnection.closeConnection();
+			
+		} catch (Exception e){
+			System.err.println(e);
+			e.printStackTrace();
+		}
+		
 		return (status == 1);
 	}
 
@@ -81,4 +99,64 @@ public class ParticipantDAO {
 		return Participants;	
 	}
 
+
+	/**
+	 * Updates Participant info
+	 * @param id	 
+	 * @param name
+	 * @return 1 on success
+	 */
+	public boolean updateParticipant(int id, String toChange, int field){
+		int status=-1;
+		try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+			
+			switch (field) {
+				case 1:	//change name
+					status=dbConnection.updateParticipantName(id, toChange);
+					break;
+				case 2:
+					status=dbConnection.updateParticipantLastname(id, toChange);
+					break;
+				case 3: 
+					status=dbConnection.updateParticipantBirthdate(id, toChange);
+					break;
+				case 4: 
+					status=dbConnection.updateParticipantSpecialNeeds(id, toChange);
+					break;
+			
+				default:
+					break;
+			}
+			
+			dbConnection.closeConnection();
+			
+		} catch (Exception e){
+			System.err.println(e);
+			e.printStackTrace();
+		}		
+
+		return (status==1);
+	}
+
+
+	public int countParticipant(){
+		int result = 0;
+		
+		try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+			result = dbConnection.countParticipant();
+			
+			dbConnection.closeConnection();
+
+
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return result;	
+	}
 }
