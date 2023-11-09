@@ -150,20 +150,74 @@ public class DBConnection {
 		return result;
 	}
 
+
+	/**
+	 * Get all the monitors in the database
+	 * @return ArrayList<HashTable<String, String>> with the info of all the monitors
+	 */
+	public ArrayList<Hashtable<String, String>> getAllMonitors() {
+		Statement stmt = null;
+		ArrayList<Hashtable<String, String>> monitors = new ArrayList<>();
+		
+		try {
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("getAllMonitors"));
+
+			while(rs.next()) {
+				Hashtable<String, String> monitor = new Hashtable<String, String>();
+				monitor.put("id", Integer.toString(rs.getInt("dni")));
+				monitor.put("name", rs.getString("name"));
+				monitor.put("lastname", rs.getString("lastname"));
+				monitor.put("specialeducator", Boolean.toString(rs.getBoolean("specialeducator")));
+
+				monitors.add(monitor);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return monitors;
+	}
+
+
+	public ArrayList<Hashtable<String, String>> getAvailableCamps() {
+		ArrayList<Hashtable<String, String>> availableCamps = new ArrayList<>();
+		try {
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("AVAILABLE_CAMPS"));
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Hashtable<String, String> camp = new Hashtable<String, String>();
+				camp.put("id", Integer.toString(rs.getInt("id")));
+				camp.put("start", rs.getString("start"));
+				camp.put("end", rs.getString("end"));
+				camp.put("educational_level", rs.getString("educationallevel"));
+				camp.put("max_participants", Integer.toString(rs.getInt("maxparticipants")));
+				availableCamps.add(camp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return availableCamps;
+	}
+
+/**************************************************************************************************************************************************************
+*		PARTICIPANTS
+/************************************************************************************************************************************************************ */
 	/**
 	 * Creates a new participant in the data base
-	 * @param id	 
+	 * @param id	// ==dni 
 	 * @param name
 	 * @param lastname
 	 * @param birthdate
-	 * @param specialAttention
+	 * @param specialAttention	//needs
 	 * @return 1 on success
 	 */
 	public int createParticipant(int id, String name, String lastname, LocalDate birthdDate, boolean specialAttention){
 		int status=0;
 		try{
-			
-			PreparedStatement ps = connection.prepareStatement(sqlProp.getProperty("createParticipant"));
+			System.out.println(sqlQueries.getProperty("FILL_PARTICIPANTS"));
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_PARTICIPANTS"));
 			ps.setInt(1, id);
 			ps.setString(2, name);
 			ps.setString(3, lastname);
@@ -172,7 +226,7 @@ public class DBConnection {
 			
 			status = ps.executeUpdate();
 
-		} catch(Exception e) { System.out.println(e); }
+		} catch (Exception e) { e.printStackTrace(); }
 
 		return status;
 	}
@@ -185,34 +239,11 @@ public class DBConnection {
 	public int deleteParticipant(int id){
 		int status=0;
 		try {
-			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("deleteParticipant"));
-			ps.setInt(1, id);
-			status=ps.executeUpdate();
-		} catch(Exception e) {System.out.println(e);}
-		return status;
-	}
-
-	/**
-	 * Updates Participant info
-	 * @param id	 
-	 * @param name
-	 * @param lastname
-	 * @param birthdate
-	 * @param specialAttention
-	 * @return 1 on success
-	 */
-	public int updateParticipant(int id, String name, String lastname, LocalDate birthdDate, boolean specialAttention){
-		int status=0;
-		try{
 			
-			PreparedStatement ps=connection.prepareStatement(sqlProp.getProperty("updateParticipant"));
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_PARTICIPANT_BY_ID"));
 			ps.setInt(1, id);
-			ps.setString(2, name);
-			ps.setString(3, lastname);
-			ps.setDate(4, Date.valueOf(birthdDate));
-			ps.setBoolean(5, specialAttention);
 			status=ps.executeUpdate();
-		}catch(Exception e){System.out.println(e);}
+		} catch (Exception e) { e.printStackTrace(); }
 		return status;
 	}
 
@@ -252,47 +283,91 @@ public class DBConnection {
 		return result;
 	}
 
+	
 	/**
-	 * Get all the monitors in the database
-	 * @return ArrayList<HashTable<String, String>> with the info of all the monitors
+	 * Updates Participant Name
+	 * @param id	 
+	 * @param name
+	 * @return 1 on success
 	 */
-	public ArrayList<Hashtable<String, String>> getAllMonitors() {
-		Statement stmt = null;
-		ArrayList<Hashtable<String, String>> monitors = new ArrayList<>();
-		
-		try {
-			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("getAllMonitors"));
-
-			while(rs.next()) {
-				Hashtable<String, String> monitor = new Hashtable<String, String>();
-				monitor.put("id", Integer.toString(rs.getInt("dni")));
-				monitor.put("name", rs.getString("name"));
-				monitor.put("lastname", rs.getString("lastname"));
-				monitor.put("specialeducator", Boolean.toString(rs.getBoolean("specialeducator")));
-
-				monitors.add(monitor);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-
-		return monitors;
+	public int updateParticipantName(int id, String name){
+		int status=0;
+		try{
+			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_PARTICIPANT_NAME"));
+			ps.setString(1, name);
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
 	}
 
+	/**
+	 * Updates Participant Lastname
+	 * @param id	 
+	 * @param lastname
+	 * @return 1 on success
+	 */
+	public int updateParticipantLastname(int id, String lastname){
+		int status=0;
+		try{
+			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_PARTICIPANT_LASTNAME"));
+			ps.setString(1, lastname);
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+
+	/**
+	 * Updates Participant Birthdate
+	 * @param id	 
+	 * @param birthdate
+	 * @return 1 on success
+	 */
+	public int updateParticipantBirthdate(int id, String Birthdate){
+		int status=0;
+		try{
+			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_PARTICIPANT_BIRTHDATE"));
+			ps.setDate(1, Date.valueOf(Birthdate));
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+
+	/**
+	 * Updates Participant SpecialNeeds
+	 * @param id	 
+	 * @param SpecialNeeds
+	 * @return 1 on success
+	 */
+	public int updateParticipantSpecialNeeds(int id, String SpecialNeeds){
+		int status=0;
+		try{
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_PARTICIPANT_SPECIAL_NEEDS"));
+			ps.setBoolean(1, (SpecialNeeds.equals("yes")));
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+	
 	/**
 	 * Checks if there is already an Participant in the data base with the given id 
 	 * @param id
 	 * @return >=1 on success
 	 */
-	public int countParticipantid (int id) {
+	public int countParticipant() {
 		Statement stmt = null;
 		int result=0;
 
 		try{
 			
 			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProp.getProperty("countParticipantId") + "'" + id + "'" );
+			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("COUNT_PARTICIPANTS"));
 			if ( rs.next() ) 
 			    result = rs.getInt(1);
 			
@@ -300,27 +375,40 @@ public class DBConnection {
 		return result;
 	}
 
-	public ArrayList<Hashtable<String, String>> getAvailableCamps() {
-		ArrayList<Hashtable<String, String>> availableCamps = new ArrayList<>();
-		try {
-			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("AVAILABLE_CAMPS"));
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Hashtable<String, String> camp = new Hashtable<String, String>();
-				camp.put("id", Integer.toString(rs.getInt("id")));
-				camp.put("start", rs.getString("start"));
-				camp.put("end", rs.getString("end"));
-				camp.put("educational_level", rs.getString("educationallevel"));
-				camp.put("max_participants", Integer.toString(rs.getInt("maxparticipants")));
-				availableCamps.add(camp);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+/************************************************************************************************************************************************************ */
+	
+/**************************************************************************************************************************************************************
+*		REGISTRATION
+/************************************************************************************************************************************************************ */
+	/**
+	 * Creates a new registration in the data base
+	 * @param idParticipant ->dni
+	 * @param idCamp
+	 * @param registrationDate
+	 * @param price
+	 * @return 1 on success
+	 */
+	public int createRegistration(int idPartcipant, int idCamp, LocalDate registrationDate,float price, String type){
+		int status=0;
+		type="full";
+		try{			
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
+			ps.setInt(1, idPartcipant);
+			ps.setInt(2, idCamp);
+			ps.setDate(3, Date.valueOf(registrationDate));
+			ps.setFloat(4, price);
+			ps.setString(5, type);
+			
+			
+			status = ps.executeUpdate();
 
-		return availableCamps;
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return status;
 	}
 
+/************************************************************************************************************************************************************ */
+	
 	/**
 	 *  Closes connection		Se llama tras hacer los cambios
 	 */
