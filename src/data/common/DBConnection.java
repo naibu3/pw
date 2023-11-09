@@ -412,7 +412,7 @@ public class DBConnection {
 	}
 
 	/************************************************************************************************************************************************************ */
-		
+
 	/******************
 	*	ACTIVITY
 	*******************/
@@ -512,6 +512,105 @@ public class DBConnection {
 		return result;
 	}
 
+	/******************
+	*	ACTIVITY
+	*******************/
+
+	/**
+	 * Creates a new activity in the data base
+	 * @param TODO
+	 * @return 1 on success
+	 */
+	public int createActivity(/*TODO*/) {
+		int status = 0;
+		try {
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_ACTIVITIES"));
+			//TODO
+			/*ps.setInt(1, dni);
+			ps.setString(2, name);
+			ps.setString(3, lastname);
+			ps.setBoolean(4, specialEducator);*/
+
+			status = ps.executeUpdate();
+		} catch(Exception e) { e.printStackTrace(); }
+
+		return status;
+	}
+
+	/**
+	 * Removes an activity from the data base
+	 * @param TODO
+	 * @return 1 on success
+	 */
+	public Boolean deleteActivity(/*TODO*/){
+		try {
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_ACTIVITY"));
+			//TODO
+			/*ps.setInt(1, dni);*/
+			ps.executeUpdate();
+
+			return true;
+		} catch(Exception e) { 
+			e.printStackTrace(); 
+			return false;
+		}
+	}
+
+	/**
+	 * Updates activity info
+	 * @param TODO
+	 * @return 1 on success
+	 */
+	public Boolean updateActivity(/*TODO*/){
+		try{
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_ACTIVITY"));
+			//TODO
+			/*ps.setInt(4, dni);
+			ps.setString(1, name);
+			ps.setString(2, lastname);
+			ps.setBoolean(3, specialEducator);*/
+
+			ps.executeUpdate();
+
+			return true;
+		} catch(Exception e) { 
+			e.printStackTrace();
+			return false;
+		}
+	}	
+
+	public ArrayList<Hashtable<String,String>> getAllActivities () {
+		Statement stmt = null;
+		ArrayList<Hashtable<String, String>> result = new ArrayList<>();
+		Hashtable<String,String> participantMap = null;
+		
+		try {
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("GET_ALL_ACTIVITIES"));
+			
+			while (rs.next()) {
+				int idparticipant = rs.getInt("dni");
+				String name = rs.getString("name");
+				String lastname = rs.getString("lastname");				
+				Date birthdate = rs.getDate("birthdate");
+				Boolean special_attention = rs.getBoolean("specialneeds");
+
+				participantMap = new Hashtable<String, String>();
+				participantMap.put("id", Integer.toString(idparticipant));
+				participantMap.put("name", name);
+				participantMap.put("lastname", lastname);
+				participantMap.put("birthdate", String.valueOf(birthdate));
+				participantMap.put("special_attention", Boolean.toString(special_attention));
+
+				
+				result.add(participantMap);
+			}
+			
+			if (stmt != null) stmt.close();
+		} catch (Exception e) { e.printStackTrace(); }
+		return result;
+	}
+	
 	/**
 	 *  Closes connection		Se llama tras hacer los cambios
 	 */
