@@ -588,7 +588,7 @@ public class DBConnection {
         DBConnection dbConnection = new DBConnection();
         dbConnection.getConnection();
 
-        if (dbConnection.deleteMonitor(idCamp)) {
+        if (dbConnection.deleteCamp(idCamp)) {
             return true;
         }
 
@@ -598,7 +598,7 @@ public class DBConnection {
 	public Boolean updateCamp(int idCamp, LocalDate begginningDate, LocalDate endingDate, Level level,int maxAssistants) {
         DBConnection dbConnection = new DBConnection();
         dbConnection.getConnection();
-        if (dbConnection.updateMonitor(idCamp, begginningDate, endingDate, level,maxAssistants)) {
+        if (dbConnection.updateCamp(idCamp, begginningDate, endingDate, level,maxAssistants)) {
             return true;
         }
         
