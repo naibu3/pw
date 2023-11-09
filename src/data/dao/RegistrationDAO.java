@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import data.dto.RegistrationDTO;
 import data.common.DBConnection;
 
-public class RegistrationDAO {
+public class RegistrationDAO{
+    
     
 }
