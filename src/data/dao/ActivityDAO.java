@@ -62,20 +62,20 @@ public class ActivityDAO {
      * Get all the activities in the database
      * @return ArrayList<ActivityDTO> with all the activities in the database.
      */
-    public ArrayList<MonitorDTO> getAllMonitors() {
-        ArrayList<MonitorDTO> result = new ArrayList<MonitorDTO>();
+    public ArrayList<ActivityDTO> getAllActivities() {
+        ArrayList<ActivityDTO> result = new ArrayList<ActivityDTO>();
         try {
             DBConnection dbConnection = new DBConnection();
             dbConnection.getConnection();
 
-            ArrayList<Hashtable<String, String>> monitors = dbConnection.getAllMonitors();
-            if (monitors == null) {
+            ArrayList<Hashtable<String, String>> activities = dbConnection.getAllActivities();
+            if (activities == null) {
                 return null;
             }
 
-            for (Hashtable<String, String> monitor: monitors) {
-                MonitorDTO currentMonitor = new MonitorDTO(Integer.parseInt(monitor.get("id")), monitor.get("name"), monitor.get("lastname"), Boolean.parseBoolean(monitor.get("specialeducator")));
-                result.add(currentMonitor);
+            for (Hashtable<String, String> activity: activities) {
+                ActivityDTO currentActivity = new ActivityDTO(/*TODO*/);
+                result.add(currentActivity);
             }
 
         } catch (Exception e) {
