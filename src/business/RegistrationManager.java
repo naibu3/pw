@@ -1,10 +1,6 @@
 package business;
 
 import java.time.LocalDate;
-import java.util.Hashtable;
-import java.util.ArrayList;
-
-import data.common.DBConnection;
 import data.dto.RegistrationDTO;
 
 public class RegistrationManager {
