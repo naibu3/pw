@@ -5,6 +5,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Properties;
+
+import data.dto.CampDTO;
+
 import java.util.ArrayList;
 
 public class DBConnection {
@@ -419,23 +422,18 @@ public class DBConnection {
 
 	/**
 	 * Creates a new activity in the data base
-	 * @param name
-	 * @param level
-	 * @param timetable
-	 * @param max
-	 * @param monitors_n
+	 * @param TODO
 	 * @return 1 on success
 	 */
-	public int createActivity(String name, Level level, String timetable, int max, int monitors_n) {
+	public int createActivity(/*TODO*/) {
 		int status = 0;
 		try {
 			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_ACTIVITIES"));
-
-			ps.setString(1, name);
-			ps.setString(2, level.toString());
-			ps.setString(3, timetable);
-			ps.setInt(4, max);
-			ps.setInt(5, monitors_n);
+			//TODO
+			/*ps.setInt(1, dni);
+			ps.setString(2, name);
+			ps.setString(3, lastname);
+			ps.setBoolean(4, specialEducator);*/
 
 			status = ps.executeUpdate();
 		} catch(Exception e) { e.printStackTrace(); }
@@ -445,14 +443,14 @@ public class DBConnection {
 
 	/**
 	 * Removes an activity from the data base
-	 * @param name
+	 * @param TODO
 	 * @return 1 on success
 	 */
-	public Boolean deleteActivity(String name){
+	public Boolean deleteActivity(/*TODO*/){
 		try {
 			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_ACTIVITY"));
-
-			ps.setString(1, name);
+			//TODO
+			/*ps.setInt(1, dni);*/
 			ps.executeUpdate();
 
 			return true;
@@ -464,22 +462,17 @@ public class DBConnection {
 
 	/**
 	 * Updates activity info
-	 * @param name
-	 * @param level
-	 * @param timetable
-	 * @param max
-	 * @param monitors_n
+	 * @param TODO
 	 * @return 1 on success
 	 */
-	public Boolean updateActivity(String name, Level level, String timetable, int max, int monitors_n){
+	public Boolean updateActivity(/*TODO*/){
 		try{
 			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_ACTIVITY"));
-			
-			ps.setString(1, level.toString());
-			ps.setString(2, timetable);
-			ps.setInt(3, max);
-			ps.setInt(4, monitors_n);
-			ps.setString(5, name);
+			//TODO
+			/*ps.setInt(4, dni);
+			ps.setString(1, name);
+			ps.setString(2, lastname);
+			ps.setBoolean(3, specialEducator);*/
 
 			ps.executeUpdate();
 
@@ -537,4 +530,78 @@ public class DBConnection {
 		}
 	}
 
+	/******************
+	*	CAMP
+	*******************/
+
+
+	public boolean createCamp(CampDTO Camp) {
+		int status = -1;
+		try {
+			pathSQL = new Properties();
+			pathSQL.load(new FileInputStream("config.properties"));
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+
+			status = dbConnection.createCamp(Camp.getIdCamp(), Camp.getbeginningDate(), Camp.getendingDate(), Camp.geteducativeLevel(), Camp.getmaxAssistants());
+			
+			dbConnection.closeConnection();
+			
+		} catch (Exception e){
+			System.err.println(e);
+			e.printStackTrace();
+		}
+		return (status == 1);
+	}
+
+	/**
+	 * Retrieves all the users in the data base, no matter which type of user they are
+	 * @return ArrayList<CampDTO> with all the registered users in the data base
+	 */
+	public ArrayList<CampDTO> getAllCamps(){
+		ArrayList<Hashtable<String, String>> result = new ArrayList<>();
+		ArrayList<CampDTO> Camps = new ArrayList<>();
+		
+		try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+			result = dbConnection.getAllCamps();
+			
+			dbConnection.closeConnection();
+
+			if (result != null) {
+				result.forEach((item) -> {
+					CampDTO Camp = new CampDTO(Integer.parseInt(item.get("idCamp")),LocalDate.parse(item.get("begginingDate")),LocalDate.parse(item.get("endingDate"))/* ,Level.parse("level_"))*/;
+
+					Camps.add(Camp);
+				});
+			}
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return Camps;	
+	}
+
+	public Boolean deleteCamp(int idCamp) {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.getConnection();
+
+        if (dbConnection.deleteCamp(idCamp)) {
+            return true;
+        }
+
+        return false;
+    }
+
+	public Boolean updateCamp(int idCamp, LocalDate begginningDate, LocalDate endingDate, Level level,int maxAssistants) {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.getConnection();
+        if (dbConnection.updateCamp(idCamp, begginningDate, endingDate, level,maxAssistants)) {
+            return true;
+        }
+        
+        return false;
+    }
 }
