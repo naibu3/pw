@@ -1,5 +1,7 @@
 package data.common;
 
+package data.Level;
+
 import java.io.FileInputStream;
 import java.sql.*;
 import java.time.LocalDate;

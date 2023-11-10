@@ -415,25 +415,30 @@ public class DBConnection {
 	}
 
 	/************************************************************************************************************************************************************ */
-
+	
 	/******************
 	*	ACTIVITY
 	*******************/
 
 	/**
 	 * Creates a new activity in the data base
-	 * @param TODO
+	 * @param name
+	 * @param level
+	 * @param timetable
+	 * @param max
+	 * @param monitors_n
 	 * @return 1 on success
 	 */
-	public int createActivity(/*TODO*/) {
+	public int createActivity(String name, Level level, String timetable, int max, int monitors_n) {
 		int status = 0;
 		try {
 			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_ACTIVITIES"));
-			//TODO
-			/*ps.setInt(1, dni);
-			ps.setString(2, name);
-			ps.setString(3, lastname);
-			ps.setBoolean(4, specialEducator);*/
+
+			ps.setString(1, name);
+			ps.setString(2, level.toString());
+			ps.setString(3, timetable);
+			ps.setInt(4, max);
+			ps.setInt(5, monitors_n);
 
 			status = ps.executeUpdate();
 		} catch(Exception e) { e.printStackTrace(); }
@@ -443,14 +448,14 @@ public class DBConnection {
 
 	/**
 	 * Removes an activity from the data base
-	 * @param TODO
+	 * @param name
 	 * @return 1 on success
 	 */
-	public Boolean deleteActivity(/*TODO*/){
+	public Boolean deleteActivity(String name){
 		try {
 			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_ACTIVITY"));
-			//TODO
-			/*ps.setInt(1, dni);*/
+
+			ps.setString(1, name);
 			ps.executeUpdate();
 
 			return true;
@@ -462,17 +467,22 @@ public class DBConnection {
 
 	/**
 	 * Updates activity info
-	 * @param TODO
+	 * @param name
+	 * @param level
+	 * @param timetable
+	 * @param max
+	 * @param monitors_n
 	 * @return 1 on success
 	 */
-	public Boolean updateActivity(/*TODO*/){
+	public Boolean updateActivity(String name, Level level, String timetable, int max, int monitors_n){
 		try{
 			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_ACTIVITY"));
-			//TODO
-			/*ps.setInt(4, dni);
-			ps.setString(1, name);
-			ps.setString(2, lastname);
-			ps.setBoolean(3, specialEducator);*/
+			
+			ps.setString(1, level.toString());
+			ps.setString(2, timetable);
+			ps.setInt(3, max);
+			ps.setInt(4, monitors_n);
+			ps.setString(5, name);
 
 			ps.executeUpdate();
 
