@@ -3,7 +3,7 @@ package data.dao;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import data.dto.MonitorDTO;
-import data.common.DBConnection;
+import data.shared.DBConnection;
 
 public class MonitorDAO {
     public MonitorDAO() {}

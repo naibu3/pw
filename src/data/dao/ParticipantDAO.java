@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import data.dto.ParticipantDTO;
-import data.common.DBConnection;
+import data.shared.DBConnection;
 
 public class ParticipantDAO {
     

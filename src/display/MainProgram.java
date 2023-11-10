@@ -1,4 +1,6 @@
 import business.MonitorManager;
+import java.time.LocalDate;
+import java.util.Scanner;
 
 public class MainProgram {
     public static void main(String[] args) {

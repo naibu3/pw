@@ -3,11 +3,10 @@ package data.dao;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import data.common.DBConnection;
+import data.shared.DBConnection;
 import data.dto.ActivityDTO;
-import data.dto.MonitorDTO;
 
-import data.common.Level;
+import data.shared.Level;
 
 public class ActivityDAO {
     

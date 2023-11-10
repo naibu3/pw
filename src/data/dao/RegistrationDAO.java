@@ -1,6 +1,6 @@
 package data.dao;
 
-import data.common.DBConnection;
+import data.shared.DBConnection;
 import data.dto.RegistrationDTO;
 
 public class RegistrationDAO {

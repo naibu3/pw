@@ -1,6 +1,6 @@
 package data.dto;
 
-import data.common.Level;
+import data.shared.Level;
 import java.util.List;
 
 public class ActivityDTO {

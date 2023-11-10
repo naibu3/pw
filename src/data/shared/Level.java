@@ -1,4 +1,4 @@
-package data.common;
+package data.shared;
 /** Represents ages.
  * @version 1.0
 */

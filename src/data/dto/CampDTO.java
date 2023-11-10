@@ -3,7 +3,7 @@ package data.dto;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import data.comon.Level;
+import data.shared.Level;
 
 
 /** Represents a camp.

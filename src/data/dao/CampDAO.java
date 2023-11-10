@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import data.dto.CampDTO;
-import data.comon.DBConnection;
+import data.shared.DBConnection;
 
 public class CampDAO {    
     private Properties pathSQL;

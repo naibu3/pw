@@ -1,4 +1,4 @@
-package data.common;
+package data.shared;
 
 import java.io.FileInputStream;
 import java.sql.*;
