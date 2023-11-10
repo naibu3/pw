@@ -428,6 +428,52 @@ public class DBConnection {
 		return status;
 	}
 
+	/**
+	 * Updates a registration in the data base
+	 * @param registrationId
+	 * @param idParticipant ->dni
+	 * @param idCamp
+	 * @param registrationDate
+	 * @param price
+	 * @param type
+	 * @return 1 on success
+	 */
+	public int updateRegistration(int registrationId, int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
+		int status=0;
+		try{			
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("UPDATE_REGISTRATION"));
+			ps.setInt(1, idPartcipant);
+			ps.setInt(2, idCamp);
+			ps.setDate(3, Date.valueOf(registrationDate));
+			ps.setFloat(4, price);
+			ps.setString(5, type.toString());
+			ps.setInt(6, registrationId);
+			
+			status = ps.executeUpdate();
+
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return status;
+	}
+
+	/**
+	 * Deletes a registration in the data base
+	 * @param id
+	 * @return 1 on success
+	 */
+	public int deleteRegistration(int id){
+		int status=0;
+		try{			
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("DELETE_REGISTRATION"));
+			ps.setInt(1, id);
+			
+			status = ps.executeUpdate();
+
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return status;
+	}
+
 	/************************************************************************************************************************************************************ */
 	
 	/******************
