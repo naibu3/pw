@@ -7,21 +7,27 @@ import data.common.DBConnection;
 import data.dto.ActivityDTO;
 import data.dto.MonitorDTO;
 
+import data.common.Level;
+
 public class ActivityDAO {
     
     public ActivityDAO(){}
 
     /**
 	 * Creates a new activity
-	 * @param activity
+	 * @param name
+	 * @param level
+	 * @param timetable
+	 * @param max
+	 * @param monitors_n
 	 * @return true on success
 	 */
-    public Boolean createActivity(ActivityDTO activity) {
+    public Boolean createActivity(String name, Level level, String timetable, int max, int monitors_n) {
         try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 
-            dbConnection.createActivity(/*TODO*/);
+            dbConnection.createActivity(name, level, timetable, max, monitors_n);
             dbConnection.closeConnection();
 
         } catch(Exception e) {
@@ -36,22 +42,30 @@ public class ActivityDAO {
      * @param id
      * @return true on success, otherwise false
      */
-    public Boolean deleteActivity(int id) {
+    public Boolean deleteActivity(String name) {
         DBConnection dbConnection = new DBConnection();
         dbConnection.getConnection();
 
-        if (dbConnection.deleteActivity(id)) {  //TODO
+        if (dbConnection.deleteActivity(name)) {
             return true;
         }
 
         return false;
     }
 
-    //TODO
-    public Boolean updateActivity(/*TODO*/) {
+    /**
+     * Update an activity from the database
+     * @param name
+	 * @param level
+	 * @param timetable
+	 * @param max
+	 * @param monitors_n
+     * @return true on success, otherwise false
+     */
+    public Boolean updateActivity(String name, Level level, String timetable, int max, int monitors_n) {
         DBConnection dbConnection = new DBConnection();
         dbConnection.getConnection();
-        if (dbConnection.updateActivity(/*TODO*/)) {
+        if (dbConnection.updateActivity(name, level, timetable, max, monitors_n)) {
             return true;
         }
         
@@ -74,7 +88,11 @@ public class ActivityDAO {
             }
 
             for (Hashtable<String, String> activity: activities) {
-                ActivityDTO currentActivity = new ActivityDTO(/*TODO*/);
+                ActivityDTO currentActivity = new ActivityDTO(activity.get("name"),
+                                                                Level.valueOf(activity.get("timetable")),
+                                                                activity.get("educationallevel"),
+                                                                Integer.parseInt(activity.get("maxparticipants")),
+                                                                Integer.parseInt(activity.get("monitorsrequired")));
                 result.add(currentActivity);
             }
 
