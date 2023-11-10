@@ -3,10 +3,7 @@ package business;
 import java.util.ArrayList;
 
 import data.dao.ActivityDAO;
-import data.dao.MonitorDAO;
 import data.dto.ActivityDTO;
-import data.dto.MonitorDTO;
-import data.shared.DBConnection;
 import data.shared.Level;
 
 public class ActivityManager {
