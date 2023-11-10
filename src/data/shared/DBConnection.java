@@ -182,7 +182,7 @@ public class DBConnection {
 		
 		try {
 			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("getAllMonitors"));
+			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("GET_ALL_MONITORS"));
 
 			while(rs.next()) {
 				Hashtable<String, String> monitor = new Hashtable<String, String>();
@@ -281,7 +281,7 @@ public class DBConnection {
 		
 		try {
 			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("getAllParticipants"));
+			ResultSet rs = stmt.executeQuery(sqlQueries.getProperty("GET_ALL_PARTICIPANTS"));
 			
 			while (rs.next()) {
 				int idparticipant = rs.getInt("dni");
