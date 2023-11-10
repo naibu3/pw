@@ -1,6 +1,7 @@
 import business.MonitorManager;
 import java.time.LocalDate;
 import java.util.Scanner;
+import business.ParticipantManager;
 
 public class MainProgram {
     public static void main(String[] args) {
@@ -19,7 +20,7 @@ public class MainProgram {
             // Intentar parsear el String a LocalDate
             LocalDate.parse(fecha);
             return true; // El formato es válido
-        } catch (DateTimeParseException e) {
+        } catch (Exception e) {
             return false; // El formato no es válido
         }
     }

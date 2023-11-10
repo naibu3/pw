@@ -7,5 +7,9 @@
         "exclude": [
             "/home/nacabaro/mysql-connector.jar"
         ]
-    }
+    },
+    "java.project.sourcePaths": [
+        "src/display",
+        "src"
+    ]
 }
