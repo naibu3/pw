@@ -410,16 +410,15 @@ public class DBConnection {
 	 * @param price
 	 * @return 1 on success
 	 */
-	public int createRegistration(int idPartcipant, int idCamp, LocalDate registrationDate,float price, String type){
+	public int createRegistration(int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
 		int status=0;
-		type="full";
 		try{			
 			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
 			ps.setInt(1, idPartcipant);
 			ps.setInt(2, idCamp);
 			ps.setDate(3, Date.valueOf(registrationDate));
 			ps.setFloat(4, price);
-			ps.setString(5, type);
+			ps.setString(5, type.toString());
 			
 			
 			status = ps.executeUpdate();
