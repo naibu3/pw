@@ -101,4 +101,25 @@ public class ActivityDAO {
 
         return result;
     }
+
+    /**
+	 * Adds a monitor into activity
+	 * @param activityName
+	 * @param monitorId
+	 * @return true on success
+	 */
+    public Boolean addMonitorToActivity(String activityName, int monitorId) {
+        try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+
+            dbConnection.addMonitorToActivity(activityName, monitorId);
+            dbConnection.closeConnection();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

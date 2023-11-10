@@ -54,8 +54,23 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 		
-			return connection;
+		return connection;
+	}
+
+	/**
+	 *  Closes connection		Se llama tras hacer los cambios
+	 */
+	public void closeConnection() {
+		try {
+			if(this.connection != null && !this.connection.isClosed()) {
+				this.connection.close();
+				System.out.println("Database connection successfully closed!");
+			}
+		} catch (SQLException e) {
+			System.err.println("Error while trying to close the connection.");
+			e.printStackTrace();
 		}
+	}
 
 	/*********************************
 	 * MONITORS
@@ -524,20 +539,25 @@ public class DBConnection {
 		} catch (Exception e) { e.printStackTrace(); }
 		return result;
 	}
-	
+
 	/**
-	 *  Closes connection		Se llama tras hacer los cambios
+	 * Adds a monitor into activity
+	 * @param activityName
+	 * @param monitorId
+	 * @return true on success
 	 */
-	public void closeConnection() {
+	public int addMonitorToActivity(String activityName, int monitorId) {
+		int status = 0;
 		try {
-			if(this.connection != null && !this.connection.isClosed()) {
-				this.connection.close();
-				System.out.println("Database connection successfully closed!");
-			}
-		} catch (SQLException e) {
-			System.err.println("Error while trying to close the connection.");
-			e.printStackTrace();
-		}
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("ADD_MONITOR_TO_ACTIVITY"));
+
+			ps.setString(1, activityName);
+			ps.setInt(2, monitorId);
+
+			status = ps.executeUpdate();
+		} catch(Exception e) { e.printStackTrace(); }
+
+		return status;
 	}
 
 	/******************
