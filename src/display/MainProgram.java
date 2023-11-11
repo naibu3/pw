@@ -35,7 +35,7 @@ public class MainProgram {
 	public static void displayMainMenu() {
 		Boolean flag = true;
 		while (flag) {
-			System.out.println("-- Main menu: -------------------");
+			System.out.println("-- Main menu: -----------------------------");
 			System.out.println("1. Activity Manager");
 			System.out.println("2. Participant Manager");
 			System.out.println("3. Registration Manager");
@@ -75,7 +75,7 @@ public class MainProgram {
 	public static void displayActivityMenu() {		
 		Boolean flag = true;
 		while (flag) {
-			System.out.println("-- Activity Manager: ------------");
+			System.out.println("-- Activity Manager: ----------------------");
 			System.out.println("1. Create activity");
 			System.out.println("2. Update activity information");
 			System.out.println("3. Remove activity");
@@ -113,7 +113,7 @@ public class MainProgram {
 	public static void displayParticipantMenu() {
 		Boolean flag = true;
 		while(flag) {
-			System.out.println("-- Participant Manager: ---------");
+			System.out.println("-- Participant Manager: -------------------");
 			System.out.println("1. Create participant");
 			System.out.println("2. Update participant data");
 			System.out.println("3. Remove participant");
@@ -154,7 +154,7 @@ public class MainProgram {
 	public static void displayRegistrationMenu() {
 		Boolean flag = true;
 		while (flag) {
-			System.out.println("-- Registration Manager: --------");
+			System.out.println("-- Registration Manager: ------------------");
 			System.out.println("1. Create registration");
 			System.out.println("0. Go back");
 
@@ -180,7 +180,7 @@ public class MainProgram {
 	public static void displayCampsMenu() {
 		Boolean flag = true;
 		while (flag) {
-			System.out.println("-- Camps Manager: ---------------");
+			System.out.println("-- Camps Manager: -------------------------");
 			System.out.println("1. Create new camp");
 			System.out.println("2. Update camp details");
 			System.out.println("3. Remove camp");
@@ -352,12 +352,6 @@ public class MainProgram {
 		System.out.println(participantManager.getAllParticipants());
 	}
 
-	/* 
-	public static int countParticipant(ParticipantManager participantManager){
-		int count=participantManager.countParticipant();
-		return count;
-	}*/
-
 
 	/*
 	 * Activity functions
@@ -406,6 +400,7 @@ public class MainProgram {
 	public static void listActivities() {
 		System.out.println(activityManager.getAllActivities());
 	}
+
 
 	/*
 	 * Registration functions
@@ -469,7 +464,7 @@ public class MainProgram {
 		campManager.createCamp(id, beginningDate, endingDate, Level.valueOf(level), maxAssistants);
 	}
 
-	// Menu option to remoce a camp
+	// Menu option to remove a camp
 	public static void removeCamp() {
 		System.out.println("Insert the ID of the camp you want to delete: ");
 		Integer campId = Integer.parseInt(stdinScanner.nextLine());
@@ -516,6 +511,7 @@ public class MainProgram {
 		}
 	}
 
+	// Menu option to list all monitors
 	public static void listAllMonitors() {
 		System.out.println(campManager.getAllMonitors());
 	} 
