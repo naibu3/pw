@@ -68,7 +68,11 @@ public class CampDAO {
 																LocalDate.parse(camp.get("end")),
                                                                 Level.valueOf(camp.get("timetable")),
 																Integer.valueOf(camp.get("maxAssistants")));
-                result.add(currentcamp);
+                
+//si no va quita el if
+		    if(Boolean.valueOf(camp.get("special_monitor")))
+			currentcamp.setresponsibleMonitors(1);
+		result.add(currentcamp);
             }
 			
 		} catch (Exception e){
@@ -119,6 +123,23 @@ public class CampDAO {
 			e.printStackTrace();
 		}		
 
+		return (status==1);
+	}
+
+	public boolean add_special_monitor(int idM, int idC){
+		int status = -1;
+		try {			
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+
+			status = dbConnection.add_special_monitor(idM, idC);
+			
+			dbConnection.closeConnection();
+			
+		} catch (Exception e){
+			System.err.println(e);
+			e.printStackTrace();
+		}
 		return (status==1);
 	}
 
