@@ -201,6 +201,89 @@ public class DBConnection {
 	/******************************
 	 * REGISTRATIONS
 	 ******************************/
+	/**
+	 * Creates a new registration in the data base
+	 * @param id
+	 * @param idP
+	 * @param idC
+	 * @param rDate
+	 * @param price		//calculated
+	 * @param type
+	 * @param time		//calculated
+	 * @return 1 on success
+	 */
+	public int createRegistration(int idP, int idC, LocalDate rDate, Type type){
+		int status=0;
+		try{
+
+			String time = calculateRegistrationTime(idC, rDate);
+			float price = calculateRegistrationPrice(idC, type);
+
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
+			ps.setInt(1, idP);
+			ps.setInt(2, idC);
+			ps.setDate(3, Date.valueOf(rDate));
+			ps.setFloat(4, price);
+			ps.setString(5, String.valueOf(type));
+			ps.setString(6, time);
+			
+			
+			status = ps.executeUpdate();
+
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return status;
+	}
+	/*
+	* GET TIME EARLY/LATE
+	*/
+		public String calculateRegistrationTime(int campId, LocalDate campStartDate) {
+			PreparedStatement ps = null;
+			String result = null;
+		
+			try {
+				ps = connection.prepareStatement(sqlQueries.getProperty("CALCULATE_TIME"));
+				
+				ps.setDate(1, Date.valueOf(campStartDate));
+				ps.setInt(2, campId);
+		
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					result = rs.getString("registration_tim");
+				}
+		
+			} catch (Exception e) { e.printStackTrace(); }
+		
+			return result;
+		}
+	
+	/*
+	 * GET PRICE 
+	 */
+		public float calculateRegistrationPrice(int campId, Type type) {
+			PreparedStatement ps = null;
+			float result = 0;
+		
+			try {
+				ps = connection.prepareStatement(sqlQueries.getProperty("CALCULATE_PRICE"));
+				
+				ps.setInt(1, campId);
+		
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					result = rs.getInt("activity_count");
+				}
+				if(type.equals(Type.Full))
+					result=result*20+300;
+				else
+					result=result*20+100;
+		
+			} catch (Exception e) { e.printStackTrace(); }
+		
+			return result;
+		}
+
+	
 	public ArrayList<Hashtable<String, String>> getAvailableCamps() {
 		ArrayList<Hashtable<String, String>> availableCamps = new ArrayList<>();
 		try {
