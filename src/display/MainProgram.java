@@ -144,10 +144,15 @@ public class MainProgram {
 		Boolean flag = true;
 		while (flag) {
 			System.out.println("-- Registration Manager: --------");
+			System.out.println("1. Create registration");
 			System.out.println("0. Go back");
 
 			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
+				case 1:
+					createRegistration();
+					break;
+					
 				case 0:
 					flag = false;
 					System.out.println("Returning to previous menu...");
