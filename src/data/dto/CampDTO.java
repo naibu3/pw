@@ -150,7 +150,7 @@ public class CampDTO{
      /** Adds an activity.
      * @param activity activity
     */
-    public void associateActivity(Activity activity) {
+    public void associateActivity(ActivityDTO activity) {
         if (activity.getLevel_().equals(this.level_)) {
             this.activity.add(activity.getName_());
         }
