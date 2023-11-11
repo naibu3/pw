@@ -22,9 +22,9 @@ public class MainProgram {
 		registrationManager = new RegistrationManager();
 		campManager = new CampManager();
 
-		//displayMainMenu();
+		displayMainMenu();
 
-		createCamp();
+		//createCamp();
 
 		/*MonitorManager monitorManager = new MonitorManager();
 		monitorManager.createMonitor(12,"Pitillo", "fumatas", true);
@@ -92,14 +92,18 @@ public class MainProgram {
 			
 			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
+				case 1:
+					createActivity();
+					break;
+
 				case 0:
-				flag = false;
-				System.out.println("Returning to previous menu...");
-				break;
+					flag = false;
+					System.out.println("Returning to previous menu...");
+					break;
 				
 				default:
-				System.out.println("Invalid option. Try again.");
-				break;
+					System.out.println("Invalid option. Try again.");
+					break;
 			}
 		}
 	}
@@ -203,6 +207,14 @@ public class MainProgram {
         }
     }
 
+	// This function is here to check the timetable was inserted correctly
+	private static boolean validateTimetable(String timetable) {
+		if (timetable.toLowerCase().equals("morning") || timetable.toLowerCase().equals("afternoon")) {
+			return true;
+		}
+
+		return false;
+	}
 
 	/****************************************************************************************************************************************** */
 	//	PARTICIPANT FUNCTIONS
@@ -314,48 +326,38 @@ public class MainProgram {
 	/*
 	 * Activity functions
 	 */
-	/*
 	public static void createActivity(){
 		String name;
 		Level activityLevel;
-		LocalDate timeTable = LocalDate.now();
+		String timetable;
 		int maxParticipants;
-
-		
-		System.out.println("Insert DNI: ");
-		dni=Integer.parseInt(stdinScanner.nextLine());
+		int monitorsRequired;
 
 		System.out.println("Insert name: ");
 		name=stdinScanner.nextLine();
 
-		System.out.println("Insert lastname: ");
-		lastname=stdinScanner.nextLine();
+		System.out.println("Insert level (1: children, 2: youth, 3: teenager): ");
+		activityLevel = Level.values()[ Integer.parseInt(stdinScanner.nextLine()) - 1];
 
-		System.out.println("Insert birthdate with this format [YYYY-MM-DD]: ");
-		String date;
+		System.out.println("Insert timetable (morning, afternoon)");
 		do {
-			date = stdinScanner.nextLine();
-			if (validarFormatoFecha(date)) {
-				birthDate=LocalDate.parse(date);
-			} else {
-				System.out.println("The date you inserted is not correctly formatted. Please try again.");
+			timetable = stdinScanner.nextLine();
+			timetable = timetable.substring(0, 1).toUpperCase() + timetable.substring(1);
+
+			if (!validateTimetable(timetable)) {
+				System.out.println("You have to insert either Morning or Afternoon");
 			}
-		} while (!validarFormatoFecha(date));
+		} while (!validateTimetable(timetable));
 
-		System.out.println("Insert yes if the kid need special attention: ");	
-		aux=stdinScanner.nextLine();
-		
-		if(aux.equals("yes")){
-			specialNeeds = true;
-		}
-		else{
-			specialNeeds=false;
-		}
+		System.out.println("Insert the maximum number of participants in the activity: ");	
+		maxParticipants = Integer.parseInt(stdinScanner.nextLine());
 
-		System.out.println(specialNeeds.toString());
-		participantManager.createParticipant(dni, name, lastname, birthDate, specialNeeds);
+		System.out.println("How many monitors are required for this activity?");
+		monitorsRequired = Integer.parseInt(stdinScanner.nextLine());
+
+		activityManager.createActivity(name, activityLevel, timetable, maxParticipants, monitorsRequired);
 	}
-	*/
+
 	/******************************
 	 * REGISTRATION
 	 ******************************/
