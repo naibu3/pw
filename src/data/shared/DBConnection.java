@@ -608,55 +608,61 @@ public class DBConnection {
 	/******************
 	*	CAMP
 	*******************/
-
-
-	public boolean createCamp(CampDTO Camp) {
+													//Revisar autoincremento
+	public int createCamp(int id, LocalDate beggin, LocalDate end, Level level, int maxAssistants) {
 		int status = -1;
 		try {
-			pathSQL = new Properties();
-			pathSQL.load(new FileInputStream("config.properties"));
-			DBConnection dbConnection = new DBConnection();
-			dbConnection.getConnection();
-
-			status = dbConnection.createCamp(Camp.getIdCamp(), Camp.getbeginningDate(), Camp.getendingDate(), Camp.geteducativeLevel(), Camp.getmaxAssistants());
 			
-			dbConnection.closeConnection();
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_CAMPS"));
+			
+			ps.setDate(1, Date.valueOf(beggin));
+			ps.setDate(2, Date.valueOf(end));
+			ps.setString(3, String.valueOf(level));
+			ps.setInt(4, maxAssistants);
+
+
+			status= ps.executeUpdate();
 			
 		} catch (Exception e){
 			System.err.println(e);
 			e.printStackTrace();
 		}
-		return (status == 1);
+		return (status);
 	}
 
 	/**
 	 * Retrieves all the users in the data base, no matter which type of user they are
-	 * @return ArrayList<CampDTO> with all the registered users in the data base
+	 * @return ArrayList<Hashtable<String,String>>  with all the registered users in the data base
 	 */
-	public ArrayList<CampDTO> getAllCamps(){
+	public ArrayList<Hashtable<String,String>>  getAllCamps(){
+		Statement stmt = null;
 		ArrayList<Hashtable<String, String>> result = new ArrayList<>();
-		ArrayList<CampDTO> Camps = new ArrayList<>();
+		Hashtable<String,String> CampMap = null;
 		
 		try {
-			DBConnection dbConnection = new DBConnection();
-			dbConnection.getConnection();
-			result = dbConnection.getAllCamps();
-			
-			dbConnection.closeConnection();
+			stmt=connection.createStatement();
+			ResultSet rs=stmt.executeQuery(sqlQueries.getProperty("GET_ALL_CAMPS"));		
+//Integer.parseInt(item.get("idCamp")),LocalDate.parse(item.get("begginingDate")),LocalDate.parse(item.get("endingDate"))/* ,Level.parse("level_"))*/;
+			while(rs.next()){
+				int idCamp=rs.getInt("id");
+				Date beggin=rs.getDate("start");
+				Date end=rs.getDate("end");
+				String level =rs.getString("level");
+				
+				CampMap = new Hashtable<String, String>();
+				CampMap.put("id", Integer.toString(idCamp));
+				CampMap.put("start", String.valueOf(beggin));
+				CampMap.put("end", String.valueOf(end));
+				CampMap.put("level", level);
 
-			if (result != null) {
-				result.forEach((item) -> {
-					CampDTO Camp = new CampDTO(Integer.parseInt(item.get("idCamp")),LocalDate.parse(item.get("begginingDate")),LocalDate.parse(item.get("endingDate"))/* ,Level.parse("level_"))*/;
-
-					Camps.add(Camp);
-				});
+				result.add(CampMap);
 			}
 			
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 		
-		return Camps;	
+		return result;	
 	}
 
 	public Boolean deleteCamp(int idCamp) {
