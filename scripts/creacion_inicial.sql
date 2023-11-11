@@ -10,6 +10,17 @@ CREATE TABLE `activities` (
   CONSTRAINT `CONSTRAINT_2` CHECK (`timetable` in ('Morning','Afternoon'))
 );
 
+DROP TABLE IF EXISTS `camps`;
+CREATE TABLE `camps` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `start` date NOT NULL,
+  `end` date NOT NULL,
+  `educationallevel` varchar(8) NOT NULL COMMENT 'Allows only ''Children'', ''Youth'' or ''Teenager''',
+  `maxparticipants` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `CONSTRAINT_1` CHECK (`educationallevel` in ('Children','Youth','Teenager'))
+);
+
 DROP TABLE IF EXISTS `activities_in_camps`;
 CREATE TABLE `activities_in_camps` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT ' This table is here to do a Many to Many relationships between Activities and Camps ',
@@ -22,25 +33,14 @@ CREATE TABLE `activities_in_camps` (
   CONSTRAINT `fk_campid_camps` FOREIGN KEY (`campid`) REFERENCES `camps` (`id`)
 );
 
-DROP TABLE IF EXISTS `camps`;
-CREATE TABLE `camps` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `start` date NOT NULL,
-  `end` date NOT NULL,
-  `educationallevel` varchar(8) NOT NULL COMMENT 'Allows only ''Children'', ''Youth'' or ''Teenager''',
-  `maxparticipants` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `CONSTRAINT_1` CHECK (`educationallevel` in ('Children','Youth','Teenager'))
-);
 
 DROP TABLE IF EXISTS `monitors`;
 CREATE TABLE `monitors` (
   `dni` varchar(9) NOT NULL,
   `name` varchar(20) NOT NULL,
   `lastname` varchar(40) NOT NULL,
-  `specialeducator` varchar(3) NOT NULL COMMENT 'Allows ''Yes'' or ''No''',
+  `specialeducator` tinyint(1) NOT NULL COMMENT 'Allows ''1'' or ''0''',
   PRIMARY KEY (`dni`),
-  CONSTRAINT `CONSTRAINT_1` CHECK (`specialeducator` in ('Yes','No'))
 );
 
 DROP TABLE IF EXISTS `monitors_in_activity`;
@@ -62,9 +62,8 @@ CREATE TABLE `participants` (
   `name` varchar(20) NOT NULL,
   `lastname` varchar(40) NOT NULL,
   `birthdate` date NOT NULL,
-  `specialneeds` varchar(3) NOT NULL COMMENT 'Allows only ''Yes'' or ''No''',
+  `specialneeds` tinyint(1) NOT NULL COMMENT 'Allows only ''1'' or ''0''',
   PRIMARY KEY (`dni`),
-  CONSTRAINT `CONSTRAINT_1` CHECK (`specialneeds` in ('Yes','No'))
 );
 
 

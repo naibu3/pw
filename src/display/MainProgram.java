@@ -1,15 +1,19 @@
 import java.time.LocalDate;
 import java.util.Scanner;
+
+import business.ActivityManager;
 import business.ParticipantManager;
+import data.shared.Level;
 
 public class MainProgram {
 	private static Scanner stdinScanner;
 	private static ParticipantManager participantManager;
+	private static ActivityManager activityManager;
 
     public static void main(String[] args) {
 		stdinScanner = new Scanner(System.in);
 		participantManager = new ParticipantManager();
-
+		activityManager = new ActivityManager();
 		displayMainMenu();
 
 		/*MonitorManager monitorManager = new MonitorManager();
@@ -70,6 +74,10 @@ public class MainProgram {
 		Boolean flag = true;
 		while (flag) {
 			System.out.println("-- Activity Manager: ------------");
+			System.out.println("1. Create activity");
+			System.out.println("2. Update activity information");
+			System.out.println("3. Remove activity");
+			System.out.println("4. Assign monitor to activity");
 			System.out.println("0. Go back");
 			
 			int input = Integer.parseInt(stdinScanner.nextLine());
@@ -287,4 +295,50 @@ public class MainProgram {
 		return count;
 	}
 /****************************************************************************************************************************************** */
+
+	/*
+	 * Activity functions
+	 */
+	/*
+	public static void createActivity(){
+		String name;
+		Level activityLevel;
+		LocalDate timeTable = LocalDate.now();
+		int maxParticipants;
+
+		
+		System.out.println("Insert DNI: ");
+		dni=Integer.parseInt(stdinScanner.nextLine());
+
+		System.out.println("Insert name: ");
+		name=stdinScanner.nextLine();
+
+		System.out.println("Insert lastname: ");
+		lastname=stdinScanner.nextLine();
+
+		System.out.println("Insert birthdate with this format [YYYY-MM-DD]: ");
+		String date;
+		do {
+			date = stdinScanner.nextLine();
+			if (validarFormatoFecha(date)) {
+				birthDate=LocalDate.parse(date);
+			} else {
+				System.out.println("The date you inserted is not correctly formatted. Please try again.");
+			}
+		} while (!validarFormatoFecha(date));
+
+		System.out.println("Insert yes if the kid need special attention: ");	
+		aux=stdinScanner.nextLine();
+		
+		if(aux.equals("yes")){
+			specialNeeds = true;
+		}
+		else{
+			specialNeeds=false;
+		}
+
+		System.out.println(specialNeeds.toString());
+		participantManager.createParticipant(dni, name, lastname, birthDate, specialNeeds);
+	}
+	*/
 }
