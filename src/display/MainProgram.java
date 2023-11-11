@@ -22,17 +22,9 @@ public class MainProgram {
 		registrationManager = new RegistrationManager();
 		campManager = new CampManager();
 
+		// Intentemos usar el menu para todas las implementaciones pls, no toqueis esto gracias
+		// Sincearamente Nacho
 		displayMainMenu();
-
-		//createCamp();
-
-		/*MonitorManager monitorManager = new MonitorManager();
-		monitorManager.createMonitor(12,"Pitillo", "fumatas", true);
-		System.out.println(monitorManager.getAllMonitors());
-		monitorManager.updateMonitor(12, "notanpitillo", "antifumatas", false);
-		System.out.println(monitorManager.getAllMonitors());
-		monitorManager.deleteMonitor(12);
-		System.out.println(monitorManager.getAllMonitors());*/		
 	}
 
 	/*
@@ -216,9 +208,11 @@ public class MainProgram {
 		return false;
 	}
 
-	/****************************************************************************************************************************************** */
-	//	PARTICIPANT FUNCTIONS
-	/****************************************************************************************************************************************** */
+
+	/*
+	 *	Participant functions
+	 */
+	// Menu option to create participant
 	public static void createParticipant(){
 		int dni;
 		String name, lastname, aux;
@@ -259,6 +253,7 @@ public class MainProgram {
 		participantManager.createParticipant(dni, name, lastname, birthDate, specialNeeds);
 	}
 
+	// Menu option to delete participant
 	public static void deleteParticipant(){
 		int dni;
 		System.out.println("Insert the DNI: ");
@@ -267,6 +262,7 @@ public class MainProgram {
 		participantManager.delete(dni);				
 	}
 
+	// Menu option to update participant information
 	public static void updateParticipant(){
 		System.out.println("Insert DNI:");
 		int dni = Integer.parseInt(stdinScanner.nextLine());
@@ -313,19 +309,22 @@ public class MainProgram {
 		participantManager.updateParticipant(dni,toChange, aux);
 	}
 
+	// Menu opction to get all the participants currently in the database
 	public static void getAllParticipants() {
 		System.out.println(participantManager.getAllParticipants());
 	}
 
+	/* 
 	public static int countParticipant(ParticipantManager participantManager){
 		int count=participantManager.countParticipant();
 		return count;
-	}
-/****************************************************************************************************************************************** */
+	}*/
+
 
 	/*
 	 * Activity functions
 	 */
+	// Menu ootion to create a new activity
 	public static void createActivity(){
 		String name;
 		Level activityLevel;
@@ -358,9 +357,10 @@ public class MainProgram {
 		activityManager.createActivity(name, activityLevel, timetable, maxParticipants, monitorsRequired);
 	}
 
-	/******************************
-	 * REGISTRATION
-	 ******************************/
+	/*
+	 * Registration functions
+	 */
+	// Menu option to create a new registration
 	public static void createRegistration(){
 		System.out.println("Insert dni: ");
 		int dni=Integer.valueOf(stdinScanner.nextLine());
@@ -374,9 +374,11 @@ public class MainProgram {
 		registrationManager.createRegistration(dni, idC, date, price, type);
 	}
 	
-	/******************************
-	 * CAMP
-	 ******************************/
+
+	/*
+	 * Camps functions
+	 */
+	// Menu option to create a new camp
 	public static void createCamp(){
 		int id;
 		LocalDate beginningDate = LocalDate.now();
