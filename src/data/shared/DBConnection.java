@@ -746,16 +746,17 @@ public class DBConnection {
 		return result;	
 	}
 
-	public Boolean deleteCamp(int idCamp) {
-        DBConnection dbConnection = new DBConnection();
-        dbConnection.getConnection();
-
-        if (dbConnection.deleteCamp(idCamp)) {
-            return true;
-        }
-
-        return false;
-    }
+        public int deleteCamp(int id){
+		int status=0;
+		try {
+			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_CAMP_BY_ID"));
+			ps.setInt(1, id);
+			status=ps.executeUpdate();
+		} catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+    
 
 	public Boolean updateCamp(int idCamp, LocalDate begginningDate, LocalDate endingDate, Level level,int maxAssistants) {
         DBConnection dbConnection = new DBConnection();
