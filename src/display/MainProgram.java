@@ -341,4 +341,20 @@ public class MainProgram {
 		participantManager.createParticipant(dni, name, lastname, birthDate, specialNeeds);
 	}
 	*/
+	/******************************
+	 * REGISTRATION
+	 ******************************/
+	public static void createRegistration(RegistrationManager registrationManager){
+		System.out.println("Insert dni: ");
+		int dni=Integer.valueOf(leer.nextLine());
+		System.out.println("Insert idCamp: ");
+		int idC=Integer.valueOf(leer.nextLine());
+		LocalDate date=LocalDate.now();
+		float price=0;
+		System.out.println("Insert Full or Partial");
+		Type type=Type.valueOf(leer.nextLine());
+		
+		registrationManager.createRegistration(dni, idC, date, price, type);
+		
+	}
 }
