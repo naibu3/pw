@@ -2,6 +2,9 @@ package data.dto;
 
 import java.time.LocalDate;
 
+import data.shared.Type;
+import data.shared.Time;
+
 /**
  * A DTO for the registration concept
  * @author Ángela González
@@ -13,18 +16,17 @@ public class RegistrationDTO {
     protected int idCamp_;
     protected LocalDate RegistrationDate_;
     protected float price_;
-    //protected EnumRegistrationType type_;
-    //protected EnumRegistrtationTime time_;
+    protected Type type_;
+    protected Time time_;
 
     public RegistrationDTO(){}
-    public RegistrationDTO(int id_part, int id_camp, LocalDate registrationDate, float price){ //faltan EnumRegistrationType type, EnumRegistrtationTime time
-        //setId(id);
+    public RegistrationDTO(int id_part, int id_camp, LocalDate registrationDate, float price, Type type, Time time){ 
         setIdParticipant_(id_part);
         setIdCamp_(id_camp);
         setRegistrationDate(registrationDate);
         setPrice(price);
-        //setType(type);
-        //setRegistrationTime(time);
+        setType(type);
+        setRegistrationTime(time);
         
     }
 
@@ -61,17 +63,17 @@ public class RegistrationDTO {
 
     /** Gets type
      * @return type_
-     public EnumRegistrationType getType() {
-         return type_;
-        }        
-    */
+     */
+    public Type getType() {
+        return type_;
+    }        
     
     /** Gets registration time
      * @return time_
-     public EnumRegistrtationTime getRegistrationTime(){
-         return time_;        
-        }
-    */
+     */
+    public Time getRegistrationTime(){
+        return time_;        
+    }
 
     /** Sets participant's id
      * @param id
@@ -103,17 +105,17 @@ public class RegistrationDTO {
 
     /** Sets type
      * @param type
-     public void setType(EnumRegistrationType type) {
-         type_=type;
-        }
-    */
+     */
+    public void setType(Type type) {
+        type_=type;
+    }
 
     /** Sets registration time
      * @param time
-     public void setRegistrationTime(EnumRegistrtationTime time) {
-         time_ = time;
-        }
-    */
+     */
+    public void setRegistrationTime(Time time) {
+        time_ = time;
+    }
 
     /** Dumps all class info into an string
      * @return string
