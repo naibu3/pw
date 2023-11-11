@@ -758,13 +758,114 @@ public class DBConnection {
 	}
     
 
-	public Boolean updateCamp(int idCamp, LocalDate begginningDate, LocalDate endingDate, Level level,int maxAssistants) {
-        DBConnection dbConnection = new DBConnection();
-        dbConnection.getConnection();
-        if (dbConnection.updateCamp(idCamp, begginningDate, endingDate, level,maxAssistants)) {
-            return true;
-        }
-        
-        return false;
-    }
+	
+	/**
+	 * Updates Participant info
+	 * @param id	 
+	 * @param name
+	 * @return 1 on success
+	 */
+	public boolean updateCamp(int id, String toChange, int field){
+		int status=-1;
+		try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+			
+			switch (field) {
+				case 1:	//change name
+					status=dbConnection.updateCampBeginningDate(id, toChange);
+					break;
+				case 2:
+					status=dbConnection.updateCampEndingDate(id, toChange);
+					break;
+				case 3: 
+					status=dbConnection.updateCampLevel(id, toChange);
+					break;
+				case 4: 
+					status=dbConnection.updateCampMaxAssistants(id, toChange);
+					break;
+			
+				default:
+					break;
+			}
+			
+			dbConnection.closeConnection();
+			
+		} catch (Exception e){
+			System.err.println(e);
+			e.printStackTrace();
+		}		
+
+		return (status==1);
+	}
+	/**
+	 * Updates Camp BeginningDate
+	 * @param id	 
+	 * @param beginningDate
+	 * @return 1 on success
+	 */
+	public int updateCampBeginningDate(int id, String beginningDate){
+		int status=0;
+		try{
+			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_BEGINNINGDATE"));
+			ps.setDate(1, Date.valueOf(beginningDate));
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+
+	/**
+	 * Updates Camp EndingDate
+	 * @param id	 
+	 * @param EndingDate
+	 * @return 1 on success
+	 */
+	public int updateCampEndingDate(int id, String endingDate){
+		int status=0;
+		try{
+			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_ENDINGDATE"));
+			ps.setDate(1, Date.valueOf(endingDate));
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+
+	/**
+	 * Updates Camp Level
+	 * @param id	 
+	 * @param Level
+	 * @return 1 on success
+	 */
+	public int updateCampLevel(int id, String level){
+		int status=0;
+		try{
+			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_LEVEL"));
+			ps.setString(1,(level.toString()));
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+
+	/**
+	 * Updates Camp MaxAssistants
+	 * @param id	 
+	 * @param MaxAssistants
+	 * @return 1 on success
+	 */
+	public int updateCampMaxAssistants(int id, String updateCampMaxAssistants){
+		int status=0;
+		try{
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_MAX_ASSISTANTS"));
+			ps.setInt(1,Integer.valueOf(updateCampMaxAssistants));
+			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
 }

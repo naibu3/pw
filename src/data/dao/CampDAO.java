@@ -88,17 +88,38 @@ public class CampDAO {
 
         return false;
     }
-/*		FALTA POR CORREGIR
- * 
- public Boolean updateCamp(int idCamp, LocalDate begginningDate, LocalDate endingDate, Level level,int maxAssistants) {
-	 DBConnection dbConnection = new DBConnection();
-	 dbConnection.getConnection();
-	 if (dbConnection.updateMonitor(idCamp, begginningDate, endingDate, level,maxAssistants)) {
-		 return true;
-        }
-        
-        return false;
-    }
-*/
+	public boolean updateCamp(int id, String toChange, int field){
+		int status=-1;
+		try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+			
+			switch (field) {
+				case 1:	//change name
+					status=dbConnection.updateCampBeginningDate(id, toChange);
+					break;
+				case 2:
+					status=dbConnection.updateCampEndingDate(id, toChange);
+					break;
+				case 3: 
+					status=dbConnection.updateCampLevel(id, toChange);
+					break;
+				case 4: 
+					status=dbConnection.updateCampMaxAssistants(id, toChange);
+					break;
+			
+				default:
+					break;
+			}
+			
+			dbConnection.closeConnection();
+			
+		} catch (Exception e){
+			System.err.println(e);
+			e.printStackTrace();
+		}		
+
+		return (status==1);
+	}
 
 }

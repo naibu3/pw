@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import business.ActivityManager;
+import business.CampManager;
 import business.ParticipantManager;
 import business.RegistrationManager;
 import data.shared.Level;
@@ -12,13 +13,18 @@ public class MainProgram {
 	private static ParticipantManager participantManager;
 	private static ActivityManager activityManager;
 	private static RegistrationManager registrationManager;
+	private static CampManager campManager;
 
     public static void main(String[] args) {
 		stdinScanner = new Scanner(System.in);
 		participantManager = new ParticipantManager();
 		activityManager = new ActivityManager();
 		registrationManager = new RegistrationManager();
-		displayMainMenu();
+		campManager = new CampManager();
+
+		//displayMainMenu();
+
+		createCamp();
 
 		/*MonitorManager monitorManager = new MonitorManager();
 		monitorManager.createMonitor(12,"Pitillo", "fumatas", true);
@@ -365,4 +371,48 @@ public class MainProgram {
 		
 		registrationManager.createRegistration(dni, idC, date, price, type);
 	}
+	
+	/******************************
+	 * CAMP
+	 ******************************/
+	public static void createCamp(){
+		int id;
+		LocalDate beginningDate = LocalDate.now();
+		LocalDate endingDate=LocalDate.now();
+
+		System.out.println("Insert Camp ID: ");
+		id=Integer.parseInt(stdinScanner.nextLine());
+
+		System.out.println("Insert beginning date with this format [YYYY-MM-DD]: ");
+		String date;
+		do {
+			date = stdinScanner.nextLine();
+			if (validarFormatoFecha(date)) {
+				beginningDate=LocalDate.parse(date);
+			} else {
+				System.out.println("The date you inserted is not correctly formatted. Please try again.");
+			}
+		} while (!validarFormatoFecha(date));
+
+		System.out.println("Insert ending date with this format [YYYY-MM-DD]: ");
+		String date2;
+		do {
+			date2 = stdinScanner.nextLine();
+			if (validarFormatoFecha(date2)) {
+				endingDate=LocalDate.parse(date);
+			} else {
+				System.out.println("The date you inserted is not correctly formatted. Please try again.");
+			}
+		} while (!validarFormatoFecha(date2));
+
+		System.out.println("Insert the level of the camp: ");
+		String level=stdinScanner.nextLine();
+
+		System.out.println("Insert maximum number of assistants: ");
+		int maxAssistants=Integer.valueOf(stdinScanner.nextLine());
+		
+
+		campManager.createCamp(id, beginningDate, endingDate, Level.valueOf(level), maxAssistants);
+	}
+
 }
