@@ -478,6 +478,29 @@ public class DBConnection {
 		}catch(Exception e){System.out.println(e);}
 		return result;
 	}
+
+	/**
+	 * Check if the participants need special attention
+	 * @param dni
+	 */
+	public boolean special_attention(int dni){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("GET_SPECIAL_NEEDS"));
+			ps.setInt(1, dni);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getBoolean("specialneeds")){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return r;
+	}
 	
 	/**************************************************************************************************************************************************************
 	*		REGISTRATION
@@ -735,6 +758,13 @@ public class DBConnection {
 				CampMap.put("start", String.valueOf(beggin));
 				CampMap.put("end", String.valueOf(end));
 				CampMap.put("level", level);
+//si no fufa quita el if
+				if(need_special_monitor(idCamp)){
+					CampMap.put("special_monitor", String.valueOf(true));
+				}
+				else{
+					CampMap.put("special_monitor", String.valueOf(false));
+				}
 
 				result.add(CampMap);
 			}
@@ -864,6 +894,38 @@ public class DBConnection {
 			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_MAX_ASSISTANTS"));
 			ps.setInt(1,Integer.valueOf(updateCampMaxAssistants));
 			ps.setInt(2, id);
+			status=ps.executeUpdate();
+		}catch (Exception e) { e.printStackTrace(); }
+		return status;
+	}
+
+	
+	public Boolean need_special_monitor(int idC){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("NEED_SPECIAL_MONITOR"));
+			ps.setInt(1, idC);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("special_needs_count")>0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
+	}
+
+	public int add_special_monitor(int idM, int idC){
+		PreparedStatement ps=null;
+		int status=0;
+
+		try{
+			ps=connection.prepareStatement(sqlQueries.getProperty("ADD_SPECIAL_MONITOR_CAMP"));
+			ps.setInt(1, idM);
+            ps.setInt(2, idC);
 			status=ps.executeUpdate();
 		}catch (Exception e) { e.printStackTrace(); }
 		return status;
