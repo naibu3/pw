@@ -83,3 +83,14 @@ CREATE TABLE `registrations` (
   CONSTRAINT `fk_participantid_participants` FOREIGN KEY (`participantid`) REFERENCES `participants` (`dni`),
   CONSTRAINT `CONSTRAINT_3` CHECK (`timetable` in ('Morning','Afternoon','All day'))
 );
+
+DROP TABLE IF EXISTS `special_monitor_camp`;
+CREATE TABLE `special_monitor_camp` (
+    id_monitor VARCHAR(9) NOT NULL,
+    id_camp INT(11) NOT NULL,
+    PRIMARY KEY (id_monitor, id_camp),
+    FOREIGN KEY (id_monitor) REFERENCES monitors (dni),
+    FOREIGN KEY (id_camp) REFERENCES camps (id),
+    CHECK (id_monitor IN (SELECT dni FROM monitors WHERE specialeducator = 1))
+);
+
