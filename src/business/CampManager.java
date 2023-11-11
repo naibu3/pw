@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import data.shared.Level;
 
 import data.dao.CampDAO;
-import data.dao.ParticipantDAO;
 import data.dto.CampDTO;
-import data.dto.ParticipantDTO;
 
 public class CampManager {
     
