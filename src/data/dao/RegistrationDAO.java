@@ -1,12 +1,10 @@
 package data.dao;
 
-import data.shared.DBConnection;
 import data.dto.RegistrationDTO;
+import data.shared.DBConnection;
 
-import java.sql.PreparedStatement;
 import java.time.LocalDate;
 
-import data.dto.ParticipantDTO;
 import data.shared.Type;
 
 public class RegistrationDAO {
@@ -19,13 +17,13 @@ public class RegistrationDAO {
 	 * @param participant
 	 * @return true on success
 	 */
-	public boolean createRegistration(int idParticipant, int idCamp, LocalDate registrationDate, float price, Type type, String timetable) {
+	public boolean createRegistration(RegistrationDTO myDTO) {
 		int status = -1;
 		try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
-
-			status = dbConnection.createRegistration(idParticipant, idCamp, registrationDate, price, type);
+			
+			status = dbConnection.createRegistration(myDTO.getIdParticipant(), myDTO.getIdCamp(), myDTO.getRegistrationDate(), myDTO.getType());
 			
 			dbConnection.closeConnection();
 			
@@ -62,7 +60,8 @@ public class RegistrationDAO {
 			e.printStackTrace();
 		}
 
-		return (status == 1);
+		return (status);
+		//		return (status == 1);
 	}
 
 	/**
