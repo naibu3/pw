@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import data.dto.CampDTO;
-
 import java.util.ArrayList;
 
 public class DBConnection {
