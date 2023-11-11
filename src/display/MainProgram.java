@@ -182,12 +182,36 @@ public class MainProgram {
 		while (flag) {
 			System.out.println("-- Camps Manager: ---------------");
 			System.out.println("1. Create new camp");
+			System.out.println("2. Update camp details");
+			System.out.println("3. Remove camp");
+			System.out.println("4. Assign special needs monitor to a camp");
+			System.out.println("5. List camps");
+			System.out.println("6. Create new monitor");
+			System.out.println("7. Update monitor details");
+			System.out.println("8. Remove a monitor");
+			System.out.println("9. List monitors");
 			System.out.println("0. Go back");
 
 			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
 				case 1:
 					createCamp();
+					break;
+				
+				case 3:
+					removeCamp();
+					break;
+				
+				case 4:
+					assignSpecialNeedsMonitorToCamp();
+					break;
+
+				case 5:
+					listAllCamps();
+					break;
+
+				case 9:
+					listAllMonitors();
 					break;
 
 				case 0:
@@ -445,4 +469,54 @@ public class MainProgram {
 		campManager.createCamp(id, beginningDate, endingDate, Level.valueOf(level), maxAssistants);
 	}
 
+	// Menu option to remoce a camp
+	public static void removeCamp() {
+		System.out.println("Insert the ID of the camp you want to delete: ");
+		Integer campId = Integer.parseInt(stdinScanner.nextLine());
+		campManager.deleteCamp(campId);
+	}
+
+	// Mneu option to list all the current camps
+	public static void listAllCamps() {
+		System.out.println(campManager.getAllCamps());
+	}
+
+	// menu option to assign an special needs monitor to a camp
+	public static void assignSpecialNeedsMonitorToCamp() {
+		String monitorId = "";
+		String campId = "";
+		Boolean flag = true;
+
+		while (flag) {
+			System.out.println("Insert the Camp ID (press l to list all the available camps)");
+			campId = stdinScanner.nextLine();
+			if (campId.equals("l")) {
+				listAllCamps();
+			} else {
+				flag = false;
+			}
+		}
+
+		flag = true;
+
+		while (flag) {
+			System.out.println("Insert the Monitor ID (press l to list all the available monitors)");
+			campId = stdinScanner.nextLine();
+			if (campId.equals("l")) {
+				listAllMonitors();
+			} else {
+				flag = false;
+			}
+		}
+
+		try {
+			campManager.addSpecialMonitor(Integer.parseInt(monitorId), Integer.parseInt(campId));
+		} catch (NumberFormatException e) {
+			System.out.println("Failed associating a special needs monitor to a camp... Perhaps you put in the name of the monitor/camp instead of the monitor/camp ID?");
+		}
+	}
+
+	public static void listAllMonitors() {
+		System.out.println(campManager.getAllMonitors());
+	} 
 }
