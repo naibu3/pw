@@ -29,9 +29,16 @@ public class CampManager {
         ArrayList<CampDTO> camps= CampInfo.getAllCamps();
         for(CampDTO camp: camps){
             p += camp.toString()+"\n";
+            //si no fufa quita el if
+            if(camp.getresponsiblespecialMonitor()==1)
+                p+="Need special monitor\n";
         }
 
         return p;
+    }
+    public void add_special_monitor(int idM, int idC){
+        CampDAO dao= new CampDAO();
+        dao.add_special_monitor(idM, idM);
     }
 
 
