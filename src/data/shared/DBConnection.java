@@ -234,7 +234,7 @@ public class DBConnection {
 	 * @param specialAttention	//needs
 	 * @return 1 on success
 	 */
-	public int createParticipant(int id, String name, String lastname, LocalDate birthdDate, boolean specialAttention){
+	public int createParticipant(int id, String name, String lastname, LocalDate birthDate, boolean specialAttention){
 		int status=0;
 		try{
 			System.out.println(sqlQueries.getProperty("FILL_PARTICIPANTS"));
@@ -242,7 +242,7 @@ public class DBConnection {
 			ps.setInt(1, id);
 			ps.setString(2, name);
 			ps.setString(3, lastname);
-			ps.setDate(4, Date.valueOf(birthdDate));
+			ps.setDate(4, Date.valueOf(birthDate));
 			ps.setBoolean(5, specialAttention);
 			
 			status = ps.executeUpdate();

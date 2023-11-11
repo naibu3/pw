@@ -10,6 +10,8 @@ public class MainProgram {
 		stdinScanner = new Scanner(System.in);
 		participantManager = new ParticipantManager();
 
+		displayMainMenu();
+
 		/*MonitorManager monitorManager = new MonitorManager();
 		monitorManager.createMonitor(12,"Pitillo", "fumatas", true);
 		System.out.println(monitorManager.getAllMonitors());
@@ -25,16 +27,16 @@ public class MainProgram {
 
 	// Main menu
 	public static void displayMainMenu() {
-		System.out.println("-- Main menu: -------------------");
-		System.out.println("1. Activity Manager");
-		System.out.println("2. Participant Manager");
-		System.out.println("3. Registration Manager");
-		System.out.println("4. Camps Manager");
-		System.out.println("0. Exit");
-
 		Boolean flag = true;
 		while (flag) {
-			int input = stdinScanner.nextInt();
+			System.out.println("-- Main menu: -------------------");
+			System.out.println("1. Activity Manager");
+			System.out.println("2. Participant Manager");
+			System.out.println("3. Registration Manager");
+			System.out.println("4. Camps Manager");
+			System.out.println("0. Exit");
+
+			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
 				case 1:
 					displayActivityMenu();
@@ -64,23 +66,38 @@ public class MainProgram {
 	}
 	
 	// Activity manager menu
-	public static void displayActivityMenu() {
-		System.out.println("-- Activity Manager: ------------");
-
+	public static void displayActivityMenu() {		
+		Boolean flag = true;
+		while (flag) {
+			System.out.println("-- Activity Manager: ------------");
+			System.out.println("0. Go back");
+			
+			int input = Integer.parseInt(stdinScanner.nextLine());
+			switch (input) {
+				case 0:
+				flag = false;
+				System.out.println("Returning to previous menu...");
+				break;
+				
+				default:
+				System.out.println("Invalid option. Try again.");
+				break;
+			}
+		}
 	}
 
 	// Participant manager menu
 	public static void displayParticipantMenu() {
-		System.out.println("-- Participant Manager: ---------");
-		System.out.println("1. Create participant");
-		System.out.println("2. Update participant data");
-		System.out.println("3. Remove participant");
-		System.out.println("4. Display all participants");
-		System.out.println("0. Go back");
-
 		Boolean flag = true;
 		while(flag) {
-			int input = stdinScanner.nextInt();
+			System.out.println("-- Participant Manager: ---------");
+			System.out.println("1. Create participant");
+			System.out.println("2. Update participant data");
+			System.out.println("3. Remove participant");
+			System.out.println("4. Display all participants");
+			System.out.println("0. Go back");
+
+			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
 				case 1:
 					createParticipant();
@@ -100,6 +117,7 @@ public class MainProgram {
 				
 				case 0:
 					flag = false;
+					System.out.println("Returning to previous menu...");
 					break;
 
 				default:
@@ -111,15 +129,48 @@ public class MainProgram {
 	
 	// Registration manager menu
 	public static void displayRegistrationMenu() {
-		System.out.println("-- Registration Manager: --------");
+		Boolean flag = true;
+		while (flag) {
+			System.out.println("-- Registration Manager: --------");
+			System.out.println("0. Go back");
+
+			int input = Integer.parseInt(stdinScanner.nextLine());
+			switch (input) {
+				case 0:
+					flag = false;
+					System.out.println("Returning to previous menu...");
+					break;
+			
+				default:
+					System.out.println("Invalid option. Try again.");
+					break;
+			}
+		}
 	}
 
 	// Camps manager menu
 	public static void displayCampsMenu() {
-		System.out.println("-- Camps Manager: ---------------");
+		Boolean flag = true;
+		while (flag) {
+			System.out.println("-- Camps Manager: ---------------");
+			System.out.println("0. Go back");
+
+			int input = Integer.parseInt(stdinScanner.nextLine());
+			switch (input) {
+				case 0:
+					flag = false;
+					System.out.println("Returning to previous menu...");
+					break;
+			
+				default:
+					System.out.println("Invalid option. Try again.");
+					break;
+			}
+		}
 	}
 
-	public static boolean validarFormatoFecha(String fecha) {
+	// This function is here to aid in the parsing of dates
+	private static boolean validarFormatoFecha(String fecha) {
         try {
             // Intentar parsear el String a LocalDate
             LocalDate.parse(fecha);
@@ -130,16 +181,14 @@ public class MainProgram {
     }
 
 
-/****************************************************************************************************************************************** */
-//	PARTICIPANT FUNCTIONS
-/****************************************************************************************************************************************** */
-
+	/****************************************************************************************************************************************** */
+	//	PARTICIPANT FUNCTIONS
+	/****************************************************************************************************************************************** */
 	public static void createParticipant(){
-		
 		int dni;
 		String name, lastname, aux;
 		Boolean specialNeeds;
-		LocalDate birthDate;
+		LocalDate birthDate = LocalDate.now();
 
 		System.out.println("Insert DNI: ");
 		dni=Integer.parseInt(stdinScanner.nextLine());
@@ -151,7 +200,15 @@ public class MainProgram {
 		lastname=stdinScanner.nextLine();
 
 		System.out.println("Insert birthdate with this format [YYYY-MM-DD]: ");
-		birthDate=LocalDate.parse(stdinScanner.nextLine());
+		String date;
+		do {
+			date = stdinScanner.nextLine();
+			if (validarFormatoFecha(date)) {
+				birthDate=LocalDate.parse(date);
+			} else {
+				System.out.println("The date you inserted is not correctly formatted. Please try again.");
+			}
+		} while (!validarFormatoFecha(date));
 
 		System.out.println("Insert yes if the kid need special attention: ");	
 		aux=stdinScanner.nextLine();
@@ -171,16 +228,16 @@ public class MainProgram {
 		int dni;
 		System.out.println("Insert the DNI: ");
 
-		dni=stdinScanner.nextInt();
+		dni=Integer.parseInt(stdinScanner.nextLine());
 		participantManager.delete(dni);				
 	}
 
 	public static void updateParticipant(){
 		System.out.println("Insert DNI:");
-		int dni = stdinScanner.nextInt();
+		int dni = Integer.parseInt(stdinScanner.nextLine());
 
 		System.out.println("Insert the number of the value that you want to modificate:\n	1<-Name 2<-Lastname 3<-Birthdate 4<-SpecialAttention\n");
-		int aux = stdinScanner.nextInt();
+		int aux = Integer.parseInt(stdinScanner.nextLine());
 		String toChange;
 
 		switch (aux) {
