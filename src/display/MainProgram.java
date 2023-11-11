@@ -210,6 +210,14 @@ public class MainProgram {
 					listAllCamps();
 					break;
 
+				case 6:
+					createMonitor();
+					break;
+				
+				case 8:
+					removeMonitor();
+					break;
+
 				case 9:
 					listAllMonitors();
 					break;
@@ -509,6 +517,42 @@ public class MainProgram {
 		} catch (NumberFormatException e) {
 			System.out.println("Failed associating a special needs monitor to a camp... Perhaps you put in the name of the monitor/camp instead of the monitor/camp ID?");
 		}
+	}
+
+	// Menu option to create a new monitor
+	public static void createMonitor(){
+		int dni;
+		String name, lastname, aux;
+		Boolean specialEducator;
+
+		System.out.println("Insert DNI: ");
+		dni=Integer.parseInt(stdinScanner.nextLine());
+
+		System.out.println("Insert name: ");
+		name=stdinScanner.nextLine();
+
+		System.out.println("Insert lastname: ");
+		lastname=stdinScanner.nextLine();
+
+		System.out.println("Insert yes if the monitor is an special educator: ");	
+		aux=stdinScanner.nextLine();
+		
+		if(aux.equals("yes")){
+			specialEducator = true;
+		} else{
+			specialEducator = false;
+		}
+
+		System.out.println(specialEducator.toString());
+		campManager.createMonitor(dni, name, lastname, specialEducator);
+	}
+
+	// Menu option to remove an special educator
+	public static void removeMonitor() {
+		Integer dni;
+		System.out.println("Insert the DNI of the monitor to be removed");
+		dni = Integer.parseInt(stdinScanner.nextLine());
+		campManager.deleteMonitor(dni);
 	}
 
 	// Menu option to list all monitors
