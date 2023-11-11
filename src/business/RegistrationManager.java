@@ -1,35 +1,30 @@
 package business;
 
 import java.time.LocalDate;
+
+import data.dao.RegistrationDAO;
 import data.dto.RegistrationDTO;
 
+import data.shared.Time;
+import data.shared.Type;
+
 public class RegistrationManager {
+
     /*
-     * Al crear una registration tengo que especificar si es mayor o menor de 15 dias y asignar time_
+     * Constructor
      */
-    private RegistrationDTO createEarlyOrLate(LocalDate registrationDate) {
-        /*
-         * Aqui vamos a comprobar que si la fecha de registro es mayor o menor de 15 dias
-         * si es menor de 15 dias vamos a hacer un late registration, en el caso contrario
-         * devolvemos un early registration.
-         */
-        return new RegistrationDTO();
+    public RegistrationManager(){}
+
+
+    public void createRegistration(int idP, int idC, LocalDate rDate, float price, Type type){
+        RegistrationDAO myDao=new RegistrationDAO();
+        Time time=Time.valueOf("Late");
+        rDate=LocalDate.now();
+        RegistrationDTO myDTO=new RegistrationDTO(idP, idC, rDate, price, type, time);                
+        myDao.createRegistration(myDTO);
     }
 
-    public Boolean createPartialRegistration() {
-        /*
-         * Esto es para crear un registro parcial. Las parciales tienen un costo de 100 euros base, 
-         * y cada actividad son 20 euros extra.
-         */
-        return true;
-    }
-
-    public Boolean createFullRegistration() {
-        /*
-         * Registro a tiempo completo son 300 euros.
-         */
-        return true;
-    }
+    
 
     /*
      * Esto tengo que mirarlo, no se si el registration manager te permite borrar registros
