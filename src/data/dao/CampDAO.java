@@ -1,17 +1,14 @@
 package data.dao;
 
-import java.util.Properties;
-import java.util.logging.Level;
 import java.util.Hashtable;
-import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import data.dto.CampDTO;
 import data.shared.DBConnection;
+import data.shared.Level;
 
 public class CampDAO {    
-    private Properties pathSQL;
 
     /**
 	 * Constructor
@@ -32,9 +29,7 @@ public class CampDAO {
 	 */
 	public boolean createCamp(CampDTO Camp) {
 		int status = -1;
-		try {
-			pathSQL = new Properties();
-			pathSQL.load(new FileInputStream("config.properties"));
+		try {			
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 
@@ -49,34 +44,38 @@ public class CampDAO {
 		return (status == 1);
 	}
 
+	
 	/**
 	 * Retrieves all the users in the data base, no matter which type of user they are
 	 * @return ArrayList<CampDTO> with all the registered users in the data base
 	 */
 	public ArrayList<CampDTO> getAllCamps(){
-		ArrayList<Hashtable<String, String>> result = new ArrayList<>();
-		ArrayList<CampDTO> Camps = new ArrayList<>();
+		ArrayList<CampDTO> result = new ArrayList<CampDTO>();
 		
 		try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
-			result = dbConnection.getAllCamps();
 			
-			dbConnection.closeConnection();
+			
+			ArrayList<Hashtable<String, String>> camps = dbConnection.getAllCamps();
+            if (camps == null) {
+                return null;
+            }
 
-			if (result != null) {
-				result.forEach((item) -> {
-					CampDTO Camp = new CampDTO(Integer.parseInt(item.get("idCamp")),LocalDate.parse(item.get("begginingDate")),LocalDate.parse(item.get("endingDate"))/* ,Level.parse("level_"))*/;
-
-					Camps.add(Camp);
-				});
-			}
+            for (Hashtable<String, String> camp: camps) {
+                CampDTO currentcamp = new CampDTO(Integer.valueOf(camp.get("id")),
+																LocalDate.parse(camp.get("start")),
+																LocalDate.parse(camp.get("end")),
+                                                                Level.valueOf(camp.get("timetable")),
+																Integer.valueOf(camp.get("maxAssistants")));
+                result.add(currentcamp);
+            }
 			
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 		
-		return Camps;	
+		return result;	
 	}
 
 	public Boolean deleteCamp(int idCamp) {
@@ -89,15 +88,17 @@ public class CampDAO {
 
         return false;
     }
-
-	public Boolean updateCamp(int idCamp, LocalDate begginningDate, LocalDate endingDate, Level level,int maxAssistants) {
-        DBConnection dbConnection = new DBConnection();
-        dbConnection.getConnection();
-        if (dbConnection.updateMonitor(idCamp, begginningDate, endingDate, level,maxAssistants)) {
-            return true;
+/*		FALTA POR CORREGIR
+ * 
+ public Boolean updateCamp(int idCamp, LocalDate begginningDate, LocalDate endingDate, Level level,int maxAssistants) {
+	 DBConnection dbConnection = new DBConnection();
+	 dbConnection.getConnection();
+	 if (dbConnection.updateMonitor(idCamp, begginningDate, endingDate, level,maxAssistants)) {
+		 return true;
         }
         
         return false;
     }
+*/
 
 }
