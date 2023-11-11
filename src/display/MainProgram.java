@@ -172,10 +172,15 @@ public class MainProgram {
 		Boolean flag = true;
 		while (flag) {
 			System.out.println("-- Camps Manager: ---------------");
+			System.out.println("1. Create new camp");
 			System.out.println("0. Go back");
 
 			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
+				case 1:
+					createCamp();
+					break;
+
 				case 0:
 					flag = false;
 					System.out.println("Returning to previous menu...");
@@ -357,6 +362,7 @@ public class MainProgram {
 		activityManager.createActivity(name, activityLevel, timetable, maxParticipants, monitorsRequired);
 	}
 
+	
 	/*
 	 * Registration functions
 	 */
