@@ -3,17 +3,21 @@ import java.util.Scanner;
 
 import business.ActivityManager;
 import business.ParticipantManager;
+import business.RegistrationManager;
 import data.shared.Level;
+import data.shared.Type;
 
 public class MainProgram {
 	private static Scanner stdinScanner;
 	private static ParticipantManager participantManager;
 	private static ActivityManager activityManager;
+	private static RegistrationManager registrationManager;
 
     public static void main(String[] args) {
 		stdinScanner = new Scanner(System.in);
 		participantManager = new ParticipantManager();
 		activityManager = new ActivityManager();
+		registrationManager = new RegistrationManager();
 		displayMainMenu();
 
 		/*MonitorManager monitorManager = new MonitorManager();
@@ -344,17 +348,16 @@ public class MainProgram {
 	/******************************
 	 * REGISTRATION
 	 ******************************/
-	public static void createRegistration(RegistrationManager registrationManager){
+	public static void createRegistration(){
 		System.out.println("Insert dni: ");
-		int dni=Integer.valueOf(leer.nextLine());
+		int dni=Integer.valueOf(stdinScanner.nextLine());
 		System.out.println("Insert idCamp: ");
-		int idC=Integer.valueOf(leer.nextLine());
+		int idC=Integer.valueOf(stdinScanner.nextLine());
 		LocalDate date=LocalDate.now();
 		float price=0;
 		System.out.println("Insert Full or Partial");
-		Type type=Type.valueOf(leer.nextLine());
+		Type type=Type.valueOf(stdinScanner.nextLine());
 		
 		registrationManager.createRegistration(dni, idC, date, price, type);
-		
 	}
 }
