@@ -80,12 +80,21 @@ public class MainProgram {
 			System.out.println("2. Update activity information");
 			System.out.println("3. Remove activity");
 			System.out.println("4. Assign monitor to activity");
+			System.out.println("5. List all the activities");
 			System.out.println("0. Go back");
 			
 			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
 				case 1:
 					createActivity();
+					break;
+
+				case 3:
+					removeActivity();
+					break;
+
+				case 5:
+					listActivities();
 					break;
 
 				case 0:
@@ -362,7 +371,18 @@ public class MainProgram {
 		activityManager.createActivity(name, activityLevel, timetable, maxParticipants, monitorsRequired);
 	}
 
-	
+	// Menu option to remove activity based on it's identifier (the activity name)
+	public static void removeActivity() {
+		System.out.println("Insert the name of the activity");
+		String actiivityName = stdinScanner.nextLine();
+		activityManager.deleteActivity(actiivityName);
+	}
+
+	// Menu option to list all the activities (past and future)
+	public static void listActivities() {
+		System.out.println(activityManager.getAllActivities());
+	}
+
 	/*
 	 * Registration functions
 	 */
