@@ -10,8 +10,6 @@ import data.shared.Type;
 public class RegistrationDAO {
     public RegistrationDAO(){}
 
-	//TODO -> check return values
-
     /**
 	 * Creates a new registration
 	 * @param participant

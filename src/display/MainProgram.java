@@ -200,6 +200,7 @@ public class MainProgram {
 			System.out.println("7. Update monitor details");
 			System.out.println("8. Remove a monitor");
 			System.out.println("9. List monitors");
+			System.out.println("10. Assign activity to camp");
 			System.out.println("0. Go back");
 
 			int input = Integer.parseInt(stdinScanner.nextLine());
@@ -238,6 +239,10 @@ public class MainProgram {
 
 				case 9:
 					listAllMonitors();
+					break;
+
+				case 10:
+					addActivityToCamp();
 					break;
 
 				case 0:
@@ -663,6 +668,17 @@ public class MainProgram {
 		
 
 		campManager.updateCamp(Integer.parseInt(id),beginningDate,endingDate, Level.valueOf(level),maxAssistants);
+	}
+
+	// Mneu option to add an activity to a camp
+	public static void addActivityToCamp() {
+		System.out.println("Insert the actvity name:");
+		String name = stdinScanner.nextLine();
+
+		System.out.println("Insert the id of the camp");
+		Integer campId = Integer.parseInt(stdinScanner.nextLine());
+
+		campManager.addActivityToCamp(campId, name);
 	}
 
 	// Menu option to list all monitors
