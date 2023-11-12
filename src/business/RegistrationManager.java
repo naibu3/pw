@@ -16,12 +16,13 @@ public class RegistrationManager {
     public RegistrationManager(){}
 
 
-    public void createRegistration(int idP, int idC, LocalDate rDate, float price, Type type){
+    public float createRegistration(int idP, int idC, LocalDate rDate, float price, Type type){
         RegistrationDAO myDao=new RegistrationDAO();
         Time time=Time.valueOf("Late");
         rDate=LocalDate.now();
         RegistrationDTO myDTO=new RegistrationDTO(idP, idC, rDate, price, type, time);                
-        myDao.createRegistration(myDTO);
+        float price=myDao.createRegistration(myDTO);
+        return price;
     }
 
     public void updateRegistration(int registrationId, int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
