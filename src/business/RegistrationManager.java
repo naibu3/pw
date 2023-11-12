@@ -27,10 +27,11 @@ public class RegistrationManager {
     
 
     /*
-     * Esto tengo que mirarlo, no se si el registration manager te permite borrar registros
+     * Remove a registration given an dni and a idCamp
      */
-    public Boolean removeRegistration() {
-
+    public Boolean removeRegistration(int dni, int idCamp) {
+        RegistrationDAO deleteDao=new RegistrationDAO();
+        deleteDao.deleteRegistration(dni,idCamp);
         return true;
     }
 
