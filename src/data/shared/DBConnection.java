@@ -213,13 +213,14 @@ public class DBConnection {
 	 * @param time		//calculated
 	 * @return 1 on success
 	 */
-	public int createRegistration(int idP, int idC, LocalDate rDate, Type type){
-		int status=0;
+	public float createRegistration(int idP, int idC, LocalDate rDate, Type type){
+		
+		float price=0;
 		try{
 
 			if(!isRegistration(idP, idC)){				
 				String time = calculateRegistrationTime(idC, rDate);
-				float price = calculateRegistrationPrice(idC, type);
+				price = calculateRegistrationPrice(idC, type);
 				
 				PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
 				ps.setInt(1, idP);
@@ -230,12 +231,12 @@ public class DBConnection {
 				ps.setString(6, time);
 				
 				
-				status = ps.executeUpdate();
+				 ps.executeUpdate();
 			}
 
 		} catch (Exception e) { e.printStackTrace(); }
 
-		return status;
+		return price;
 	}
 	/*
 	 * Return 1 if the registration is done
