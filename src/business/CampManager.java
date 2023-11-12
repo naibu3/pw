@@ -39,9 +39,10 @@ public class CampManager {
         return p;
     }
 
-    public void addSpecialMonitor(int idM, int idC){
+    public int addSpecialMonitor(int idM, int idC){
         CampDAO dao= new CampDAO();
-        dao.add_special_monitor(idM, idM);
+        int r=dao.add_special_monitor(idM, idM);
+        return r;
     }
 
     /**
