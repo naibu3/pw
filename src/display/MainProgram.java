@@ -162,7 +162,6 @@ public class MainProgram {
 			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
 				case 1:
-
 					float aux=createRegistration();
 					if(aux>0)
 						System.out.println("Price: "+aux);
@@ -170,6 +169,7 @@ public class MainProgram {
 						System.out.println("Invalid dni or idCamp. Try again.");
 						
 					break;
+
 				case 2:
 					deleteRegistration();
 					break;
