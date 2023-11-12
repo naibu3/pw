@@ -197,10 +197,11 @@ public class MainProgram {
 				case 1:
 					createCamp();
 					break;
+					
 				case 2:
 					updateCamp();
 					break;
-					
+
 				case 3:
 					removeCamp();
 					break;
