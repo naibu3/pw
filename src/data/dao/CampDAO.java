@@ -113,7 +113,7 @@ public class CampDAO {
         return false;
     }
 
-	public Boolean addMonitorToActivity(int idCamp,String activityName) {
+	public Boolean addActivitytoCamp(int idCamp,String activityName) {
         try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
