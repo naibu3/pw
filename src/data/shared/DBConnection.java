@@ -216,24 +216,50 @@ public class DBConnection {
 		int status=0;
 		try{
 
-			String time = calculateRegistrationTime(idC, rDate);
-			float price = calculateRegistrationPrice(idC, type);
-
-			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
-			ps.setInt(1, idP);
-			ps.setInt(2, idC);
-			ps.setDate(3, Date.valueOf(rDate));
-			ps.setFloat(4, price);
-			ps.setString(5, String.valueOf(type));
-			ps.setString(6, time);
-			
-			
-			status = ps.executeUpdate();
+			if(!isRegistration(idP, idC)){				
+				String time = calculateRegistrationTime(idC, rDate);
+				float price = calculateRegistrationPrice(idC, type);
+				
+				PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
+				ps.setInt(1, idP);
+				ps.setInt(2, idC);
+				ps.setDate(3, Date.valueOf(rDate));
+				ps.setFloat(4, price);
+				ps.setString(5, String.valueOf(type));
+				ps.setString(6, time);
+				
+				
+				status = ps.executeUpdate();
+			}
 
 		} catch (Exception e) { e.printStackTrace(); }
 
 		return status;
 	}
+	/*
+	 * Return 1 if the registration is done
+	 */
+		public Boolean isRegistration(int dni, int idC) {
+			PreparedStatement ps = null;
+			Boolean result = null;
+		
+			try {
+				ps = connection.prepareStatement(sqlQueries.getProperty("IS_REGISTRATION"));
+				
+				ps.setInt(1, dni);
+				ps.setInt(2, idC);
+		
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					result = (rs.getInt("exists_count")>0);
+				}
+		
+			} catch (Exception e) { e.printStackTrace(); }
+		
+			return result;
+		}
+	
+	
 	/*
 	* GET TIME EARLY/LATE
 	*/
