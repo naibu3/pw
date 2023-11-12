@@ -21,8 +21,8 @@ public class RegistrationManager {
         Time time=Time.valueOf("Late");
         rDate=LocalDate.now();
         RegistrationDTO myDTO=new RegistrationDTO(idP, idC, rDate, price, type, time);                
-        float price=myDao.createRegistration(myDTO);
-        return price;
+        float prize=myDao.createRegistration(myDTO);
+        return prize;
     }
 
     public void updateRegistration(int registrationId, int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
