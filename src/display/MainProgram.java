@@ -162,7 +162,13 @@ public class MainProgram {
 			int input = Integer.parseInt(stdinScanner.nextLine());
 			switch (input) {
 				case 1:
-					createRegistration();
+
+					float aux=createRegistration();
+					if(aux>0)
+						System.out.println("Price: "+aux);
+					else
+						System.out.println("Invalid dni or idCamp. Try again.");
+						
 					break;
 				case 2:
 					deleteRegistration();
@@ -426,7 +432,7 @@ public class MainProgram {
 	 * Registration functions
 	 */
 	// Menu option to create a new registration
-	public static void createRegistration(){
+	public static float createRegistration(){
 		System.out.println("Insert dni: ");
 		int dni=Integer.valueOf(stdinScanner.nextLine());
 		System.out.println("Insert idCamp: ");
@@ -436,7 +442,8 @@ public class MainProgram {
 		System.out.println("Insert Full or Partial");
 		Type type=Type.valueOf(stdinScanner.nextLine());
 		
-		registrationManager.createRegistration(dni, idC, date, price, type);
+		float aux=registrationManager.createRegistration(dni, idC, date, price, type);
+		return aux;
 	}
 	public static void deleteRegistration(){
 		System.out.println("Insert dni: ");
