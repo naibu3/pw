@@ -84,4 +84,14 @@ public class MonitorDAO {
 
         return result;
     }
+
+    public MonitorDTO getMonitor(int dni) {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.getConnection();
+
+        Hashtable<String, String> monitorString = dbConnection.monitorByDni(dni);
+        MonitorDTO monitor = new MonitorDTO(Integer.parseInt(monitorString.get("id")), monitorString.get("name"), monitorString.get("lastname"), Boolean.parseBoolean(monitorString.get("specialeducator")));
+
+        return monitor;
+    }
 }

@@ -111,4 +111,8 @@ public class CampManager {
         return false;
     }
 
+    public MonitorDTO getMonitor(int dni) {
+        MonitorDAO monitorInfo = new MonitorDAO();
+        return monitorInfo.getMonitor(dni);
+    }
 }

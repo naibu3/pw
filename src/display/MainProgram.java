@@ -555,6 +555,39 @@ public class MainProgram {
 		campManager.deleteMonitor(dni);
 	}
 
+	// Menu option to update a monitor
+	public static void updateMonitor() {
+		Boolean flag = true;
+		String dni = "";
+		while (flag) {			
+			System.out.println("Insert the DNI of the monitor you want to update (press l to get a list of monitors)");
+			dni = stdinScanner.nextLine();
+			if (dni.equals("l")) {
+				listAllMonitors();
+			} else {
+				flag = false;
+			}
+		}
+
+		System.out.println("Insert name: ");
+		String name=stdinScanner.nextLine();
+
+		System.out.println("Insert lastname: ");
+		String lastname=stdinScanner.nextLine();
+
+		System.out.println("Insert yes if the monitor is an special educator: ");	
+		String aux=stdinScanner.nextLine();
+		
+		Boolean specialEducator;
+		if(aux.equals("yes")){
+			specialEducator = true;
+		} else{
+			specialEducator = false;
+		}
+
+		campManager.updateMonitor(Integer.parseInt(dni), name, lastname, specialEducator);
+	}
+
 	// Menu option to list all monitors
 	public static void listAllMonitors() {
 		System.out.println(campManager.getAllMonitors());
