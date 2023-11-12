@@ -17,13 +17,13 @@ public class RegistrationDAO {
 	 * @param participant
 	 * @return true on success
 	 */
-	public boolean createRegistration(RegistrationDTO myDTO) {
-		int status = -1;
+	public float createRegistration(RegistrationDTO myDTO) {
+		float prize=0;
 		try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 			
-			status = dbConnection.createRegistration(myDTO.getIdParticipant(), myDTO.getIdCamp(), myDTO.getRegistrationDate(), myDTO.getType());
+			prize = dbConnection.createRegistration(myDTO.getIdParticipant(), myDTO.getIdCamp(), myDTO.getRegistrationDate(), myDTO.getType());
 			
 			dbConnection.closeConnection();
 			
@@ -31,7 +31,7 @@ public class RegistrationDAO {
 			System.err.println(e);
 			e.printStackTrace();
 		}
-		return (status == 1);
+		return prize;
 	}
 
 	/**
