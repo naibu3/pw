@@ -163,6 +163,9 @@ public class MainProgram {
 				case 1:
 					createRegistration();
 					break;
+				case 2:
+					deleteRegistration();
+					break;
 					
 				case 0:
 					flag = false;
@@ -434,7 +437,13 @@ public class MainProgram {
 		
 		registrationManager.createRegistration(dni, idC, date, price, type);
 	}
-	
+	public static void deleteRegistration(){
+		System.out.println("Insert dni: ");
+		int dni=Integer.valueOf(stdinScanner.nextLine());
+		System.out.println("Insert idCamp: ");
+		int idC=Integer.valueOf(stdinScanner.nextLine());
+		registrationManager.removeRegistration(dni, idC);
+	}
 
 	/*
 	 * Camps functions
