@@ -583,7 +583,7 @@ public class DBConnection {
 	 * @param type
 	 * @return 1 on success
 	 */
-	public int updateRegistration(int registrationId, int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
+	public int updateRegistration(int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
 		int status=0;
 		try{			
 			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("UPDATE_REGISTRATION"));
@@ -592,7 +592,6 @@ public class DBConnection {
 			ps.setDate(3, Date.valueOf(registrationDate));
 			ps.setFloat(4, price);
 			ps.setString(5, type.toString());
-			ps.setInt(6, registrationId);
 			
 			status = ps.executeUpdate();
 

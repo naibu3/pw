@@ -24,6 +24,11 @@ public class RegistrationManager {
         myDao.createRegistration(myDTO);
     }
 
+    public void updateRegistration(int registrationId, int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
+        RegistrationDAO myDao=new RegistrationDAO();              
+        myDao.updateRegistration(idP, idC, rDate, price, type);
+    }
+
     
 
     /*

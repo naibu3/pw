@@ -44,14 +44,14 @@ public class RegistrationDAO {
 	 * @param type
 	 * @return 1 on success
 	 */
-	public int updateRegistration(int registrationId, int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
+	public int updateRegistration(int idPartcipant, int idCamp, LocalDate registrationDate,float price, Type type){
 		
 		int status = -1;
 		try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 
-			status = dbConnection.updateRegistration(registrationId, idPartcipant, idCamp, registrationDate, price, type);
+			status = dbConnection.updateRegistration(idPartcipant, idCamp, registrationDate, price, type);
 			
 			dbConnection.closeConnection();
 			
