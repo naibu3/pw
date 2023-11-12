@@ -36,3 +36,10 @@ $ java -jar <file_name>.jar
 
 Once open, you will be greeted with a terminal interface that shows the functionality of the service. You may move around using the number keys, being 0 the key used to return to the previous menu. 
 
+## Building
+For building the JAR file, the commands (In the case of a Unix-Based system (macOS or Linux)) are the following:
+
+```
+find src -name "*.java" -exec javac -d bin {} +     # Create the Java Bytecode into a bin/ folder
+jar cmf Manifest.mf campmanager.jar -C bin/ .       # Builds the JAR file with the Manifest file (specifies the main class and libraries)
+```
