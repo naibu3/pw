@@ -332,6 +332,20 @@ public class DBConnection {
 		return availableCamps;
 	}
 
+	public int addActivityToCamp(int id,String activityName) {
+		int status = 0;
+		try {
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("ADD_ACTIVITY_TO_CAMP"));
+
+			ps.setInt(1, id);
+			ps.setString(2, activityName);
+
+			status = ps.executeUpdate();
+		} catch(Exception e) { e.printStackTrace(); }
+
+		return status;
+	}
+
 	/**************************************************************************************************************************************************************
 	*		PARTICIPANTS
 	/************************************************************************************************************************************************************ */

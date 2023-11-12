@@ -50,6 +50,15 @@ public class CampManager {
         return p;
     }
 
+    public Boolean addActivityToCamp(int idCamp, String activityName) {
+        CampDAO CampInfo = new CampDAO();
+        if (CampInfo.addActivityToCamp(idCamp, activityName)) {
+            return true;
+        }
+
+        return false;
+    }
+
     
 
     public int addSpecialMonitor(int idM, int idC){

@@ -107,8 +107,25 @@ public class CampDAO {
         if (dbConnection.updateCamp(id,beginningDate,endingDate,level,max)) {
             return true;
         }
+
+	
         
         return false;
+    }
+
+	public Boolean addMonitorToActivity(int idCamp,String activityName) {
+        try {
+			DBConnection dbConnection = new DBConnection();
+			dbConnection.getConnection();
+
+            dbConnection.addActivityToCamp(idCamp, activityName);
+            dbConnection.closeConnection();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 	public int add_special_monitor(int idM, int idC){
