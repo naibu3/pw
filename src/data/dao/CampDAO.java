@@ -126,7 +126,7 @@ public class CampDAO {
 		return (status==1);
 	}
 
-	public boolean add_special_monitor(int idM, int idC){
+	public int add_special_monitor(int idM, int idC){
 		int status = -1;
 		try {			
 			DBConnection dbConnection = new DBConnection();
@@ -140,7 +140,7 @@ public class CampDAO {
 			System.err.println(e);
 			e.printStackTrace();
 		}
-		return (status==1);
+		return (status);
 	}
 
 }
