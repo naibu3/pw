@@ -156,6 +156,7 @@ public class MainProgram {
 		while (flag) {
 			System.out.println("-- Registration Manager: ------------------");
 			System.out.println("1. Create registration");
+			System.out.println("2. Delete registration");
 			System.out.println("0. Go back");
 
 			int input = Integer.parseInt(stdinScanner.nextLine());
