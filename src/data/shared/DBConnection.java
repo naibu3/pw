@@ -602,20 +602,19 @@ public class DBConnection {
 	}
 
 	/**
-	 * Deletes a registration in the data base
-	 * @param id
+	 * Removes a registration from the data base
+	 * @param dni
+	 * @param idC
 	 * @return 1 on success
 	 */
-	public int deleteRegistration(int id){
+	public int deleteRegistration(int dni, int idC){
 		int status=0;
-		try{			
-			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("DELETE_REGISTRATION"));
-			ps.setInt(1, id);
-			
-			status = ps.executeUpdate();
-
+		try {			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_REGISTRATION"));
+			ps.setInt(1, dni);
+			ps.setInt(2, idC);
+			status=ps.executeUpdate();
 		} catch (Exception e) { e.printStackTrace(); }
-
 		return status;
 	}
 
