@@ -776,13 +776,68 @@ public class DBConnection {
 		return result;	
 	}
 
-        public int deleteCamp(int id){
+	public Boolean hasParticipants(int idC){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("HAS_PARTICIPANTS"));
+			ps.setInt(1, idC);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("participant_count")>0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
+	}
+
+	public Boolean hasSpecialMonitors(int idC){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("HAS_SPECIAL_MONITORS"));
+			ps.setInt(1, idC);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("special_monitor_count")>0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
+	}
+
+	public Boolean hasActivities(int idC){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("HAS_ACTIVITIES"));
+			ps.setInt(1, idC);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("activity_count")>0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
+	}
+
+    public int deleteCamp(int id){
 		int status=0;
 		try {
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_CAMP_BY_ID"));
-			ps.setInt(1, id);
-			status=ps.executeUpdate();
+			if(!hasActivities(id) && !hasParticipants(id) && !hasSpecialMonitors(id)){				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_CAMP_BY_ID"));
+				ps.setInt(1, id);
+				status=ps.executeUpdate();
+			}
 		} catch (Exception e) { e.printStackTrace(); }
 		return status;
 	}

@@ -484,7 +484,10 @@ public class MainProgram {
 	public static void removeCamp() {
 		System.out.println("Insert the ID of the camp you want to delete: ");
 		Integer campId = Integer.parseInt(stdinScanner.nextLine());
-		campManager.deleteCamp(campId);
+		boolean aux=campManager.deleteCamp(campId);
+		if(!aux){
+			System.out.println("There is a participant/activity/special monitor associated with your camp");
+		}
 	}
 
 	// Mneu option to list all the current camps

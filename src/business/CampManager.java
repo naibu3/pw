@@ -18,9 +18,10 @@ public class CampManager {
         Dao.createCamp(newCamp);
     }
 
-    public void deleteCamp(int id){
+    public Boolean deleteCamp(int id){
         CampDAO deleteDao=new CampDAO();
-        deleteDao.deleteCamp(id);
+        boolean r=deleteDao.deleteCamp(id);
+        return r;
     }
 
     public String getAllCamps(){
