@@ -923,11 +923,34 @@ public class DBConnection {
 		int status=0;
 
 		try{
-			ps=connection.prepareStatement(sqlQueries.getProperty("ADD_SPECIAL_MONITOR_CAMP"));
-			ps.setInt(1, idM);
-            ps.setInt(2, idC);
-			status=ps.executeUpdate();
+			if(is_special_monitor(idM)){
+				ps=connection.prepareStatement(sqlQueries.getProperty("ADD_SPECIAL_MONITOR_CAMP"));
+				ps.setInt(1, idM);
+				ps.setInt(2, idC);
+				status=ps.executeUpdate();
+			}
+			else{
+				return 10;
+			}
 		}catch (Exception e) { e.printStackTrace(); }
 		return status;
+	}
+
+	public Boolean is_special_monitor(int idM){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("IS_SPECIAL_MONITOR"));
+			ps.setInt(1, idM);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("is_special")!=0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
 	}
 }
