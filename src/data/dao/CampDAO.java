@@ -1,8 +1,11 @@
 package data.dao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import java.util.Hashtable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import data.dto.CampDTO;
 import data.shared.DBConnection;
@@ -66,13 +69,19 @@ public class CampDAO {
                 CampDTO currentcamp = new CampDTO(Integer.valueOf(camp.get("id")),
 																LocalDate.parse(camp.get("start")),
 																LocalDate.parse(camp.get("end")),
-                                                                Level.valueOf(camp.get("timetable")),
-																Integer.valueOf(camp.get("maxAssistants")));
-                
-//si no va quita el if
-		    if(Boolean.valueOf(camp.get("special_monitor")))
-			currentcamp.setresponsibleMonitors(1);
-		result.add(currentcamp);
+                                                                Level.valueOf(camp.get("educationallevel")),
+																Integer.valueOf(camp.get("maxparticipants")));
+				String str=camp.get("activities");
+
+				List<String> nuevaLista = new ArrayList<>(Arrays.asList(str.split(",")));
+                currentcamp.setactivity(nuevaLista);
+				//si no va quita el if
+				/*
+				* 
+				*/
+				if(Boolean.valueOf(camp.get("special_monitor")))
+				currentcamp.setresponsiblespecialMonitor(1);
+						result.add(currentcamp);
             }
 			
 		} catch (Exception e){
@@ -92,41 +101,34 @@ public class CampDAO {
 
         return false;
     }
-	public boolean updateCamp(int id, String toChange, int field){
-		int status=-1;
-		try {
+	public Boolean updateCamp(int id,LocalDate beginningDate,LocalDate endingDate,Level level,int max) {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.getConnection();
+        if (dbConnection.updateCamp(id,beginningDate,endingDate,level,max)) {
+            return true;
+        }
+
+	
+        
+        return false;
+    }
+
+	public Boolean addMonitorToActivity(int idCamp,String activityName) {
+        try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
-			
-			switch (field) {
-				case 1:	//change name
-					status=dbConnection.updateCampBeginningDate(id, toChange);
-					break;
-				case 2:
-					status=dbConnection.updateCampEndingDate(id, toChange);
-					break;
-				case 3: 
-					status=dbConnection.updateCampLevel(id, toChange);
-					break;
-				case 4: 
-					status=dbConnection.updateCampMaxAssistants(id, toChange);
-					break;
-			
-				default:
-					break;
-			}
-			
-			dbConnection.closeConnection();
-			
-		} catch (Exception e){
-			System.err.println(e);
-			e.printStackTrace();
-		}		
 
-		return (status==1);
-	}
+            dbConnection.addActivityToCamp(idCamp, activityName);
+            dbConnection.closeConnection();
 
-	public boolean add_special_monitor(int idM, int idC){
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+	public int add_special_monitor(int idM, int idC){
 		int status = -1;
 		try {			
 			DBConnection dbConnection = new DBConnection();
@@ -140,7 +142,7 @@ public class CampDAO {
 			System.err.println(e);
 			e.printStackTrace();
 		}
-		return (status==1);
+		return (status);
 	}
 
 }

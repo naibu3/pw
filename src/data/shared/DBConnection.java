@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 
 import java.util.ArrayList;
@@ -216,24 +217,50 @@ public class DBConnection {
 		int status=0;
 		try{
 
-			String time = calculateRegistrationTime(idC, rDate);
-			float price = calculateRegistrationPrice(idC, type);
-
-			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
-			ps.setInt(1, idP);
-			ps.setInt(2, idC);
-			ps.setDate(3, Date.valueOf(rDate));
-			ps.setFloat(4, price);
-			ps.setString(5, String.valueOf(type));
-			ps.setString(6, time);
-			
-			
-			status = ps.executeUpdate();
+			if(!isRegistration(idP, idC)){				
+				String time = calculateRegistrationTime(idC, rDate);
+				float price = calculateRegistrationPrice(idC, type);
+				
+				PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_REGISTRATION"));
+				ps.setInt(1, idP);
+				ps.setInt(2, idC);
+				ps.setDate(3, Date.valueOf(rDate));
+				ps.setFloat(4, price);
+				ps.setString(5, String.valueOf(type));
+				ps.setString(6, time);
+				
+				
+				status = ps.executeUpdate();
+			}
 
 		} catch (Exception e) { e.printStackTrace(); }
 
 		return status;
 	}
+	/*
+	 * Return 1 if the registration is done
+	 */
+		public Boolean isRegistration(int dni, int idC) {
+			PreparedStatement ps = null;
+			Boolean result = null;
+		
+			try {
+				ps = connection.prepareStatement(sqlQueries.getProperty("IS_REGISTRATION"));
+				
+				ps.setInt(1, dni);
+				ps.setInt(2, idC);
+		
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					result = (rs.getInt("exists_count")>0);
+				}
+		
+			} catch (Exception e) { e.printStackTrace(); }
+		
+			return result;
+		}
+	
+	
 	/*
 	* GET TIME EARLY/LATE
 	*/
@@ -303,6 +330,20 @@ public class DBConnection {
 		}
 
 		return availableCamps;
+	}
+
+	public int addActivityToCamp(int id,String activityName) {
+		int status = 0;
+		try {
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("ADD_ACTIVITY_TO_CAMP"));
+
+			ps.setInt(1, id);
+			ps.setString(2, activityName);
+
+			status = ps.executeUpdate();
+		} catch(Exception e) { e.printStackTrace(); }
+
+		return status;
 	}
 
 	/**************************************************************************************************************************************************************
@@ -561,20 +602,19 @@ public class DBConnection {
 	}
 
 	/**
-	 * Deletes a registration in the data base
-	 * @param id
+	 * Removes a registration from the data base
+	 * @param dni
+	 * @param idC
 	 * @return 1 on success
 	 */
-	public int deleteRegistration(int id){
+	public int deleteRegistration(int dni, int idC){
 		int status=0;
-		try{			
-			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("DELETE_REGISTRATION"));
-			ps.setInt(1, id);
-			
-			status = ps.executeUpdate();
-
+		try {			
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_REGISTRATION"));
+			ps.setInt(1, dni);
+			ps.setInt(2, idC);
+			status=ps.executeUpdate();
 		} catch (Exception e) { e.printStackTrace(); }
-
 		return status;
 	}
 
@@ -734,6 +774,27 @@ public class DBConnection {
 		return (status);
 	}
 
+	public List<String> getActivityNamesByCampId(int campId) {
+        List<String> activityNames = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            // Utiliza la conexión a la base de datos (this.connection)
+            ps = this.connection.prepareStatement(sqlQueries.getProperty("get.activity.names.by_camp_id"));
+            ps.setInt(1, campId);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Obtiene el nombre de la actividad y lo agrega a la lista
+                String activityName = rs.getString("name");
+                activityNames.add(activityName);
+            }
+		} catch(Exception e) { e.printStackTrace(); }		
+		return activityNames;
+	}
+
 	/**
 	 * Retrieves all the users in the data base, no matter which type of user they are
 	 * @return ArrayList<Hashtable<String,String>>  with all the registered users in the data base
@@ -751,21 +812,29 @@ public class DBConnection {
 				int idCamp=rs.getInt("id");
 				Date beggin=rs.getDate("start");
 				Date end=rs.getDate("end");
-				String level =rs.getString("level");
+				String level =rs.getString("educationallevel");
+				int max=rs.getInt("maxparticipants");
 				
 				CampMap = new Hashtable<String, String>();
 				CampMap.put("id", Integer.toString(idCamp));
 				CampMap.put("start", String.valueOf(beggin));
 				CampMap.put("end", String.valueOf(end));
-				CampMap.put("level", level);
-//si no fufa quita el if
-				if(need_special_monitor(idCamp)){
-					CampMap.put("special_monitor", String.valueOf(true));
-				}
-				else{
-					CampMap.put("special_monitor", String.valueOf(false));
-				}
+				CampMap.put("educationallevel", level);
+				CampMap.put("maxparticipants", String.valueOf(max));
+				
+				List<String> activities = getActivityNamesByCampId(idCamp);
+				
+				CampMap.put("activities", String.join(",", activities));
 
+//si no fufa quita el if
+
+ if(need_special_monitor(idCamp)){
+	 CampMap.put("special_monitor", String.valueOf(true));
+	}
+	else{
+		CampMap.put("special_monitor", String.valueOf(false));
+	}
+	
 				result.add(CampMap);
 			}
 			
@@ -776,128 +845,168 @@ public class DBConnection {
 		return result;	
 	}
 
-        public int deleteCamp(int id){
+	public Boolean hasParticipants(int idC){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("HAS_PARTICIPANTS"));
+			ps.setInt(1, idC);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("participant_count")>0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
+	}
+
+	public Boolean hasSpecialMonitors(int idC){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("HAS_SPECIAL_MONITORS"));
+			ps.setInt(1, idC);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("special_monitor_count")>0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
+	}
+
+	public Boolean hasActivities(int idC){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("HAS_ACTIVITIES"));
+			ps.setInt(1, idC);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("activity_count")>0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
+	}
+
+    public int deleteCamp(int id){
 		int status=0;
 		try {
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_CAMP_BY_ID"));
-			ps.setInt(1, id);
-			status=ps.executeUpdate();
+			if(!hasActivities(id) && !hasParticipants(id) && !hasSpecialMonitors(id)){				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_CAMP_BY_ID"));
+				ps.setInt(1, id);
+				status=ps.executeUpdate();
+			}
 		} catch (Exception e) { e.printStackTrace(); }
 		return status;
 	}
-    
-
-	
+    	
 	/**
-	 * Updates Participant info
-	 * @param id	 
-	 * @param name
-	 * @return 1 on success
-	 */
-	public boolean updateCamp(int id, String toChange, int field){
-		int status=-1;
-		try {
-			DBConnection dbConnection = new DBConnection();
-			dbConnection.getConnection();
-			
-			switch (field) {
-				case 1:	//change name
-					status=dbConnection.updateCampBeginningDate(id, toChange);
-					break;
-				case 2:
-					status=dbConnection.updateCampEndingDate(id, toChange);
-					break;
-				case 3: 
-					status=dbConnection.updateCampLevel(id, toChange);
-					break;
-				case 4: 
-					status=dbConnection.updateCampMaxAssistants(id, toChange);
-					break;
-			
-				default:
-					break;
+		 * Updates Camp info
+		 * @param idCamp 
+		 * @param name
+		 * @return 1 on success
+		 */
+
+		public Boolean updateCamp(int id,LocalDate beginningDate,LocalDate endingDate,Level level,int max) {
+			try{
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP"));
+				
+				ps.setString(1,beginningDate.toString() );
+				ps.setString(2, endingDate.toString());
+				ps.setString(3, level.toString());
+				ps.setInt(4, max);
+				ps.setInt(5,id);
+
+				ps.executeUpdate();
+
+				return true;
+			} catch(Exception e) { 
+				e.printStackTrace();
+				return false;
 			}
-			
-			dbConnection.closeConnection();
-			
-		} catch (Exception e){
-			System.err.println(e);
-			e.printStackTrace();
-		}		
+		}	
+		
+		/**
+		 * Updates Camp BeginningDate
+		 * @param id	 
+		 * @param beginningDate
+		 * @return 1 on success
+		 */
+		public int updateCampBeginningDate(int id, String beginningDate){
+			int status=0;
+			try{
+				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_BEGINNINGDATE"));
+				ps.setDate(1, Date.valueOf(beginningDate));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
+		}
 
-		return (status==1);
-	}
-	/**
-	 * Updates Camp BeginningDate
-	 * @param id	 
-	 * @param beginningDate
-	 * @return 1 on success
-	 */
-	public int updateCampBeginningDate(int id, String beginningDate){
-		int status=0;
-		try{
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_BEGINNINGDATE"));
-			ps.setDate(1, Date.valueOf(beginningDate));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
+		/**
+		 * Updates Camp EndingDate
+		 * @param id	 
+		 * @param EndingDate
+		 * @return 1 on success
+		 */
+		public int updateCampEndingDate(int id, String endingDate){
+			int status=0;
+			try{
+				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_ENDINGDATE"));
+				ps.setDate(1, Date.valueOf(endingDate));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
+		}
 
-	/**
-	 * Updates Camp EndingDate
-	 * @param id	 
-	 * @param EndingDate
-	 * @return 1 on success
-	 */
-	public int updateCampEndingDate(int id, String endingDate){
-		int status=0;
-		try{
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_ENDINGDATE"));
-			ps.setDate(1, Date.valueOf(endingDate));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
+		/**
+		 * Updates Camp Level
+		 * @param id	 
+		 * @param Level
+		 * @return 1 on success
+		 */
+		public int updateCampLevel(int id, String level){
+			int status=0;
+			try{
+				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_LEVEL"));
+				ps.setString(1,(level.toString()));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
+		}
 
-	/**
-	 * Updates Camp Level
-	 * @param id	 
-	 * @param Level
-	 * @return 1 on success
-	 */
-	public int updateCampLevel(int id, String level){
-		int status=0;
-		try{
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_LEVEL"));
-			ps.setString(1,(level.toString()));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
-
-	/**
-	 * Updates Camp MaxAssistants
-	 * @param id	 
-	 * @param MaxAssistants
-	 * @return 1 on success
-	 */
-	public int updateCampMaxAssistants(int id, String updateCampMaxAssistants){
-		int status=0;
-		try{
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_MAX_ASSISTANTS"));
-			ps.setInt(1,Integer.valueOf(updateCampMaxAssistants));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
+		/**
+		 * Updates Camp MaxAssistants
+		 * @param id	 
+		 * @param MaxAssistants
+		 * @return 1 on success
+		 */
+		public int updateCampMaxAssistants(int id, String updateCampMaxAssistants){
+			int status=0;
+			try{
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_MAX_ASSISTANTS"));
+				ps.setInt(1,Integer.valueOf(updateCampMaxAssistants));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
+		}
 
 	
 	public Boolean need_special_monitor(int idC){
@@ -923,11 +1032,34 @@ public class DBConnection {
 		int status=0;
 
 		try{
-			ps=connection.prepareStatement(sqlQueries.getProperty("ADD_SPECIAL_MONITOR_CAMP"));
-			ps.setInt(1, idM);
-            ps.setInt(2, idC);
-			status=ps.executeUpdate();
+			if(is_special_monitor(idM)){
+				ps=connection.prepareStatement(sqlQueries.getProperty("ADD_SPECIAL_MONITOR_CAMP"));
+				ps.setInt(1, idM);
+				ps.setInt(2, idC);
+				status=ps.executeUpdate();
+			}
+			else{
+				return 10;
+			}
 		}catch (Exception e) { e.printStackTrace(); }
 		return status;
+	}
+
+	public Boolean is_special_monitor(int idM){
+		boolean r=false;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		try{
+			ps = connection.prepareStatement(sqlQueries.getProperty("IS_SPECIAL_MONITOR"));
+			ps.setInt(1, idM);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("is_special")!=0){
+					r=true;
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); }
+		return r;
 	}
 }

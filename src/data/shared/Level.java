@@ -3,8 +3,7 @@ package data.shared;
  * @version 1.0
 */
 public enum Level { 
-
-    Children,
+   Children,
     Youth,
     Teenager
 

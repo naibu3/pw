@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import data.shared.Level;
-
+import data.dao.ActivityDAO;
 import data.dao.CampDAO;
 import data.dao.MonitorDAO;
 import data.dto.CampDTO;
@@ -18,9 +18,15 @@ public class CampManager {
         Dao.createCamp(newCamp);
     }
 
-    public void deleteCamp(int id){
+    public Boolean deleteCamp(int id){
         CampDAO deleteDao=new CampDAO();
-        deleteDao.deleteCamp(id);
+        boolean r=deleteDao.deleteCamp(id);
+        return r;
+    }
+
+    public void updateCamp(int id,LocalDate beginningDate,LocalDate endingDate, Level level, int maxAssistants) {
+        CampDAO CampInfo = new CampDAO();
+        CampInfo.updateCamp(id, beginningDate, endingDate, level, maxAssistants);        
     }
 
     public String getAllCamps(){
@@ -30,18 +36,35 @@ public class CampManager {
 
         ArrayList<CampDTO> camps= CampInfo.getAllCamps();
         for(CampDTO camp: camps){
-            p += camp.toString()+"\n";
+            p += camp.toString();
             //si no fufa quita el if
-            if(camp.getresponsiblespecialMonitor()==1)
-                p+="Need special monitor\n";
+            /*
+             * 
+             */
+             if(camp.getresponsiblespecialMonitor()==1)
+                 p+="Need special monitor";
+            
+            p+="\n";
         }
 
         return p;
     }
 
-    public void addSpecialMonitor(int idM, int idC){
+    public Boolean addActivityToCamp(int idCamp, String activityName) {
+        CampDAO CampInfo = new CampDAO();
+        if (CampInfo.addActivityToCamp(idCamp, activityName)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    
+
+    public int addSpecialMonitor(int idM, int idC){
         CampDAO dao= new CampDAO();
-        dao.add_special_monitor(idM, idM);
+        int r=dao.add_special_monitor(idM, idM);
+        return r;
     }
 
     /**

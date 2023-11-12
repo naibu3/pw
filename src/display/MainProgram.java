@@ -163,6 +163,9 @@ public class MainProgram {
 				case 1:
 					createRegistration();
 					break;
+				case 2:
+					deleteRegistration();
+					break;
 					
 				case 0:
 					flag = false;
@@ -434,7 +437,13 @@ public class MainProgram {
 		
 		registrationManager.createRegistration(dni, idC, date, price, type);
 	}
-	
+	public static void deleteRegistration(){
+		System.out.println("Insert dni: ");
+		int dni=Integer.valueOf(stdinScanner.nextLine());
+		System.out.println("Insert idCamp: ");
+		int idC=Integer.valueOf(stdinScanner.nextLine());
+		registrationManager.removeRegistration(dni, idC);
+	}
 
 	/*
 	 * Camps functions
@@ -479,12 +488,16 @@ public class MainProgram {
 
 		campManager.createCamp(id, beginningDate, endingDate, Level.valueOf(level), maxAssistants);
 	}
+	
 
 	// Menu option to remove a camp
 	public static void removeCamp() {
 		System.out.println("Insert the ID of the camp you want to delete: ");
 		Integer campId = Integer.parseInt(stdinScanner.nextLine());
-		campManager.deleteCamp(campId);
+		boolean aux=campManager.deleteCamp(campId);
+		if(!aux){
+			System.out.println("There is a participant/activity/special monitor associated with your camp");
+		}
 	}
 
 	// Mneu option to list all the current camps
@@ -601,11 +614,11 @@ public class MainProgram {
 		LocalDate beginningDate = LocalDate.now();
 		LocalDate endingDate = LocalDate.now();
 		Boolean flag = true;
-		String dni = "";
+		String id = "";
 		while (flag) {			
 			System.out.println("Insert the ID of the camp you want to update (press l to get a list of all the camps)");
-			dni = stdinScanner.nextLine();
-			if (dni.equals("l")) {
+			id = stdinScanner.nextLine();
+			if (id.equals("l")) {
 				listAllCamps();
 			} else {
 				flag = false;
@@ -628,7 +641,7 @@ public class MainProgram {
 		do {
 			date2 = stdinScanner.nextLine();
 			if (validarFormatoFecha(date2)) {
-				endingDate=LocalDate.parse(date);
+				endingDate=LocalDate.parse(date2);
 			} else {
 				System.out.println("The date you inserted is not correctly formatted. Please try again.");
 			}
@@ -641,7 +654,7 @@ public class MainProgram {
 		int maxAssistants=Integer.valueOf(stdinScanner.nextLine());
 		
 
-		//campManager.updateCamp();
+		campManager.updateCamp(Integer.parseInt(id),beginningDate,endingDate, Level.valueOf(level),maxAssistants);
 	}
 
 	// Menu option to list all monitors
