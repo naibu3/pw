@@ -871,44 +871,30 @@ public class DBConnection {
 
 	
 	/**
-	 * Updates Participant info
-	 * @param id	 
+	 * Updates Camp info
+	 * @param idCamp 
 	 * @param name
 	 * @return 1 on success
 	 */
-	public boolean updateCamp(int id, String toChange, int field){
-		int status=-1;
-		try {
-			DBConnection dbConnection = new DBConnection();
-			dbConnection.getConnection();
-			
-			switch (field) {
-				case 1:	//change name
-					status=dbConnection.updateCampBeginningDate(id, toChange);
-					break;
-				case 2:
-					status=dbConnection.updateCampEndingDate(id, toChange);
-					break;
-				case 3: 
-					status=dbConnection.updateCampLevel(id, toChange);
-					break;
-				case 4: 
-					status=dbConnection.updateCampMaxAssistants(id, toChange);
-					break;
-			
-				default:
-					break;
-			}
-			
-			dbConnection.closeConnection();
-			
-		} catch (Exception e){
-			System.err.println(e);
-			e.printStackTrace();
-		}		
 
-		return (status==1);
-	}
+	public Boolean updateCamp(int id,LocalDate beginningDate,LocalDate endingDate,Level level,int max) {
+		try{
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP"));
+			
+			ps.setString(1,beginningDate.toString() );
+			ps.setString(2, endingDate.toString());
+			ps.setString(3, level.toString());
+			ps.setInt(4, max);
+
+			ps.executeUpdate();
+
+			return true;
+		} catch(Exception e) { 
+			e.printStackTrace();
+			return false;
+		}
+	}	
+	
 	/**
 	 * Updates Camp BeginningDate
 	 * @param id	 

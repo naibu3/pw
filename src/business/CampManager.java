@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import data.shared.Level;
-
+import data.dao.ActivityDAO;
 import data.dao.CampDAO;
 import data.dao.MonitorDAO;
 import data.dto.CampDTO;
@@ -24,6 +24,13 @@ public class CampManager {
         return r;
     }
 
+    public void updateCamp(int id,LocalDate beginningDate,LocalDate endingDate, Level level, int maxAssistants) {
+        CampDAO CampInfo = new CampDAO();
+        if (CampInfo.updateCamp(id, beginningDate, endingDate, level, maxAssistants)) {
+        }
+
+    }
+
     public String getAllCamps(){
         String p="";
 
@@ -39,6 +46,8 @@ public class CampManager {
 
         return p;
     }
+
+    
 
     public int addSpecialMonitor(int idM, int idC){
         CampDAO dao= new CampDAO();

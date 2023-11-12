@@ -479,6 +479,7 @@ public class MainProgram {
 
 		campManager.createCamp(id, beginningDate, endingDate, Level.valueOf(level), maxAssistants);
 	}
+	
 
 	// Menu option to remove a camp
 	public static void removeCamp() {
@@ -631,7 +632,7 @@ public class MainProgram {
 		do {
 			date2 = stdinScanner.nextLine();
 			if (validarFormatoFecha(date2)) {
-				endingDate=LocalDate.parse(date);
+				endingDate=LocalDate.parse(date2);
 			} else {
 				System.out.println("The date you inserted is not correctly formatted. Please try again.");
 			}
@@ -644,7 +645,7 @@ public class MainProgram {
 		int maxAssistants=Integer.valueOf(stdinScanner.nextLine());
 		
 
-		//campManager.updateCamp();
+		campManager.updateCamp(Integer.valueOf(dni),beginningDate,endingDate,level,maxAssistants);
 	}
 
 	// Menu option to list all monitors
