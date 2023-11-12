@@ -93,6 +93,10 @@ public class MainProgram {
 					removeActivity();
 					break;
 
+				case 4:
+					assignMonitorToActivity();
+					break;
+
 				case 5:
 					listActivities();
 					break;
@@ -432,6 +436,16 @@ public class MainProgram {
 		System.out.println(activityManager.getAllActivities());
 	}
 
+	// Menu option to assign a monitor to an activity
+	public static void assignMonitorToActivity() {
+		System.out.println("Insert the monitor DNI");
+		Integer dni = Integer.parseInt(stdinScanner.nextLine());
+
+		System.out.println("Insert the activity name");
+		String name = stdinScanner.nextLine();
+
+		activityManager.addMonitorToActivity(name, dni);
+	}
 
 	/*
 	 * Registration functions
