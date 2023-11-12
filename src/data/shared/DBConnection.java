@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 
 import java.util.ArrayList;
@@ -760,6 +761,27 @@ public class DBConnection {
 		return (status);
 	}
 
+	public List<String> getActivityNamesByCampId(int campId) {
+        List<String> activityNames = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            // Utiliza la conexión a la base de datos (this.connection)
+            ps = this.connection.prepareStatement(sqlQueries.getProperty("get.activity.names.by_camp_id"));
+            ps.setInt(1, campId);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Obtiene el nombre de la actividad y lo agrega a la lista
+                String activityName = rs.getString("name");
+                activityNames.add(activityName);
+            }
+		} catch(Exception e) { e.printStackTrace(); }		
+		return activityNames;
+	}
+
 	/**
 	 * Retrieves all the users in the data base, no matter which type of user they are
 	 * @return ArrayList<Hashtable<String,String>>  with all the registered users in the data base
@@ -786,6 +808,11 @@ public class DBConnection {
 				CampMap.put("end", String.valueOf(end));
 				CampMap.put("educationallevel", level);
 				CampMap.put("maxparticipants", String.valueOf(max));
+				
+				List<String> activities = getActivityNamesByCampId(idCamp);
+				
+				CampMap.put("activities", String.join(",", activities));
+
 //si no fufa quita el if
 
  if(need_special_monitor(idCamp)){

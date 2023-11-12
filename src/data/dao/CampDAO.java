@@ -1,8 +1,11 @@
 package data.dao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import java.util.Hashtable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import data.dto.CampDTO;
 import data.shared.DBConnection;
@@ -68,14 +71,17 @@ public class CampDAO {
 																LocalDate.parse(camp.get("end")),
                                                                 Level.valueOf(camp.get("educationallevel")),
 																Integer.valueOf(camp.get("maxparticipants")));
-                
-//si no va quita el if
-/*
- * 
- */
- if(Boolean.valueOf(camp.get("special_monitor")))
- currentcamp.setresponsiblespecialMonitor(1);
-		result.add(currentcamp);
+				String str=camp.get("activities");
+
+				List<String> nuevaLista = new ArrayList<>(Arrays.asList(str.split(",")));
+                currentcamp.setactivity(nuevaLista);
+				//si no va quita el if
+				/*
+				* 
+				*/
+				if(Boolean.valueOf(camp.get("special_monitor")))
+				currentcamp.setresponsiblespecialMonitor(1);
+						result.add(currentcamp);
             }
 			
 		} catch (Exception e){
