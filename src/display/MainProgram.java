@@ -197,7 +197,10 @@ public class MainProgram {
 				case 1:
 					createCamp();
 					break;
-				
+				case 2:
+					updateCamp();
+					break;
+					
 				case 3:
 					removeCamp();
 					break;
@@ -212,6 +215,10 @@ public class MainProgram {
 
 				case 6:
 					createMonitor();
+					break;
+				
+				case 7:
+					updateMonitor();
 					break;
 				
 				case 8:
@@ -586,6 +593,54 @@ public class MainProgram {
 		}
 
 		campManager.updateMonitor(Integer.parseInt(dni), name, lastname, specialEducator);
+	}
+
+	// Menu option to update the camp
+	public static void updateCamp() {
+		LocalDate beginningDate = LocalDate.now();
+		LocalDate endingDate = LocalDate.now();
+		Boolean flag = true;
+		String dni = "";
+		while (flag) {			
+			System.out.println("Insert the ID of the camp you want to update (press l to get a list of all the camps)");
+			dni = stdinScanner.nextLine();
+			if (dni.equals("l")) {
+				listAllCamps();
+			} else {
+				flag = false;
+			}
+		}
+
+		System.out.println("Insert beginning date with this format [YYYY-MM-DD]: ");
+		String date;
+		do {
+			date = stdinScanner.nextLine();
+			if (validarFormatoFecha(date)) {
+				beginningDate=LocalDate.parse(date);
+			} else {
+				System.out.println("The date you inserted is not correctly formatted. Please try again.");
+			}
+		} while (!validarFormatoFecha(date));
+
+		System.out.println("Insert ending date with this format [YYYY-MM-DD]: ");
+		String date2;
+		do {
+			date2 = stdinScanner.nextLine();
+			if (validarFormatoFecha(date2)) {
+				endingDate=LocalDate.parse(date);
+			} else {
+				System.out.println("The date you inserted is not correctly formatted. Please try again.");
+			}
+		} while (!validarFormatoFecha(date2));
+
+		System.out.println("Insert the level of the camp: ");
+		String level=stdinScanner.nextLine();
+
+		System.out.println("Insert maximum number of assistants: ");
+		int maxAssistants=Integer.valueOf(stdinScanner.nextLine());
+		
+
+		//campManager.updateCamp();
 	}
 
 	// Menu option to list all monitors
