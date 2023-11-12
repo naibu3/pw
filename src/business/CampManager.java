@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import data.shared.Level;
-import data.dao.ActivityDAO;
 import data.dao.CampDAO;
 import data.dao.MonitorDAO;
 import data.dto.CampDTO;
@@ -52,7 +51,7 @@ public class CampManager {
 
     public Boolean addActivityToCamp(int idCamp, String activityName) {
         CampDAO CampInfo = new CampDAO();
-        if (CampInfo.addActivityToCamp(idCamp, activityName)) {
+        if (CampInfo.addActivitytoCamp(idCamp, activityName)) {
             return true;
         }
 
