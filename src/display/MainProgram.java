@@ -426,6 +426,7 @@ public class MainProgram {
 
 	// Menu option to remove activity based on it's identifier (the activity name)
 	public static void removeActivity() {
+		System.out.println("NOTE: Before removing an activity make sure it has no monitors");
 		System.out.println("Insert the name of the activity");
 		String actiivityName = stdinScanner.nextLine();
 		activityManager.deleteActivity(actiivityName);
@@ -519,6 +520,7 @@ public class MainProgram {
 
 	// Menu option to remove a camp
 	public static void removeCamp() {
+		System.out.println("NOTE: Before removing a camp, make sure to remove all the participants, activities or monitors associated to it");
 		System.out.println("Insert the ID of the camp you want to delete: ");
 		Integer campId = Integer.parseInt(stdinScanner.nextLine());
 		boolean aux=campManager.deleteCamp(campId);
@@ -552,7 +554,7 @@ public class MainProgram {
 
 		while (flag) {
 			System.out.println("Insert the Monitor ID (press l to list all the available monitors)");
-			campId = stdinScanner.nextLine();
+			monitorId = stdinScanner.nextLine();
 			if (campId.equals("l")) {
 				listAllMonitors();
 			} else {
@@ -561,6 +563,8 @@ public class MainProgram {
 		}
 
 		try {
+			System.out.println(monitorId);
+			System.out.println(campId);
 			campManager.addSpecialMonitor(Integer.parseInt(monitorId), Integer.parseInt(campId));
 		} catch (NumberFormatException e) {
 			System.out.println("Failed associating a special needs monitor to a camp... Perhaps you put in the name of the monitor/camp instead of the monitor/camp ID?");
@@ -597,6 +601,7 @@ public class MainProgram {
 
 	// Menu option to remove an special educator
 	public static void removeMonitor() {
+		System.out.println("NOTE: Before removing any monitor make sure the monitor is not associated to a camp.");
 		Integer dni;
 		System.out.println("Insert the DNI of the monitor to be removed");
 		dni = Integer.parseInt(stdinScanner.nextLine());

@@ -781,7 +781,7 @@ public class DBConnection {
 
         try {
             // Utiliza la conexión a la base de datos (this.connection)
-            ps = this.connection.prepareStatement(sqlQueries.getProperty("get.activity.names.by_camp_id"));
+            ps = this.connection.prepareStatement(sqlQueries.getProperty("GET_ACTIVITIES_BY_ID"));
             ps.setInt(1, campId);
 
             rs = ps.executeQuery();
