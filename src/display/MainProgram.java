@@ -605,11 +605,11 @@ public class MainProgram {
 		LocalDate beginningDate = LocalDate.now();
 		LocalDate endingDate = LocalDate.now();
 		Boolean flag = true;
-		String dni = "";
+		String id = "";
 		while (flag) {			
 			System.out.println("Insert the ID of the camp you want to update (press l to get a list of all the camps)");
-			dni = stdinScanner.nextLine();
-			if (dni.equals("l")) {
+			id = stdinScanner.nextLine();
+			if (id.equals("l")) {
 				listAllCamps();
 			} else {
 				flag = false;
@@ -645,7 +645,7 @@ public class MainProgram {
 		int maxAssistants=Integer.valueOf(stdinScanner.nextLine());
 		
 
-		campManager.updateCamp(Integer.valueOf(dni),beginningDate,endingDate,level,maxAssistants);
+		campManager.updateCamp(Integer.parseInt(id),beginningDate,endingDate, Level.valueOf(level),maxAssistants);
 	}
 
 	// Menu option to list all monitors

@@ -777,21 +777,24 @@ public class DBConnection {
 				int idCamp=rs.getInt("id");
 				Date beggin=rs.getDate("start");
 				Date end=rs.getDate("end");
-				String level =rs.getString("level");
+				String level =rs.getString("educationallevel");
+				int max=rs.getInt("maxparticipants");
 				
 				CampMap = new Hashtable<String, String>();
 				CampMap.put("id", Integer.toString(idCamp));
 				CampMap.put("start", String.valueOf(beggin));
 				CampMap.put("end", String.valueOf(end));
-				CampMap.put("level", level);
+				CampMap.put("educationallevel", level);
+				CampMap.put("maxparticipants", String.valueOf(max));
 //si no fufa quita el if
-				if(need_special_monitor(idCamp)){
-					CampMap.put("special_monitor", String.valueOf(true));
-				}
-				else{
-					CampMap.put("special_monitor", String.valueOf(false));
-				}
 
+ if(need_special_monitor(idCamp)){
+	 CampMap.put("special_monitor", String.valueOf(true));
+	}
+	else{
+		CampMap.put("special_monitor", String.valueOf(false));
+	}
+	
 				result.add(CampMap);
 			}
 			
@@ -867,104 +870,103 @@ public class DBConnection {
 		} catch (Exception e) { e.printStackTrace(); }
 		return status;
 	}
-    
-
-	
+    	
 	/**
-	 * Updates Camp info
-	 * @param idCamp 
-	 * @param name
-	 * @return 1 on success
-	 */
+		 * Updates Camp info
+		 * @param idCamp 
+		 * @param name
+		 * @return 1 on success
+		 */
 
-	public Boolean updateCamp(int id,LocalDate beginningDate,LocalDate endingDate,Level level,int max) {
-		try{
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP"));
-			
-			ps.setString(1,beginningDate.toString() );
-			ps.setString(2, endingDate.toString());
-			ps.setString(3, level.toString());
-			ps.setInt(4, max);
+		public Boolean updateCamp(int id,LocalDate beginningDate,LocalDate endingDate,Level level,int max) {
+			try{
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP"));
+				
+				ps.setString(1,beginningDate.toString() );
+				ps.setString(2, endingDate.toString());
+				ps.setString(3, level.toString());
+				ps.setInt(4, max);
+				ps.setInt(5,id);
 
-			ps.executeUpdate();
+				ps.executeUpdate();
 
-			return true;
-		} catch(Exception e) { 
-			e.printStackTrace();
-			return false;
+				return true;
+			} catch(Exception e) { 
+				e.printStackTrace();
+				return false;
+			}
+		}	
+		
+		/**
+		 * Updates Camp BeginningDate
+		 * @param id	 
+		 * @param beginningDate
+		 * @return 1 on success
+		 */
+		public int updateCampBeginningDate(int id, String beginningDate){
+			int status=0;
+			try{
+				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_BEGINNINGDATE"));
+				ps.setDate(1, Date.valueOf(beginningDate));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
 		}
-	}	
-	
-	/**
-	 * Updates Camp BeginningDate
-	 * @param id	 
-	 * @param beginningDate
-	 * @return 1 on success
-	 */
-	public int updateCampBeginningDate(int id, String beginningDate){
-		int status=0;
-		try{
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_BEGINNINGDATE"));
-			ps.setDate(1, Date.valueOf(beginningDate));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
 
-	/**
-	 * Updates Camp EndingDate
-	 * @param id	 
-	 * @param EndingDate
-	 * @return 1 on success
-	 */
-	public int updateCampEndingDate(int id, String endingDate){
-		int status=0;
-		try{
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_ENDINGDATE"));
-			ps.setDate(1, Date.valueOf(endingDate));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
+		/**
+		 * Updates Camp EndingDate
+		 * @param id	 
+		 * @param EndingDate
+		 * @return 1 on success
+		 */
+		public int updateCampEndingDate(int id, String endingDate){
+			int status=0;
+			try{
+				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_ENDINGDATE"));
+				ps.setDate(1, Date.valueOf(endingDate));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
+		}
 
-	/**
-	 * Updates Camp Level
-	 * @param id	 
-	 * @param Level
-	 * @return 1 on success
-	 */
-	public int updateCampLevel(int id, String level){
-		int status=0;
-		try{
-			
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_LEVEL"));
-			ps.setString(1,(level.toString()));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
+		/**
+		 * Updates Camp Level
+		 * @param id	 
+		 * @param Level
+		 * @return 1 on success
+		 */
+		public int updateCampLevel(int id, String level){
+			int status=0;
+			try{
+				
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_LEVEL"));
+				ps.setString(1,(level.toString()));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
+		}
 
-	/**
-	 * Updates Camp MaxAssistants
-	 * @param id	 
-	 * @param MaxAssistants
-	 * @return 1 on success
-	 */
-	public int updateCampMaxAssistants(int id, String updateCampMaxAssistants){
-		int status=0;
-		try{
-			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_MAX_ASSISTANTS"));
-			ps.setInt(1,Integer.valueOf(updateCampMaxAssistants));
-			ps.setInt(2, id);
-			status=ps.executeUpdate();
-		}catch (Exception e) { e.printStackTrace(); }
-		return status;
-	}
+		/**
+		 * Updates Camp MaxAssistants
+		 * @param id	 
+		 * @param MaxAssistants
+		 * @return 1 on success
+		 */
+		public int updateCampMaxAssistants(int id, String updateCampMaxAssistants){
+			int status=0;
+			try{
+				PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_CAMP_MAX_ASSISTANTS"));
+				ps.setInt(1,Integer.valueOf(updateCampMaxAssistants));
+				ps.setInt(2, id);
+				status=ps.executeUpdate();
+			}catch (Exception e) { e.printStackTrace(); }
+			return status;
+		}
 
 	
 	public Boolean need_special_monitor(int idC){

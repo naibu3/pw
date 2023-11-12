@@ -66,12 +66,15 @@ public class CampDAO {
                 CampDTO currentcamp = new CampDTO(Integer.valueOf(camp.get("id")),
 																LocalDate.parse(camp.get("start")),
 																LocalDate.parse(camp.get("end")),
-                                                                Level.valueOf(camp.get("timetable")),
-																Integer.valueOf(camp.get("maxAssistants")));
+                                                                Level.valueOf(camp.get("educationallevel")),
+																Integer.valueOf(camp.get("maxparticipants")));
                 
 //si no va quita el if
-		    if(Boolean.valueOf(camp.get("special_monitor")))
-			currentcamp.setresponsibleMonitors(1);
+/*
+ * 
+ */
+ if(Boolean.valueOf(camp.get("special_monitor")))
+ currentcamp.setresponsiblespecialMonitor(1);
 		result.add(currentcamp);
             }
 			

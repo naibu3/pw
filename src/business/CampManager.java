@@ -26,9 +26,7 @@ public class CampManager {
 
     public void updateCamp(int id,LocalDate beginningDate,LocalDate endingDate, Level level, int maxAssistants) {
         CampDAO CampInfo = new CampDAO();
-        if (CampInfo.updateCamp(id, beginningDate, endingDate, level, maxAssistants)) {
-        }
-
+        CampInfo.updateCamp(id, beginningDate, endingDate, level, maxAssistants);        
     }
 
     public String getAllCamps(){
@@ -38,10 +36,15 @@ public class CampManager {
 
         ArrayList<CampDTO> camps= CampInfo.getAllCamps();
         for(CampDTO camp: camps){
-            p += camp.toString()+"\n";
+            p += camp.toString();
             //si no fufa quita el if
-            if(camp.getresponsiblespecialMonitor()==1)
-                p+="Need special monitor\n";
+            /*
+             * 
+             */
+             if(camp.getresponsiblespecialMonitor()==1)
+                 p+="Need special monitor";
+            
+            p+="\n";
         }
 
         return p;
