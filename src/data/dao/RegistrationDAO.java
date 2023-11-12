@@ -69,13 +69,13 @@ public class RegistrationDAO {
 	 * @param id
 	 * @return true on success
 	 */
-	public boolean deleteRegistration(int id) {
+	public boolean deleteRegistration(int dni, int idCamp) {
 		int status = -1;
 		try {
 			DBConnection dbConnection = new DBConnection();
 			dbConnection.getConnection();
 
-			status = dbConnection.deleteRegistration(id);
+			status = dbConnection.deleteRegistration(dni, idCamp);
 			
 			dbConnection.closeConnection();
 			
