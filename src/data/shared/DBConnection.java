@@ -1062,4 +1062,81 @@ public class DBConnection {
 		} catch (Exception e) { e.printStackTrace(); }
 		return r;
 	}
+	
+	
+	/******************
+	 *	USER
+	*******************/
+
+	public int createUser(String nombre, String email, LocalDate fechana, LocalDate date, String pass, boolean rol){
+		int status = -1;
+		try {
+			
+			PreparedStatement ps = connection.prepareStatement(sqlQueries.getProperty("FILL_USERS"));
+			
+			ps.setString(1, String.valueOf(nombre));
+			ps.setString(2, String.valueOf(email));
+			ps.setDate(3, Date.valueOf(fechana));
+			ps.setDate(4, Date.valueOf(date));
+			ps.setString(5, String.valueOf(pass));
+			ps.setBoolean(6, rol);
+			
+			
+			
+			status= ps.executeUpdate();
+			
+		} catch (Exception e){
+			System.err.println(e);
+			e.printStackTrace();
+		}
+		return (status);
+	}
+	/**
+	 * Updates user info
+	 * @param name	 
+	 * @param email
+	 * @param fechana
+	 * @param date
+	 * @param pass
+	 * @param rol 
+	 * @return 1 on success
+	 */
+	public Boolean updateUser(String name, String email, LocalDate fechana, LocalDate date, String pass, boolean rol){
+		try{
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("UPDATE_USER"));
+			ps.setString(1, name);
+			ps.setString(2, email);
+			ps.setDate(3, Date.valueOf(fechana));
+			ps.setDate(4, Date.valueOf(date));
+			ps.setString(5, pass);
+			ps.setBoolean(6, rol);
+
+			ps.executeUpdate();
+
+			return true;
+		} catch(Exception e) { 
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+		/**
+	 * Removes a monitor from the data base
+	 * @param email
+	 * @return 1 on success
+	 */
+	public Boolean deleteUser(String email){
+		try {
+			PreparedStatement ps=connection.prepareStatement(sqlQueries.getProperty("DELETE_USER"));
+			ps.setString (1, email);
+			ps.executeUpdate();
+
+			return true;
+		} catch(Exception e) { 
+			e.printStackTrace(); 
+			return false;
+		}
+	}
+
+	
 }
